@@ -9,6 +9,7 @@ class BasicFieldsTestPage extends TestPage {
 		'CalendarDate' => 'Date',
 		'CompositeDate' => 'Date',
 		'Date' => 'Date',
+		"DateDisabled" => "Date",
 		'DMYCalendarDate' => 'Date',
 		'DMYDate' => 'Date',
 		'DropdownTime' => 'Time',
@@ -46,6 +47,7 @@ class BasicFieldsTestPage extends TestPage {
 	
 	static $defaults = array(
 		'Readonly' => 'Default value for \'readonly\'',
+		"DateDisabled" => "2002-10-23",
 	);
 	
 	function getCMSFields() {
@@ -83,6 +85,7 @@ class BasicFieldsTestPage extends TestPage {
 			new CalendarDateField('CalendarDate','CalendarDateField'),
 			new CompositeDateField('CompositeDate','CompsiteDateField'),
 			new DateField('Date','DateField'),
+			new DateField_Disabled("DateDisabled","DateField_Disabled (should be 2002-10-23)"),
 			new DMYCalendarDateField('DMYCalendarDate','DMYCalendarDateField'),
 			new DMYDateField('DMYDate','DMYDateField'),
 			new DropdownTimeField('DropdownTime','DropdownTimeField'),
