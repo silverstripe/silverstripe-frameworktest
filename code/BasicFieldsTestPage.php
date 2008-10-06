@@ -52,33 +52,39 @@ class BasicFieldsTestPage extends TestPage {
 	
 	function getCMSFields() {
 		$fields = parent::getCMSFields();
-		// TODO: Tidy these up
-		$fields->addFieldsToTab('Root.Content.BasicTests', array(
+		
+		$fields->addFieldsToTab('Root.Content.TextTests', array(
+			new ReadonlyField('Readonly', 'ReadonlyField'),
+			new TextareaField('Textarea', 'TextareaField - 8 rows', 8),
+			new TextField('Text', 'TextField'),
+			new HtmlEditorField('HTMLField', 'HtmlEditorField'),
+		//	new HtmlOneLineField('HTMLOneLine', 'HTMLOneLineField'), // Doesn't work
+			new EmailField('Email', 'EmailField'),
+			new PasswordField('Password', 'PasswordField'),
+			new ConfirmedPasswordField('ConfirmedPassword', 'ConfirmedPasswordField'),
+			new UniqueTextField('UniqueText', 'UniqueText', 'BasicFieldsTestPage', 'This field must be unique.', 'UniqueTextField'),
+			new UniqueRestrictedTextField('UniqueRestrictedText', 'UniqueRestrictedText', 'BasicFieldsTestPage', 'This field must be unique for each page',
+								'[^A-Za-z0-9-]+', '-', 'This field can only be made up of letters, digits and hyphens.',
+								'UniqueRestrictedTextField'),
+			new AjaxUniqueTextField('AjaxUniqueText', 'AjaxUniqueTextField', 'AjaxjUniqueText', 'BasicFieldsTestPage'),
+		//	new AutocompleteTextField('Autocomplete', 'AutocompleteTextField', Director::absoluteURL('BasicFieldsTestPage_Controller/AutoCompleteItems')), // Doesn't work
+		));
+		
+		$fields->addFieldsToTab('Root.Content.NumericTests', array(
+			new NumericField('Number', 'NumericField'),
+			new CurrencyField('Price', 'CurrencyField'),
+			new BankAccountField('BankNumber', 'BankAccountField'),
+			new PhoneNumberField('PhoneNumber', 'PhoneNumberField'),
+			new CreditCardField('CreditCard', 'CreditCardField'),
+			new GSTNumberField('GSTNumber', 'GSTNumberField'),
+		));
+		
+		$fields->addFieldsToTab('Root.Content.OptionTests', array(
 			new CheckboxField('Checkbox', 'CheckboxField'),
 			new DropdownField('DropdownID', 'DropdownField', TestCategory::map()),
 			new GroupedDropdownField('GroupedDropdownID', 'GroupedDropdown', array('Test Categorys' => TestCategory::map())),
 			new ListboxField('ListboxFieldID', 'ListboxField', TestCategory::map(), array(), 3),
 			new OptionsetField('OptionSetID', 'OptionSetField', TestCategory::map()),
-			new ReadonlyField('Readonly', 'ReadonlyField'),
-			new TextareaField('Textarea', 'TextareaField - 8 rows', 8),
-			new TextField('Text', 'TextField'),
-			new NumericField('Number', 'NumericField'),
-			new CurrencyField('Price', 'CurrencyField'),
-			new EmailField('Email', 'EmailField'),
-			new PasswordField('Password', 'PasswordField'),
-			new ConfirmedPasswordField('ConfirmedPassword', 'ConfirmedPasswordField'),
-			new HtmlEditorField('HTMLField', 'HtmlEditorField'),
-			new HtmlOneLineField('HTMLOneLine', 'HTMLOneLineField'),
-			new UniqueTextField('UniqueText', 'UniqueText', 'BasicFieldsTestPage', 'This field must be unique.', 'UniqueTextField'),
-			new UniqueRestrictedTextField('UniqueRestrictedText', 'UniqueRestrictedText', 'BasicFieldsTestPage', 'This field must be unique for each page',
-								'[^A-Za-z0-9-]+', '-', 'This field can only be made up of letters, digits and hyphens.',
-								'UniqueRestrictedTextField'),
-			new BankAccountField('BankNumber', 'BankAccountField'),
-			new PhoneNumberField('PhoneNumber', 'PhoneNumberField'),
-			new AjaxUniqueTextField('AjaxUniqueText', 'AjaxUniqueTextField', 'AjaxjUniqueText', 'BasicFieldsTestPage'),
-		//	new AutocompleteTextField('Autocomplete', 'AutocompleteTextField', Director::absoluteURL('BasicFieldsTestPage_Controller/AutoCompleteItems')), // Um, how does this work?
-			new CreditCardField('CreditCard', 'CreditCardField'),
-			new GSTNumberField('GSTNumber', 'GSTNumberField'),
 		));
 
 		$fields->addFieldsToTab('Root.Content.DateTimeTests', array(
