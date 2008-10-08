@@ -15,7 +15,9 @@ class TestCategory extends DataObject {
 	 * Returns a dropdown map of all objects of this class
 	 */
 	static function map() {
-		return DataObject::get('TestCategory')->toDropdownMap();
+		$categories = DataObject::get('TestCategory');
+		if($categories) return $categories->toDropdownMap();
+		else return array();
 	}
 
 	function requireDefaultRecords(){
