@@ -107,7 +107,9 @@ class BasicFieldsTestPage extends TestPage {
 			new FileField('File2','FileField'),
 			new FileIFrameField('File3','FileIFrameField'),
 		));
+
 		return $fields;
+
 	}
 }
 
