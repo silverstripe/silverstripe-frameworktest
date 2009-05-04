@@ -20,7 +20,6 @@ class TestPage extends Page {
 			$page = new $class();
 			$page->Title = str_replace("TestPage","",$class) . " Test";
 			$page->write();
-			Debug::show($page);
 			$page->doPublish();
 		}
 	}
