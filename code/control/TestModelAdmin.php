@@ -1,7 +1,7 @@
 <?php
 
 class TestModelAdmin extends ModelAdmin {
-	protected static $managed_models = array(
+	public static $managed_models = array(
 		"Client",
 		"Contact",
 		"Project",
