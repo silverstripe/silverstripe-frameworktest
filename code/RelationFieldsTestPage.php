@@ -14,7 +14,7 @@ class RelationFieldsTestPage extends TestPage {
 	function getCMSFields() {
 		$fields = parent::getCMSFields();
 		
-		$fields->addFieldToTab("Root.Content.CheckboxSet", 
+		$fields->addFieldToTab("Root.Content.CheckboxSet",
 			new CheckboxSetField("CheckboxSet", "CheckboxSetField", TestCategory::map()));
 
 		/*

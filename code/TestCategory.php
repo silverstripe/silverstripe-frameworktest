@@ -16,7 +16,7 @@ class TestCategory extends DataObject {
 	 */
 	static function map() {
 		$categories = DataObject::get('TestCategory');
-		if($categories) return $categories->toDropdownMap();
+		if($categories) return $categories->map('ID', 'Title');
 		else return array();
 	}
 
