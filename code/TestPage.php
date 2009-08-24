@@ -41,7 +41,10 @@ class TestPage_Controller extends Page_Controller {
 	 */
 	function Form() {
 		$fields = $this->getCMSFields();
-		$actions = new FieldSet(new FormAction("save", "Save"));
+		$actions = new FieldSet(
+			new FormAction("save", "Save"),
+			new ImageFormAction("gohome", "Go home", "frameworktest/images/test-button.png")
+		);
 		$form = new Form($this, "Form", $fields, $actions);
 		$form->loadDataFrom($this->dataRecord);
 		return $form;
@@ -51,6 +54,10 @@ class TestPage_Controller extends Page_Controller {
 		$form->saveInto($this->dataRecord);
 		$this->dataRecord->write();
 		Director::redirectBack();
+	}
+	
+	function gohome() {
+		Director::redirect("./");
 	}
 	
 	/**
