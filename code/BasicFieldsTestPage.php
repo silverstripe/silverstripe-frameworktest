@@ -73,10 +73,8 @@ class BasicFieldsTestPage extends TestPage {
 		$fields->addFieldsToTab('Root.Content.NumericTests', array(
 			new NumericField('Number', 'NumericField'),
 			new CurrencyField('Price', 'CurrencyField'),
-			new BankAccountField('BankNumber', 'BankAccountField'),
 			new PhoneNumberField('PhoneNumber', 'PhoneNumberField'),
-			new CreditCardField('CreditCard', 'CreditCardField'),
-			new GSTNumberField('GSTNumber', 'GSTNumberField'),
+			new CreditCardField('CreditCard', 'CreditCardField')
 		));
 		
 		$fields->addFieldsToTab('Root.Content.OptionTests', array(
