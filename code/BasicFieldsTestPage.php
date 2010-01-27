@@ -86,7 +86,7 @@ class BasicFieldsTestPage extends TestPage {
 		));
 
 		// All these date/time fields generally have issues saving directly in the CMS
-		/*$fields->addFieldsToTab('Root.Content.DateTimeTests', array(
+		$fields->addFieldsToTab('Root.Content.DateTimeTests', array(
 			new CalendarDateField('CalendarDate','CalendarDateField'),
 			new CompositeDateField('CompositeDate','CompsiteDateField'),
 			new DateField('Date','DateField'),
@@ -96,7 +96,7 @@ class BasicFieldsTestPage extends TestPage {
 			new DropdownTimeField('DropdownTime','DropdownTimeField'),
 			new PopupDateTimeField('PopupDateTime','PopupDateTimeField'),
 			new TimeField('Time','TimeField')
-		));*/
+		));
 
 		$fields->addFieldsToTab('Root.Content.FileTests', array(
 			new ImageField('Image','ImageField'),
