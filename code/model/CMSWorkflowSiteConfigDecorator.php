@@ -16,6 +16,8 @@
  */
 class CMSWorkflowSiteConfigDecorator extends DataObjectDecorator {
 	
+	static $config_file_path = '';
+	
 	static $step_config =  "twostep" ;
 	
 	static $default_config = "STEP = twostep";
@@ -86,7 +88,11 @@ class CMSWorkflowSiteConfigDecorator extends DataObjectDecorator {
 	 * Config file path for frameworktest - two step and three step testing 
 	 */ 
 	static function get_config_file_path() {
-		return dirname(__FILE__) . "/CMSWorkflow_Config.cfg";
+		if (self::$config_file_path) {
+			return self::$config_file_path;
+		} else {
+			return dirname(__FILE__) . "/CMSWorkflow_Config.cfg";
+		}
 	}
 	
 	/**
@@ -127,10 +133,14 @@ class CMSWorkflowSiteConfigDecorator extends DataObjectDecorator {
 	 */
 	static function get_config_content() {
 		$file = self::get_config_file();
-		$size = filesize(self::get_config_file_path());
-		if($size < 1) $size = 1;
-		$content = fread($file, $size);
+		
+		$content = null;
+		while(!feof($file)) {
+			$content .= fread($file, 10);
+		}
+		
 		fclose($file);
+		
 		return $content;
 	}
 	
@@ -164,7 +174,8 @@ class CMSWorkflowSiteConfigDecorator extends DataObjectDecorator {
 				$replaced = self::$default_config;
 			}
 			else {
-				$replaced = trim($replaced) . "\n" . self::$default_config;
+				$newConfig = "$var = $value";
+				$replaced = trim($replaced) . "\n" . $newConfig;
 			}
 		}
 		return $replaced;
