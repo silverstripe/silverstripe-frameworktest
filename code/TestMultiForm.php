@@ -19,6 +19,8 @@ class TestMultiForm extends MultiForm {
 			$fields->push(new LiteralField($key . '_copy', "<p><strong>$key</strong> $value</p>"));
 		}
 		
+		Session::set("MultiFormMessage", "Your information has been submitted.");
+		
 		Director::redirect(Director::BaseURL() . $this->Controller()->URLSegment);
 	}
 }

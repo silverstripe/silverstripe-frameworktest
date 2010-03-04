@@ -10,4 +10,15 @@ class TestMultiFormPage_Controller extends Page_Controller {
 
 		return $form;
 	}
+	
+	function FormMessage() {
+		if(Session::get('MultiFormMessage')) {
+			$message = Session::get('MultiFormMessage');
+			Session::clear('MultiFormMessage');
+			
+			return $message;
+		}
+		
+		return false;
+	}
 }
