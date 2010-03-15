@@ -91,7 +91,6 @@ class BasicFieldsTestPage extends TestPage {
 			new CompositeDateField('CompositeDate','CompsiteDateField'),
 			new DateField('Date','DateField'),
 			new DateField_Disabled("DateDisabled","DateField_Disabled (should be 2002-10-23)"),
-			new DMYCalendarDateField('DMYCalendarDate','DMYCalendarDateField'),
 			new DMYDateField('DMYDate','DMYDateField'),
 			new DropdownTimeField('DropdownTime','DropdownTimeField'),
 			new PopupDateTimeField('PopupDateTime','PopupDateTimeField'),
