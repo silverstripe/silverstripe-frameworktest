@@ -23,9 +23,9 @@ class CMSWorkflowSiteConfigDecorator extends DataObjectDecorator {
 	static $default_config = "STEP = twostep";
 	
 	/**
-	 * @TODO: add javascript that instantly appends "(active)" the links - "Set to Two-Step" and "Set to Three-Step"
+	 * @TODO: add javascript that instantly appends "(active)" to the links - "Set to Two-Step" and "Set to Three-Step"
 	 */ 
-	function updateEditFormFields(&$fields) {
+	function updateCMSFields(&$fields) {
 		$twoStepActive = "";
 		$threeStepActive = "";
 		$whichStep = self::get_step_config();
@@ -38,7 +38,9 @@ class CMSWorkflowSiteConfigDecorator extends DataObjectDecorator {
 		}
 		
 		$fields->addFieldToTab("Root.Main", new HeaderField("WorkflowHeader", "CMS Workflow Configuration"));
+		
 		$fields->addFieldToTab("Root.Main", new LiteralField("WorkflowTwoStepLink", '<p><a target="_blank" href="CMSWorkflowSiteConfigController/setStepConfig/twostep">Set to Two Step</a> <span>' . $twoStepActive . '</span></p>'));
+		
 		$fields->addFieldToTab("Root.Main", new LiteralField("WorkflowThreeStepLink", '<p><a target="_blank" href="CMSWorkflowSiteConfigController/setStepConfig/threestep">Set to Three Step</a> <span>' . $threeStepActive . '</span></p>'));
 	}
 	
