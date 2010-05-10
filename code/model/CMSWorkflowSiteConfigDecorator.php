@@ -137,8 +137,8 @@ class CMSWorkflowSiteConfigDecorator extends DataObjectDecorator {
 		$file = self::get_config_file();
 		
 		$content = null;
-		while(!feof($file)) {
-			$content .= fread($file, 10);
+		while(!@feof($file)) {
+			$content .= @fread($file, 10);
 		}
 		
 		fclose($file);
