@@ -44,9 +44,9 @@ if($db) {
 }
 
 if(@$_GET['db']) {
-	$enabletranslatable = $_GET['enabletranslatable'];
+	$enabletranslatable = @$_GET['enabletranslatable'];
 } elseif(@$_SESSION['db']) {
-	$enabletranslatable = $_SESSION['enabletranslatable'];
+	$enabletranslatable = @$_SESSION['enabletranslatable'];
 } else {
 	$enabletranslatable = null;
 }
