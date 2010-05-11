@@ -2,7 +2,7 @@
  
 class Page2MultiForm extends MultiForm {
 	
-	protected static $start_step = 'Page2PersonalDetailsFormStep';
+	public static $start_step = 'Page2PersonalDetailsFormStep';
 	
 	public function finish($data, $form) {
 	      parent::finish($data, $form);

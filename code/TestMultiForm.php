@@ -1,6 +1,6 @@
 <?php
 class TestMultiForm extends MultiForm {
-	protected static $start_step = 'TestMultiFormStepOne';
+	public static $start_step = 'TestMultiFormStepOne';
 	
 	function finish($data, $form) {
 		parent::finish($data, $form);
