@@ -51,7 +51,7 @@ class TestMultiFormStepTwo extends MultiFormStep {
 
 
 class TestMultiFormStepThree extends MultiFormStep {
-	protected static $is_final_step = true;
+	public static $is_final_step = true;
 	
 	function getFields() {
 		$form = $this->getForm();
