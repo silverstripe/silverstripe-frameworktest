@@ -38,7 +38,7 @@ class Page2MultiForm extends MultiForm {
 
 class Page2PersonalDetailsFormStep extends MultiFormStep {
 	
-	protected static $next_steps = 'Page2OrganisationDetailsFormStep';
+	public static $next_steps = 'Page2OrganisationDetailsFormStep';
 	
 	function getFields() {
 		return new FieldSet(
@@ -51,7 +51,7 @@ class Page2PersonalDetailsFormStep extends MultiFormStep {
 
 class Page2OrganisationDetailsFormStep extends MultiFormStep {
  
-   protected static $is_final_step = true;
+   public static $is_final_step = true;
 
 	function getFields() {
 		return new FieldSet(

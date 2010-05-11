@@ -26,7 +26,7 @@ class TestMultiForm extends MultiForm {
 }
 
 class TestMultiFormStepOne extends MultiFormStep {
-	protected static $next_steps = 'TestMultiFormStepTwo';
+	public static $next_steps = 'TestMultiFormStepTwo';
 	
 	function getFields() {
 	    return new FieldSet(
@@ -38,7 +38,7 @@ class TestMultiFormStepOne extends MultiFormStep {
 }
 
 class TestMultiFormStepTwo extends MultiFormStep {
-	protected static $next_steps = 'TestMultiFormStepThree';
+	public static $next_steps = 'TestMultiFormStepThree';
 	
 	function getFields() {
 		
