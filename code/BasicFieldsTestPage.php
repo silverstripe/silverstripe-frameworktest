@@ -12,9 +12,10 @@ class BasicFieldsTestPage extends TestPage {
 		"DateDisabled" => "Date",
 		'DMYCalendarDate' => 'Date',
 		'DMYDate' => 'Date',
-		'DropdownTime' => 'Time',
-		'PopupDateTime' => 'Datetime',
+		'DateTime' => 'Datetime',
+		'DateTimeWithCalendar' => 'Datetime',
 		'Time' => 'Time',
+		'TimeWithDropdown' => 'Time',
 		'Number' => 'Int',
 		'Price' => 'Double',
 		'Email' => 'Varchar',
@@ -87,15 +88,20 @@ class BasicFieldsTestPage extends TestPage {
 
 		// All these date/time fields generally have issues saving directly in the CMS
 		$fields->addFieldsToTab('Root.Content.DateTimeTests', array(
-			new CalendarDateField('CalendarDate','CalendarDateField'),
-			new CompositeDateField('CompositeDate','CompsiteDateField'),
+			$calendarDateField = new DateField('CalendarDate','DateField with calendar'),
 			new DateField('Date','DateField'),
 			new DateField_Disabled("DateDisabled","DateField_Disabled (should be 2002-10-23)"),
-			new DMYDateField('DMYDate','DMYDateField'),
-			new DropdownTimeField('DropdownTime','DropdownTimeField'),
-			new PopupDateTimeField('PopupDateTime','PopupDateTimeField'),
-			new TimeField('Time','TimeField')
+			$dmyDateField = new DateField('DMYDate','DateField with separate fields'),
+			new TimeField('Time','TimeField'),
+			$timeFieldDropdown = new TimeField('TimeDropdown','TimeField with dropdown'),
+			new DatetimeField('DateTime', 'DateTime'),
+			$dateTimeShowCalendar = new DatetimeField('DateTimeWithCalendar', 'DateTime with calendar')
 		));
+		$calendarDateField->setConfig('showcalendar', true);
+		$dmyDateField->setConfig('dmyfields', true);
+		$timeFieldDropdown->setConfig('showdropdown', true);
+		$dateTimeShowCalendar->getDateField()->setConfig('showcalendar', true);
+		$dateTimeShowCalendar->getTimeField()->setConfig('showdropdown', true);
 
 		$fields->addFieldsToTab('Root.Content.FileTests', array(
 			new ImageField('Image','ImageField'),
