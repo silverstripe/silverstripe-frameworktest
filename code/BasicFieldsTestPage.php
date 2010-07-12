@@ -10,6 +10,8 @@ class BasicFieldsTestPage extends TestPage {
 		'CompositeDate' => 'Date',
 		'Date' => 'Date',
 		"DateDisabled" => "Date",
+		'TimeDisabled' => 'Time',
+		'DateTimeDisabled' => 'Datetime',
 		'DMYCalendarDate' => 'Date',
 		'DMYDate' => 'Date',
 		'DateTime' => 'Datetime',
@@ -49,6 +51,8 @@ class BasicFieldsTestPage extends TestPage {
 	static $defaults = array(
 		'Readonly' => 'Default value for \'readonly\'',
 		"DateDisabled" => "2002-10-23",
+		"DateTimeDisabled" => "2002-10-23 23:59",
+		"TimeDisabled" => "23:59",
 	);
 	
 	function getCMSFields() {
@@ -90,11 +94,13 @@ class BasicFieldsTestPage extends TestPage {
 		$fields->addFieldsToTab('Root.Content.DateTimeTests', array(
 			$calendarDateField = new DateField('CalendarDate','DateField with calendar'),
 			new DateField('Date','DateField'),
-			new DateField_Disabled("DateDisabled","DateField_Disabled (should be 2002-10-23)"),
+			new DateField_Disabled("DateDisabled","DateField (disabled)"),
 			$dmyDateField = new DateField('DMYDate','DateField with separate fields'),
 			new TimeField('Time','TimeField'),
+			new TimeField_Readonly('TimeDisabled','TimeField (disabled)'),
 			$timeFieldDropdown = new TimeField('TimeDropdown','TimeField with dropdown'),
 			new DatetimeField('DateTime', 'DateTime'),
+			new DatetimeField_Readonly('DateTimeDisabled', 'DateTime (disabled)'),
 			$dateTimeShowCalendar = new DatetimeField('DateTimeWithCalendar', 'DateTime with calendar')
 		));
 		$calendarDateField->setConfig('showcalendar', true);
