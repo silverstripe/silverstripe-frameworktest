@@ -63,16 +63,9 @@ class BasicFieldsTestPage extends TestPage {
 			new TextareaField('Textarea', 'TextareaField - 8 rows', 8),
 			new TextField('Text', 'TextField'),
 			new HtmlEditorField('HTMLField', 'HtmlEditorField'),
-		//	new HtmlOneLineField('HTMLOneLine', 'HTMLOneLineField'), // Doesn't work
 			new EmailField('Email', 'EmailField'),
 			new PasswordField('Password', 'PasswordField'),
-			//new ConfirmedPasswordField('ConfirmedPassword', 'ConfirmedPasswordField'),
-			new UniqueTextField('UniqueText', 'UniqueText', 'BasicFieldsTestPage', 'This field must be unique.', 'UniqueTextField'),
-			new UniqueRestrictedTextField('UniqueRestrictedText', 'UniqueRestrictedText', 'BasicFieldsTestPage', 'This field must be unique for each page',
-								'[^A-Za-z0-9-]+', '-', 'This field can only be made up of letters, digits and hyphens.',
-								'UniqueRestrictedTextField'),
 			new AjaxUniqueTextField('AjaxUniqueText', 'AjaxUniqueTextField', 'AjaxUniqueText', 'BasicFieldsTestPage'),
-		//	new AutocompleteTextField('Autocomplete', 'AutocompleteTextField', Director::absoluteURL('BasicFieldsTestPage_Controller/AutoCompleteItems')), // Doesn't work
 		));
 		
 		$fields->addFieldsToTab('Root.Content.NumericTests', array(
