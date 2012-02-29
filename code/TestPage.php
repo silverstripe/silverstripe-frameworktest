@@ -31,7 +31,6 @@ class TestPage extends Page {
  */
 class TestPage_Controller extends Page_Controller {
 	static $allowed_actions = array(
-		'makelotsofpages',
 		'Form',
 		'save',
 	);
@@ -58,27 +57,6 @@ class TestPage_Controller extends Page_Controller {
 	
 	function gohome() {
 		Director::redirect("./");
-	}
-	
-	/**
-	 * Create a bunch of pages
-	 */
-	function makelotsofpages() {
-		echo "<h1>Making pages</h1>";
-		$this->makePages(5,5);
-	}
-	
-	function makePages($count, $depth, $prefix = "", $parentID = 0) {
-		for($i=1;$i<=$count;$i++) {
-			$page = new Page();
-			$page->ParentID = $parentID;
-			$page->Title = "Test page $prefix$i";
-			$page->write();
-			$page->doPublish();
-
-			echo "<li>Created '$page->Title'";
-			if($depth > 1) $this->makePages($count, $depth-1, $prefix."$i.", $page->ID);
-		}
 	}
 
 	function EmailForm() {
