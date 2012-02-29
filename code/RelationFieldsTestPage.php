@@ -25,18 +25,13 @@ class RelationFieldsTestPage extends TestPage {
 		// TODO Fix legacy relation CTFs in 3.0
 
 		// $fields->addFieldToTab("Root.HasOneCTF", 
-		// 	new HasOneComplexTableField($this, "FavouriteItem", "TestCTFItem", array(
-		// 		"Title" => "Item Title", 
-		// 		"Author" => "Item Author")));
+		// 	new HasOneComplexTableField($this, "HasOneCompany");
 
 		// $fields->addFieldToTab("Root.HasManyCTF", 
-		// 	new HasManyComplexTableField($this, "Items", "TestCTFItem", array(
-		// 		"Title" => "Item Title", 
-		// 		"Author" => "Item Author")));
+		// 	new HasManyComplexTableField($this, "HasManyCompanies");
 
 		// $fields->addFieldToTab("Root.ManyManyCTF", 
-		// 	new ManyManyComplexTableField($this, "CheckboxSet", "TestCategory", array(
-		// 		"Title" => "Item Title")));
+		// 	new ManyManyComplexTableField($this, "ManyManyCompanies");
 
 
 //		$fields->addFieldToTab("Root.Tests.ComplexTableField", 
@@ -50,5 +45,3 @@ class RelationFieldsTestPage extends TestPage {
 class RelationFieldsTestPage_Controller extends TestPage_Controller {
 	
 }
-
-?>

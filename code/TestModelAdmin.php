@@ -2,13 +2,11 @@
 
 class TestModelAdmin extends ModelAdmin {
 	static $url_segment = 'test';
-	static $menu_title = 'Test MdAdm';
+	static $menu_title = 'Test ModelAdmin';
 
 	public static $managed_models = array(
-		"Client",
-		"Contact",
-		"Project",
-		"Developer",
+		"Company",
+		"Employee",
 	);
 
 }
