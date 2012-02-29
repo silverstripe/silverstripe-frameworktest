@@ -92,13 +92,10 @@ class BasicFieldsTestPage extends TestPage {
 		$fields->addFieldsToTab('Root.DateTime', array(
 			$calendarDateField = new DateField('CalendarDate','DateField with calendar'),
 			new DateField('Date','DateField'),
-			new DateField_Disabled("DateDisabled","DateField (disabled)"),
 			$dmyDateField = new DateField('DMYDate','DateField with separate fields'),
 			new TimeField('Time','TimeField'),
-			new TimeField_Readonly('TimeDisabled','TimeField (disabled)'),
 			$timeFieldDropdown = new TimeField('TimeDropdown','TimeField with dropdown'),
 			new DatetimeField('DateTime', 'DateTime'),
-			new DatetimeField_Readonly('DateTimeDisabled', 'DateTime (disabled)'),
 			$dateTimeShowCalendar = new DatetimeField('DateTimeWithCalendar', 'DateTime with calendar')
 		));
 		$calendarDateField->setConfig('showcalendar', true);
@@ -113,6 +110,22 @@ class BasicFieldsTestPage extends TestPage {
 			FormField::create('UploadField', 'HasManyFiles','HasManyFilesUploadField'),
 			FormField::create('UploadField', 'ManyManyFiles','ManyManyFilesUploadField')
 		));
+
+		$tabs = array('Root.Text', 'Root.Numeric', 'Root.Option', 'Root.DateTime', 'Root.File');
+		foreach($tabs as $tab) {
+			$tabObj = $fields->fieldByName($tab);
+			foreach($tabObj->FieldList() as $field) {
+				$disabledField = $field->performDisabledTransformation();
+				$disabledField->setTitle($disabledField->Title() . ' (disabled)');
+				$disabledField->setName($disabledField->Name() . '_disabled');
+				$tabObj->insertAfter($disabledField, $field->Name());
+
+				$readonlyField = $field->performReadonlyTransformation();
+				$readonlyField->setTitle($readonlyField->Title() . ' (readonly)');
+				$readonlyField->setName($readonlyField->Name() . '_readonly');
+				$tabObj->insertAfter($readonlyField, $field->Name());
+			}
+		}
 
 		return $fields;
 
