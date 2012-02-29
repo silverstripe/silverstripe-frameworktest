@@ -1,14 +1,15 @@
 <?php
 
 class RelationFieldsTestPage extends TestPage {
+	
 	static $has_one = array(
-		"FavouriteItem" => "TestCTFItem",
+		"HasOneCompany" => "Company",
 	);
 	static $has_many = array(
-		"Items" => "TestCTFItem",
+		"HasManyCompanies" => "Company",
 	);
 	static $many_many = array(
-		"CheckboxSet" => "TestCategory",
+		"ManyManyCompanies" => "Company",
 	);
 	
 	function getCMSFields() {
@@ -18,9 +19,8 @@ class RelationFieldsTestPage extends TestPage {
 			new CheckboxSetField("CheckboxSet", "CheckboxSetField", TestCategory::map()));
 
 		$fields->addFieldToTab("Root.CTF", 
-			new ComplexTableField($this, "Items", "TestCTFItem", array(
-				"Title" => "Item Title", 
-				"Author" => "Item Author")));
+			new ComplexTableField($this, "HasManyCompanies", "TestCTFItem")
+		);
 
 		// TODO Fix legacy relation CTFs in 3.0
 
