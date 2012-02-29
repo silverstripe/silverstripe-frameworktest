@@ -14,7 +14,8 @@ class Company extends DataObject {
 	);
 
 	public static $has_one = array(
-		'RelationFieldsTestPage' => 'RelationFieldsTestPage'
+		'RelationFieldsTestPage' => 'RelationFieldsTestPage',
+		'GridFieldTestPage' => 'GridFieldTestPage'
 	);
 	
 	public static $has_many  = array(
@@ -22,7 +23,8 @@ class Company extends DataObject {
 	);
 
 	static $belongs_many_many = array(
-		'RelationFieldsTestPages' => 'RelationFieldsTestPage'
+		'RelationFieldsTestPages' => 'RelationFieldsTestPage',
+		'GridFieldTestPage' => 'GridFieldTestPage'
 	);
 
 	public static $summary_fields = array('Name', 'Category', 'Revenue', 'CEO');

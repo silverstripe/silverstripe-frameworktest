@@ -1,5 +1,17 @@
 <?php
 class GridFieldTestPage extends Page {
+
+	static $has_one = array(
+		"HasOneCompany" => "Company",
+	);
+
+	static $has_many = array(
+		"HasManyCompanies" => "Company",
+	);
+
+	static $many_many = array(
+		"ManyManyCompanies" => "Company",
+	);
 	
 	public function requireDefaultRecords() {
 		parent::requireDefaultRecords();
@@ -27,10 +39,30 @@ class GridFieldTestPage extends Page {
 		$config->addComponent(new GridFieldAction_Delete());
 		$config->addComponent(new GridFieldAction_Edit());
 		$config->addComponent($forms = new GridFieldPopupForms());
-		
 		$grid = new GridField('Companies', 'Companies', new DataList('Company'),$config);
+		$fields->addFieldToTab('Root.NoRelation', $grid);
 
-		$fields->addFieldToTab('Root.GridField', $grid);
+		$config = new GridFieldConfig();
+		$config->addComponent(new GridFieldDefaultColumns());
+		$config->addComponent(new GridFieldSortableHeader());
+		$config->addComponent(new GridFieldPaginator);
+		$config->addComponent(new GridFieldFilter());
+		$config->addComponent(new GridFieldAction_Delete());
+		$config->addComponent(new GridFieldAction_Edit());
+		$config->addComponent(new GridFieldRelationAdd('Name'));
+		$grid = new GridField('HasManyCompanies', 'HasManyCompanies', new DataList('Company'),$config);
+		$fields->addFieldToTab('Root.HasMany', $grid);
+
+		$config = new GridFieldConfig();
+		$config->addComponent(new GridFieldDefaultColumns());
+		$config->addComponent(new GridFieldSortableHeader());
+		$config->addComponent(new GridFieldPaginator);
+		$config->addComponent(new GridFieldFilter());
+		$config->addComponent(new GridFieldAction_Delete());
+		$config->addComponent(new GridFieldAction_Edit());
+		$config->addComponent(new GridFieldRelationAdd('Name'));
+		$grid = new GridField('ManyManyCompanies', 'ManyManyCompanies', new DataList('Company'),$config);
+		$fields->addFieldToTab('Root.ManyMany', $grid);
 
 		return $fields;
 	}
