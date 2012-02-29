@@ -14,7 +14,7 @@
  * The STEP config can be either twostep or threestep where twostep is the default 
  *
  */
-class CMSWorkflowSiteConfigDecorator extends DataObjectDecorator {
+class CMSWorkflowSiteConfigDecorator extends DataExtension {
 	
 	static $config_file_path = '';
 	

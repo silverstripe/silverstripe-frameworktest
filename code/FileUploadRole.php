@@ -1,5 +1,5 @@
 <?php
-class FileUploadRole extends DataObjectDecorator{
+class FileUploadRole extends DataExtension{
 	function extraStatics() {
 		return array(
 			'has_one' => array(

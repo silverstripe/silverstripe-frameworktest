@@ -1,6 +1,6 @@
 <?php
 
-class FrameworkTestRole extends DataObjectDecorator {
+class FrameworkTestRole extends DataExtension {
 	function extraStatics() {
 		return array(
 			'has_one' => array(
