@@ -14,29 +14,29 @@ class RelationFieldsTestPage extends TestPage {
 	function getCMSFields() {
 		$fields = parent::getCMSFields();
 		
-		$fields->addFieldToTab("Root.Content.CheckboxSet",
+		$fields->addFieldToTab("Root.CheckboxSet",
 			new CheckboxSetField("CheckboxSet", "CheckboxSetField", TestCategory::map()));
 
-		/*
-		$fields->addFieldToTab("Root.Content.ComplexTableField", 
+		$fields->addFieldToTab("Root.CTF", 
 			new ComplexTableField($this, "Items", "TestCTFItem", array(
 				"Title" => "Item Title", 
 				"Author" => "Item Author")));
-			*/
 
-		$fields->addFieldToTab("Root.Content.HasOneComplexTableField", 
-			new HasOneComplexTableField($this, "FavouriteItem", "TestCTFItem", array(
-				"Title" => "Item Title", 
-				"Author" => "Item Author")));
+		// TODO Fix legacy relation CTFs in 3.0
 
-		$fields->addFieldToTab("Root.Content.HasManyComplexTableField", 
-			new HasManyComplexTableField($this, "Items", "TestCTFItem", array(
-				"Title" => "Item Title", 
-				"Author" => "Item Author")));
+		// $fields->addFieldToTab("Root.HasOneCTF", 
+		// 	new HasOneComplexTableField($this, "FavouriteItem", "TestCTFItem", array(
+		// 		"Title" => "Item Title", 
+		// 		"Author" => "Item Author")));
 
-		$fields->addFieldToTab("Root.Content.ManyManyComplexTableField", 
-			new ManyManyComplexTableField($this, "CheckboxSet", "TestCategory", array(
-				"Title" => "Item Title")));
+		// $fields->addFieldToTab("Root.HasManyCTF", 
+		// 	new HasManyComplexTableField($this, "Items", "TestCTFItem", array(
+		// 		"Title" => "Item Title", 
+		// 		"Author" => "Item Author")));
+
+		// $fields->addFieldToTab("Root.ManyManyCTF", 
+		// 	new ManyManyComplexTableField($this, "CheckboxSet", "TestCategory", array(
+		// 		"Title" => "Item Title")));
 
 
 //		$fields->addFieldToTab("Root.Tests.ComplexTableField", 

@@ -40,12 +40,16 @@ class BasicFieldsTestPage extends TestPage {
 		'OptionSet' => 'TestCategory',
 		'GroupedDropdown' => 'TestCategory',
 		'ListboxField' => 'TestCategory',
-		'Image' => 'Image',
-		'Image2' => 'Image',
-		'Image3' => 'Image',
 		'File' => 'File',
-		'File2' => 'File',
-		'File3' => 'File',
+		'Image' => 'Image',
+	);
+
+	static $has_many = array(
+		'HasManyFiles' => 'File',
+	);
+
+	static $many_many = array(
+		'ManyManyFiles' => 'File',
 	);
 	
 	static $defaults = array(
@@ -58,7 +62,7 @@ class BasicFieldsTestPage extends TestPage {
 	function getCMSFields() {
 		$fields = parent::getCMSFields();
 		
-		$fields->addFieldsToTab('Root.Content.TextTests', array(
+		$fields->addFieldsToTab('Root.Text', array(
 			new ReadonlyField('Readonly', 'ReadonlyField'),
 			new TextareaField('Textarea', 'TextareaField - 8 rows', 8),
 			new TextField('Text', 'TextField'),
@@ -68,15 +72,16 @@ class BasicFieldsTestPage extends TestPage {
 			new AjaxUniqueTextField('AjaxUniqueText', 'AjaxUniqueTextField', 'AjaxUniqueText', 'BasicFieldsTestPage'),
 		));
 		
-		$fields->addFieldsToTab('Root.Content.NumericTests', array(
+		$fields->addFieldsToTab('Root.Numeric', array(
 			new NumericField('Number', 'NumericField'),
 			new CurrencyField('Price', 'CurrencyField'),
 			new PhoneNumberField('PhoneNumber', 'PhoneNumberField'),
 			new CreditCardField('CreditCard', 'CreditCardField')
 		));
 		
-		$fields->addFieldsToTab('Root.Content.OptionTests', array(
+		$fields->addFieldsToTab('Root.Option', array(
 			new CheckboxField('Checkbox', 'CheckboxField'),
+			new CheckboxSetField('CheckboxSet', 'CheckboxSetField', TestCategory::map()),
 			new DropdownField('DropdownID', 'DropdownField', TestCategory::map()),
 			new GroupedDropdownField('GroupedDropdownID', 'GroupedDropdown', array('Test Categorys' => TestCategory::map())),
 			new ListboxField('ListboxFieldID', 'ListboxField', TestCategory::map(), array(), 3),
@@ -84,7 +89,7 @@ class BasicFieldsTestPage extends TestPage {
 		));
 
 		// All these date/time fields generally have issues saving directly in the CMS
-		$fields->addFieldsToTab('Root.Content.DateTimeTests', array(
+		$fields->addFieldsToTab('Root.DateTime', array(
 			$calendarDateField = new DateField('CalendarDate','DateField with calendar'),
 			new DateField('Date','DateField'),
 			new DateField_Disabled("DateDisabled","DateField (disabled)"),
@@ -102,13 +107,11 @@ class BasicFieldsTestPage extends TestPage {
 		$dateTimeShowCalendar->getDateField()->setConfig('showcalendar', true);
 		$dateTimeShowCalendar->getTimeField()->setConfig('showdropdown', true);
 
-		$fields->addFieldsToTab('Root.Content.FileTests', array(
-			new ImageField('Image','ImageField'),
-			new SimpleImageField('Image2','SimpleImageField'),
-			new ImageField('Image3','ImageField'),
-			new FileIFrameField('File','FileIFrameField'),
-			new FileField('File2','FileField'),
-			new FileIFrameField('File3','FileIFrameField'),
+		$fields->addFieldsToTab('Root.File', array(
+			FormField::create('UploadField', 'File','FileUploadField'),
+			FormField::create('UploadField', 'Image','ImageUploadField'),
+			FormField::create('UploadField', 'HasManyFiles','HasManyFilesUploadField'),
+			FormField::create('UploadField', 'ManyManyFiles','ManyManyFilesUploadField')
 		));
 
 		return $fields;
