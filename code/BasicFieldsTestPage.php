@@ -117,13 +117,13 @@ class BasicFieldsTestPage extends TestPage {
 			foreach($tabObj->FieldList() as $field) {
 				$disabledField = $field->performDisabledTransformation();
 				$disabledField->setTitle($disabledField->Title() . ' (disabled)');
-				$disabledField->setName($disabledField->Name() . '_disabled');
-				$tabObj->insertAfter($disabledField, $field->Name());
+				$disabledField->setName($disabledField->getName() . '_disabled');
+				$tabObj->insertAfter($disabledField, $field->getName());
 
 				$readonlyField = $field->performReadonlyTransformation();
 				$readonlyField->setTitle($readonlyField->Title() . ' (readonly)');
-				$readonlyField->setName($readonlyField->Name() . '_readonly');
-				$tabObj->insertAfter($readonlyField, $field->Name());
+				$readonlyField->setName($readonlyField->getName() . '_readonly');
+				$tabObj->insertAfter($readonlyField, $field->getName());
 			}
 		}
 
