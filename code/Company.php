@@ -42,7 +42,7 @@ class Company extends DataObject {
 		$config->addComponent(new GridFieldDefaultColumns());
 		$config->addComponent(new GridFieldSortableHeader());
 		$config->addComponent(new GridFieldPaginator());
-		$config->addComponent(new GridFieldAction_Edit());
+		$config->addComponent(new GridFieldDeleteAction());
 		$config->addComponent(new GridFieldRelationDelete());
 		$config->addComponent(new GridFieldPopupForms());
 		

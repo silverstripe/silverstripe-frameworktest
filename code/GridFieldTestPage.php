@@ -36,8 +36,8 @@ class GridFieldTestPage extends Page {
 		$config->addComponent(new GridFieldSortableHeader());
 		$config->addComponent(new GridFieldPaginator);
 		$config->addComponent(new GridFieldFilter());
-		$config->addComponent(new GridFieldAction_Delete());
-		$config->addComponent(new GridFieldAction_Edit());
+		$config->addComponent(new GridFieldDeleteAction());
+		$config->addComponent(new GridFieldEditAction());
 		$config->addComponent($forms = new GridFieldPopupForms());
 		$grid = new GridField('Companies', 'Companies', new DataList('Company'),$config);
 		$fields->addFieldToTab('Root.NoRelation', $grid);
@@ -47,8 +47,8 @@ class GridFieldTestPage extends Page {
 		$config->addComponent(new GridFieldSortableHeader());
 		$config->addComponent(new GridFieldPaginator);
 		$config->addComponent(new GridFieldFilter());
-		$config->addComponent(new GridFieldAction_Delete());
-		$config->addComponent(new GridFieldAction_Edit());
+		$config->addComponent(new GridFieldDeleteAction());
+		$config->addComponent(new GridFieldEditAction());
 		$config->addComponent(new GridFieldRelationAdd('Name'));
 		$grid = new GridField('HasManyCompanies', 'HasManyCompanies', new DataList('Company'),$config);
 		$fields->addFieldToTab('Root.HasMany', $grid);
@@ -58,8 +58,8 @@ class GridFieldTestPage extends Page {
 		$config->addComponent(new GridFieldSortableHeader());
 		$config->addComponent(new GridFieldPaginator);
 		$config->addComponent(new GridFieldFilter());
-		$config->addComponent(new GridFieldAction_Delete());
-		$config->addComponent(new GridFieldAction_Edit());
+		$config->addComponent(new GridFieldDeleteAction());
+		$config->addComponent(new GridFieldEditAction());
 		$config->addComponent(new GridFieldRelationAdd('Name'));
 		$grid = new GridField('ManyManyCompanies', 'ManyManyCompanies', new DataList('Company'),$config);
 		$fields->addFieldToTab('Root.ManyMany', $grid);
@@ -91,8 +91,8 @@ class GridFieldTestPage_Controller extends Page_Controller {
 		$config->addComponent(new GridFieldSortableHeader());
 		$config->addComponent(new GridFieldPaginator);
 		$config->addComponent(new GridFieldFilter());
-		$config->addComponent(new GridFieldAction_Delete());
-		$config->addComponent(new GridFieldAction_Edit());
+		$config->addComponent(new GridFieldDeleteAction());
+		$config->addComponent(new GridFieldEditAction());
 		$config->addComponent(new GridFieldPopupForms());
 		
 		$grid = new GridField('Companies', 'Companies', new DataList('Company'),$config);
