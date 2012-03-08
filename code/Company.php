@@ -30,7 +30,7 @@ class Company extends DataObject {
 	public static $summary_fields = array('Name', 'Category', 'Revenue', 'CEO');
 
 	
-	public function getCMSFields($controller, $formName) {
+	public function getCMSFields() {
 		$fields = new FieldList();
 		$fields->add(new TextField('Name', 'Name', $this->Name));
 		$fields->add(new TextField('Category', 'Category', $this->Category));
