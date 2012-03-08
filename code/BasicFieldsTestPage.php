@@ -127,6 +127,8 @@ class BasicFieldsTestPage extends TestPage {
 			}
 		}
 
+		$fields->addFieldToTab('Root.Text', new TextField('Text_NoLabel', false, 'TextField without label'), 'Text_disabled');
+
 		return $fields;
 
 	}

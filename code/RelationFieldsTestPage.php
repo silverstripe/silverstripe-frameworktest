@@ -4,35 +4,34 @@ class RelationFieldsTestPage extends TestPage {
 	
 	static $has_one = array(
 		"HasOneCompany" => "Company",
+		"HasOnePage" => "SiteTree",
 	);
 	static $has_many = array(
 		"HasManyCompanies" => "Company",
+		"HasManyPages" => "SiteTree",
 	);
 	static $many_many = array(
 		"ManyManyCompanies" => "Company",
+		"ManyManyPages" => "SiteTree",
 	);
 	
 	function getCMSFields() {
 		$fields = parent::getCMSFields();
 		
 		$fields->addFieldToTab("Root.CheckboxSet",
-			new CheckboxSetField("CheckboxSet", "CheckboxSetField", TestCategory::map()));
-
-		$fields->addFieldToTab("Root.CTF", 
-			new ComplexTableField($this, "HasManyCompanies", "TestCTFItem")
+			new CheckboxSetField("CheckboxSet", "CheckboxSetField", TestCategory::map())
 		);
 
-		// TODO Fix legacy relation CTFs in 3.0
+		$fields->addFieldsToTab('Root.Tree', array(
+			Object::create('TreeDropdownField', 'HasOnePage', 'HasOnePage', 'SiteTree'),
+			Object::create('TreeMultiselectField', 'HasManyPages', 'HasManyPages', 'SiteTree'),
+			Object::create('TreeMultiselectField', 'ManyManyPages', 'ManyManyPages (with search)', 'SiteTree')->setShowSearch(true)
+		));
 
-		// $fields->addFieldToTab("Root.HasOneCTF", 
-		// 	new HasOneComplexTableField($this, "HasOneCompany");
-
-		// $fields->addFieldToTab("Root.HasManyCTF", 
-		// 	new HasManyComplexTableField($this, "HasManyCompanies");
-
-		// $fields->addFieldToTab("Root.ManyManyCTF", 
-		// 	new ManyManyComplexTableField($this, "ManyManyCompanies");
-
+		// TODO Fix CTF in 3.0
+		// $fields->addFieldToTab("Root.CTF", 
+		// 	new ComplexTableField($this, "HasManyCompanies", "TestCTFItem")
+		// );
 
 //		$fields->addFieldToTab("Root.Tests.ComplexTableField", 
 //			new CheckboxSetField("CheckboxSet", "CheckboxSetField", TestCategory::map()));

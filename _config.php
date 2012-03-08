@@ -2,6 +2,7 @@
 
 Object::add_extension('Member', 'FrameworkTestRole');
 Object::add_extension('Member', 'FileUploadRole');
+Object::add_extension('SiteTree', 'FrameworkTestSiteTreeExtension');
 
 if(class_exists('SiteTreeCMSWorkflow')) {
 	Object::add_extension('SiteConfig', 'CMSWorkflowSiteConfigDecorator');
