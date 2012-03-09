@@ -38,13 +38,13 @@ class Company extends DataObject {
 		$fields->add(new TextField('CEO', 'CEO', $this->CEO));
 		
 		$config = new GridFieldConfig();
-		$config->addComponent(new GridFieldRelationAdd('Name'));
-		$config->addComponent(new GridFieldDefaultColumns());
+		$config->addComponent(new GridFieldAddExistingAutocompleter('Name'));
+		$config->addComponent(new GridFieldDataColumns());
 		$config->addComponent(new GridFieldSortableHeader());
 		$config->addComponent(new GridFieldPaginator());
 		$config->addComponent(new GridFieldDeleteAction());
-		$config->addComponent(new GridFieldRelationDelete());
-		$config->addComponent(new GridFieldPopupForms());
+		$config->addComponent(new GridFieldDeleteAction(true));
+		$config->addComponent(new GridFieldDetailForm());
 		
 		$gridField = new GridField('Employees', 'Employees', $this->Employees(), $config);
 		$fields->add($gridField);
