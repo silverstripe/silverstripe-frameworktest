@@ -37,14 +37,7 @@ class Company extends DataObject {
 		$fields->add(new TextField('Revenue', 'Revenue', $this->Revenue));
 		$fields->add(new TextField('CEO', 'CEO', $this->CEO));
 		
-		$config = new GridFieldConfig();
-		$config->addComponent(new GridFieldRelationAdd('Name'));
-		$config->addComponent(new GridFieldDefaultColumns());
-		$config->addComponent(new GridFieldSortableHeader());
-		$config->addComponent(new GridFieldPaginator());
-		$config->addComponent(new GridFieldDeleteAction());
-		$config->addComponent(new GridFieldRelationDelete());
-		$config->addComponent(new GridFieldPopupForms());
+		$config = new GridFieldConfig_RelationEditor();
 		
 		$gridField = new GridField('Employees', 'Employees', $this->Employees(), $config);
 		$fields->add($gridField);

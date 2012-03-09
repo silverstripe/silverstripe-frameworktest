@@ -31,36 +31,15 @@ class GridFieldTestPage extends Page {
 	public function getCMSFields() {
 		$fields = parent::getCMSFields();
 
-		$config = new GridFieldConfig();
-		$config->addComponent(new GridFieldDefaultColumns());
-		$config->addComponent(new GridFieldSortableHeader());
-		$config->addComponent(new GridFieldPaginator);
-		$config->addComponent(new GridFieldFilter());
-		$config->addComponent(new GridFieldDeleteAction());
-		$config->addComponent(new GridFieldEditAction());
-		$config->addComponent($forms = new GridFieldPopupForms());
+		$config = new GridFieldConfig_RecordEditor();
 		$grid = new GridField('Companies', 'Companies', new DataList('Company'),$config);
 		$fields->addFieldToTab('Root.NoRelation', $grid);
 
-		$config = new GridFieldConfig();
-		$config->addComponent(new GridFieldDefaultColumns());
-		$config->addComponent(new GridFieldSortableHeader());
-		$config->addComponent(new GridFieldPaginator);
-		$config->addComponent(new GridFieldFilter());
-		$config->addComponent(new GridFieldDeleteAction());
-		$config->addComponent(new GridFieldEditAction());
-		$config->addComponent(new GridFieldRelationAdd('Name'));
+		$config = new GridFieldConfig_RelationEditor();
 		$grid = new GridField('HasManyCompanies', 'HasManyCompanies', new DataList('Company'),$config);
 		$fields->addFieldToTab('Root.HasMany', $grid);
 
-		$config = new GridFieldConfig();
-		$config->addComponent(new GridFieldDefaultColumns());
-		$config->addComponent(new GridFieldSortableHeader());
-		$config->addComponent(new GridFieldPaginator);
-		$config->addComponent(new GridFieldFilter());
-		$config->addComponent(new GridFieldDeleteAction());
-		$config->addComponent(new GridFieldEditAction());
-		$config->addComponent(new GridFieldRelationAdd('Name'));
+		$config = new GridFieldConfig_RelationEditor();
 		$grid = new GridField('ManyManyCompanies', 'ManyManyCompanies', new DataList('Company'),$config);
 		$fields->addFieldToTab('Root.ManyMany', $grid);
 
@@ -86,14 +65,7 @@ class GridFieldTestPage_Controller extends Page_Controller {
 	 * @return Form 
 	 */
 	public function Form(){
-		$config = new GridFieldConfig();
-		$config->addComponent(new GridFieldDefaultColumns());
-		$config->addComponent(new GridFieldSortableHeader());
-		$config->addComponent(new GridFieldPaginator);
-		$config->addComponent(new GridFieldFilter());
-		$config->addComponent(new GridFieldDeleteAction());
-		$config->addComponent(new GridFieldEditAction());
-		$config->addComponent(new GridFieldPopupForms());
+		$config = new GridFieldConfig_RecordEditor();
 		
 		$grid = new GridField('Companies', 'Companies', new DataList('Company'),$config);
 		return new Form($this,'Form',new FieldList($grid),new FieldList());
