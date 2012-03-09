@@ -39,11 +39,11 @@ class Company extends DataObject {
 		
 		$config = new GridFieldConfig();
 		$config->addComponent(new GridFieldAddExistingAutocompleter('Name'));
-		$config->addComponent(new GridFieldDefaultColumns());
+		$config->addComponent(new GridFieldDataColumns());
 		$config->addComponent(new GridFieldSortableHeader());
 		$config->addComponent(new GridFieldPaginator());
 		$config->addComponent(new GridFieldDeleteAction());
-		$config->addComponent(new GridFieldRemoveButton());
+		$config->addComponent(new GridFieldDeleteAction(true));
 		$config->addComponent(new GridFieldDetailForm());
 		
 		$gridField = new GridField('Employees', 'Employees', $this->Employees(), $config);

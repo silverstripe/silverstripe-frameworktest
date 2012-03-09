@@ -32,7 +32,7 @@ class GridFieldTestPage extends Page {
 		$fields = parent::getCMSFields();
 
 		$config = new GridFieldConfig();
-		$config->addComponent(new GridFieldDefaultColumns());
+		$config->addComponent(new GridFieldDataColumns());
 		$config->addComponent(new GridFieldSortableHeader());
 		$config->addComponent(new GridFieldPaginator);
 		$config->addComponent(new GridFieldFilterHeader());
@@ -43,7 +43,7 @@ class GridFieldTestPage extends Page {
 		$fields->addFieldToTab('Root.NoRelation', $grid);
 
 		$config = new GridFieldConfig();
-		$config->addComponent(new GridFieldDefaultColumns());
+		$config->addComponent(new GridFieldDataColumns());
 		$config->addComponent(new GridFieldSortableHeader());
 		$config->addComponent(new GridFieldPaginator);
 		$config->addComponent(new GridFieldFilterHeader());
@@ -54,7 +54,7 @@ class GridFieldTestPage extends Page {
 		$fields->addFieldToTab('Root.HasMany', $grid);
 
 		$config = new GridFieldConfig();
-		$config->addComponent(new GridFieldDefaultColumns());
+		$config->addComponent(new GridFieldDataColumns());
 		$config->addComponent(new GridFieldSortableHeader());
 		$config->addComponent(new GridFieldPaginator);
 		$config->addComponent(new GridFieldFilterHeader());
@@ -87,7 +87,7 @@ class GridFieldTestPage_Controller extends Page_Controller {
 	 */
 	public function Form(){
 		$config = new GridFieldConfig();
-		$config->addComponent(new GridFieldDefaultColumns());
+		$config->addComponent(new GridFieldDataColumns());
 		$config->addComponent(new GridFieldSortableHeader());
 		$config->addComponent(new GridFieldPaginator);
 		$config->addComponent(new GridFieldFilterHeader());
