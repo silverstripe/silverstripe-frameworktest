@@ -28,11 +28,6 @@ class RelationFieldsTestPage extends TestPage {
 			Object::create('TreeMultiselectField', 'ManyManyPages', 'ManyManyPages (with search)', 'SiteTree')->setShowSearch(true)
 		));
 
-		// TODO Fix CTF in 3.0
-		// $fields->addFieldToTab("Root.CTF", 
-		// 	new ComplexTableField($this, "HasManyCompanies", "TestCTFItem")
-		// );
-
 //		$fields->addFieldToTab("Root.Tests.ComplexTableField", 
 //			new CheckboxSetField("CheckboxSet", "CheckboxSetField", TestCategory::map()));
 //		$fields->addFieldToTab("Root.Tests.CheckboxSet", new CheckboxSetField("CheckboxSet", "CheckboxSetField", TestCategory::map()));
