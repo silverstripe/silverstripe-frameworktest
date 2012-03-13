@@ -36,11 +36,11 @@ class Company extends DataObject {
 		$fields->add(new TextField('Category', 'Category', $this->Category));
 		$fields->add(new TextField('Revenue', 'Revenue', $this->Revenue));
 		$fields->add(new TextField('CEO', 'CEO', $this->CEO));
-		
-		$config = new GridFieldConfig_RelationEditor();
-		
-		$gridField = new GridField('Employees', 'Employees', $this->Employees(), $config);
-		$fields->add($gridField);
+		if($this->ID !== 0){//existing
+			$config = new GridFieldConfig_RelationEditor();
+			$gridField = new GridField('Employees', 'Employees', $this->Employees(), $config);
+			$fields->add($gridField);
+		}
 		return $fields;
 	}
 	
