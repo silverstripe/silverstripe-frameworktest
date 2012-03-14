@@ -15,7 +15,7 @@ class Company extends DataObject {
 
 	public static $has_one = array(
 		'RelationFieldsTestPage' => 'RelationFieldsTestPage',
-		'GridFieldTestPage' => 'GridFieldTestPage'
+		'GridFieldTestPageHasOne' => 'GridFieldTestPage'
 	);
 	
 	public static $has_many  = array(
