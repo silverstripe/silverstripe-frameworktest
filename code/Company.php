@@ -29,19 +29,7 @@ class Company extends DataObject {
 
 	public static $summary_fields = array('Name', 'Category', 'Revenue', 'CEO');
 
-	
-	public function getCMSFields() {
-		$fields = new FieldList();
-		$fields->add(new TextField('Name', 'Name', $this->Name));
-		$fields->add(new TextField('Category', 'Category', $this->Category));
-		$fields->add(new TextField('Revenue', 'Revenue', $this->Revenue));
-		$fields->add(new TextField('CEO', 'CEO', $this->CEO));
-		if($this->ID !== 0){//existing
-			$config = new GridFieldConfig_RelationEditor();
-			$gridField = new GridField('Employees', 'Employees', $this->Employees(), $config);
-			$fields->add($gridField);
 		}
-		return $fields;
 	}
 	
 	public function requireDefaultRecords() {
