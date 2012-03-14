@@ -29,7 +29,13 @@ class Company extends DataObject {
 
 	public static $summary_fields = array('Name', 'Category', 'Revenue', 'CEO');
 
+	function validate() {
+		if(!$this->Title) {
+			return new ValidationResult(false, 'Title is required');	
+		} else {
+			return parent::validate();
 		}
+		
 	}
 	
 	public function requireDefaultRecords() {
