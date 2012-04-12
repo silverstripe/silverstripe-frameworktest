@@ -23,9 +23,9 @@ class RelationFieldsTestPage extends TestPage {
 		);
 
 		$fields->addFieldsToTab('Root.Tree', array(
-			Object::create('TreeDropdownField', 'HasOnePage', 'HasOnePage', 'SiteTree'),
-			Object::create('TreeMultiselectField', 'HasManyPages', 'HasManyPages', 'SiteTree'),
-			Object::create('TreeMultiselectField', 'ManyManyPages', 'ManyManyPages (with search)', 'SiteTree')->setShowSearch(true)
+			TreeDropdownField::create('HasOnePage', 'HasOnePage', 'SiteTree'),
+			TreeMultiselectField::create('HasManyPages', 'HasManyPages', 'SiteTree'),
+			TreeMultiselectField::create('ManyManyPages', 'ManyManyPages (with search)', 'SiteTree')->setShowSearch(true)
 		));
 
 //		$fields->addFieldToTab("Root.Tests.ComplexTableField", 

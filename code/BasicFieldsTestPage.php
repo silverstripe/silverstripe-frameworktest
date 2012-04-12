@@ -105,10 +105,10 @@ class BasicFieldsTestPage extends TestPage {
 		$dateTimeShowCalendar->getTimeField()->setConfig('showdropdown', true);
 
 		$fields->addFieldsToTab('Root.File', array(
-			FormField::create('UploadField', 'File','FileUploadField'),
-			FormField::create('UploadField', 'Image','ImageUploadField'),
-			FormField::create('UploadField', 'HasManyFiles','HasManyFilesUploadField'),
-			FormField::create('UploadField', 'ManyManyFiles','ManyManyFilesUploadField')
+			UploadField::create('File','FileUploadField'),
+			UploadField::create('Image','ImageUploadField'),
+			UploadField::create('HasManyFiles','HasManyFilesUploadField'),
+			UploadField::create('ManyManyFiles','ManyManyFilesUploadField')
 		));
 
 		$tabs = array('Root.Text', 'Root.Numeric', 'Root.Option', 'Root.DateTime', 'Root.File');
