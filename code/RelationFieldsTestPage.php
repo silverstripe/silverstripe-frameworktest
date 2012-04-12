@@ -15,7 +15,7 @@ class RelationFieldsTestPage extends TestPage {
 		"ManyManyPages" => "SiteTree",
 	);
 	
-	function getCMSFields() {
+	function getCMSFields($class = null, $extension = null) {
 		$fields = parent::getCMSFields();
 		
 		$fields->addFieldToTab("Root.CheckboxSet",

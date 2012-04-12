@@ -2,7 +2,7 @@
 
 class LegacyTableFieldsTestPage extends TestPage {
 	
-	function getCMSFields() {
+	function getCMSFields($class = null, $extension = null) {
 		$fields = parent::getCMSFields();
 
 		$tf = new TableListField('CompaniesTF', 'Company');

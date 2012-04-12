@@ -28,7 +28,7 @@ class GridFieldTestPage extends Page {
 		$page->doPublish();
 	}
 
-	public function getCMSFields() {
+	public function getCMSFields($class = null, $extension = null) {
 		$fields = parent::getCMSFields();
 
 		$config = new GridFieldConfig_RecordEditor();

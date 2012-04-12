@@ -8,7 +8,7 @@ class TestPage extends Page {
 	/**
 	 * We can only create subclasses of TestPage
 	 */
-	function canCreate() {
+	function canCreate($member = null) {
 		return $this->class != 'TestPage' && parent::canCreate();
 	}
 
