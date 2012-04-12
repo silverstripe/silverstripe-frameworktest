@@ -59,7 +59,7 @@ class BasicFieldsTestPage extends TestPage {
 		"TimeDisabled" => "23:59",
 	);
 	
-	function getCMSFields() {
+	function getCMSFields($params = null) {
 		$fields = parent::getCMSFields();
 		
 		$fields->addFieldsToTab('Root.Text', array(

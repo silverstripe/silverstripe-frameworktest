@@ -1,7 +1,7 @@
 <?php
 
 class FrameworkTestRole extends DataExtension {
-	function extraStatics() {
+	function extraStatics($class = null, $extension = null) {
 		return array(
 			'has_one' => array(
 				'FavouritePage' => 'SiteTree',
@@ -9,7 +9,7 @@ class FrameworkTestRole extends DataExtension {
 		);
 	}
 	
-	function updateCMSFields($fields) {
+	function updateCMSFields(FieldList $fields) {
 		$fields->push(new TreeDropdownField("FavouritePageID", "Favourite page", "SiteTree"));
 	}
 	
