@@ -33,3 +33,7 @@ It will create 3^5 pages by default, so takes a while to run through.
 
 The module is intended to run against the latest core codebase,
 but also includes branches matching earlier core releases for backwards compatibility.
+
+## Related
+
+ * [zframeworktest_dbswitcher](https://github.com/silverstripe-labs/zframeworktest_dbswitcher) module - adds capabilities to switch the database by a query parameter for testing purposes
