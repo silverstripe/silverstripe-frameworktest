@@ -20,7 +20,7 @@ class FTPageMakerTask extends BuildTask {
 			$page->ParentID = $parentID;
 			$page->Title = "Test page $prefix$i";
 			$page->write();
-			$page->doPublish();
+			$page->publish('Stage', 'Live');
 
 			echo "<li>Created '$page->Title'";
 			if($depth > 1) $this->makePages($count, $depth-1, $prefix."$i.", $page->ID);

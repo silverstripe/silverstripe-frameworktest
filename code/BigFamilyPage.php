@@ -31,7 +31,7 @@ class BigFamilyPage extends Page{
 		$familyPage = new BigFamilyPage();
 		$familyPage->Title = "Big Family";
 		$familyPage->write();
-		$familyPage->doPublish();
+		$familyPage->publish('Stage', 'Live');
 		
 		foreach(singleton('Employee')->data() as $name){
 			$page = new Page();
@@ -39,7 +39,7 @@ class BigFamilyPage extends Page{
 			$page->MenuTitle = $name;
 			$page->ParentID = $familyPage->ID;
 			$page->write();
-			$page->doPublish();
+			$page->publish('Stage', 'Live');
 		}
 		
 		DB::alteration_message("Added default 'BigFamilyPage' and its children pages","created");
