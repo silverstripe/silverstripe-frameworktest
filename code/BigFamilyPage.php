@@ -45,3 +45,6 @@ class BigFamilyPage extends Page{
 		DB::alteration_message("Added default 'BigFamilyPage' and its children pages","created");
 	}
 }
+
+class BigFamilyPage_Controller extends Page_Controller{
+}
