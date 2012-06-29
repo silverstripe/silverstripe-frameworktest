@@ -12,7 +12,7 @@ class TestMultiForm extends MultiForm {
 			$savedData = array_merge($savedData, $step->loadData());
 		}
 		
-		$fields = new FieldSet();
+		$fields = new FieldList();
 		$fields->push(new LiteralField("Heading", "<h3>You have submitted the following information:</h3>"));
 		
 	    foreach($savedData as $key=>$value)  {			
@@ -29,7 +29,7 @@ class TestMultiFormStepOne extends MultiFormStep {
 	public static $next_steps = 'TestMultiFormStepTwo';
 	
 	function getFields() {
-	    return new FieldSet(
+	    return new FieldList(
 	    	new TextField('FirstName', 'First name'),
 			new TextField('Surname', 'Surname')
 		);
@@ -42,7 +42,7 @@ class TestMultiFormStepTwo extends MultiFormStep {
 	
 	function getFields() {
 		
-	    return new FieldSet(
+	    return new FieldList(
 	    	new TextField('Email', 'Email'),
 			new TextField('Address', 'Address')
 		);
@@ -62,7 +62,7 @@ class TestMultiFormStepThree extends MultiFormStep {
 			$savedData = array_merge($savedData, $step->loadData());
 		}
 		
-		$fields = new FieldSet();
+		$fields = new FieldList();
 		$fields->push(new LiteralField("Heading", "<h3>You have submitted the following information:</h3>"));
 		
 	    foreach($savedData as $key=>$value)  {

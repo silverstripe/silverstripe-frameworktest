@@ -6,7 +6,7 @@ class RecaptchaTestPage extends Page {
 class RecaptchaTestPage_Controller extends Page_Controller {
 	
 	function Form() {
-		$fields = new FieldSet(
+		$fields = new FieldList(
 			new TextField('MyText')
 		);
 		if(class_exists('RecaptchaField')) {
@@ -19,7 +19,7 @@ class RecaptchaTestPage_Controller extends Page_Controller {
 			$this,
 			'Form',
 			$fields,
-			new FieldSet(
+			new FieldList(
 				new FormAction('submit', 'submit')
 			),
 			new RequiredFields(array('MyText'))

@@ -40,10 +40,11 @@ class TestPage_Controller extends Page_Controller {
 	 */
 	function Form() {
 		$fields = $this->getCMSFields();
-		$actions = new FieldSet(
+		$actions = new FieldList(
 			new FormAction("save", "Save"),
-			new ImageFormAction("gohome", "Go home", "frameworktest/images/test-button.png")
+			$gohome = new FormAction("gohome", "Go home")
 		);
+		$gohome->setAttribute('src', 'frameworktest/images/test-button.png');
 		$form = new Form($this, "Form", $fields, $actions);
 		$form->loadDataFrom($this->dataRecord);
 		return $form;
@@ -60,9 +61,9 @@ class TestPage_Controller extends Page_Controller {
 	}
 
 	function EmailForm() {
-		return new Form($this, "EmailForm", new FieldSet(
+		return new Form($this, "EmailForm", new FieldList(
 			new TextField("Email", "Email address")
-		), new FieldSet(
+		), new FieldList(
 			new FormAction("sendEmail", "Send test email to this address")
 		));
 	}

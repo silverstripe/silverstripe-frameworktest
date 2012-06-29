@@ -43,7 +43,7 @@ class Page3StartFormStep extends MultiFormStep {
 	public static $next_steps = 'Page3PersonalDetailsFormStep';
 	
 	function getFields() {
-		return new FieldSet(
+		return new FieldList(
 			new LiteralField('Details', '<b>This is important</b><br />
 			<p>You will receiving email once you participate in this survey. <br />
 			Under the new Unsolicited Electronic Messages Act 2007, we must have your consent to send emails relating to this form. <br />
@@ -61,7 +61,7 @@ class Page3PersonalDetailsFormStep extends MultiFormStep {
 	public static $next_steps = 'Page3OrganisationDetailsFormStep';
 	
 	function getFields() {
-	      return new FieldSet(
+	      return new FieldList(
 	         new TextField('FirstName', 'First name'),
 	         new TextField('Surname', 'Surname')
 	      );
@@ -75,7 +75,7 @@ class Page3OrganisationDetailsFormStep extends MultiFormStep {
 	public static $is_final_step = true;
 
 	function getFields() {
-		return new FieldSet(
+		return new FieldList(
 			new TextField('OrganisationName', 'Organisation Name')
 		);
 	}

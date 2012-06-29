@@ -22,11 +22,11 @@ class FrameworktestRegressSessionAdmin extends Controller {
 		$isRunning = (Session::get('db'));
 		
 		if($isRunning) {
-			$actions = new FieldSet(
+			$actions = new FieldList(
 				new FormAction('endsession', 'End Session')
 			);
 		} else {
-			$actions = new FieldSet(
+			$actions = new FieldList(
 				new FormAction('startsession', 'Start Session')
 			);
 		}
@@ -34,7 +34,7 @@ class FrameworktestRegressSessionAdmin extends Controller {
 		$form = new Form(
 			$this,
 			'Form',
-			new FieldSet(
+			new FieldList(
 				new HeaderField('Header1', ($isRunning) ? 'Session is already running' : 'Start new regress session'),
 				new LiteralField('Lit1', 
 					'<p>Use this form to set configuration prior to starting a <a href="http://regress.silverstripe.com">regress.silverstripe.com</a> test session (manual testing).</p>'

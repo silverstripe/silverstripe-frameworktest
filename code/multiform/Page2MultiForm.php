@@ -41,7 +41,7 @@ class Page2PersonalDetailsFormStep extends MultiFormStep {
 	public static $next_steps = 'Page2OrganisationDetailsFormStep';
 	
 	function getFields() {
-		return new FieldSet(
+		return new FieldList(
 			new TextField('FirstName', 'First name'),
 			new TextField('Surname', 'Surname')
 		);
@@ -54,7 +54,7 @@ class Page2OrganisationDetailsFormStep extends MultiFormStep {
    public static $is_final_step = true;
 
 	function getFields() {
-		return new FieldSet(
+		return new FieldList(
 			new TextField('OrganisationName', 'Organisation Name')
 		);
 	}
