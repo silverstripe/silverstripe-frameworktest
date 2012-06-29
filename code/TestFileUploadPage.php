@@ -10,8 +10,10 @@ class TestFileUploadPage_Controller extends TestPage_Controller{
 		$fields = new FieldList(
 			new EmailField('Email', 'EmailField'),
 			new FileField('AFile','FileField'),
-			new SimpleImageField('AImage','SimpleImageField')
+			$aImage = new UploadField('AImage','SimpleImageField')
 		);
+		
+		$aImage->allowedExtensions = array('jpg', 'gif', 'png');
 		
 		$actions = new FieldList(
 			new FormAction('addMember', "Add a member with two Files uploaded")
