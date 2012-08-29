@@ -1,7 +1,7 @@
 <?php
 
 class LegacyTableFieldsTestPage extends TestPage {
-	
+
 	function getCMSFields() {
 		$fields = parent::getCMSFields();
 

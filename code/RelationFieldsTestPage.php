@@ -14,6 +14,10 @@ class RelationFieldsTestPage extends TestPage {
 		"ManyManyCompanies" => "Company",
 		"ManyManyPages" => "SiteTree",
 	);
+
+	static $defaults = array(
+		'Title' => 'Relational Fields'
+	);
 	
 	function getCMSFields() {
 		$fields = parent::getCMSFields();

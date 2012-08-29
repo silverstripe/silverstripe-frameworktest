@@ -1,5 +1,5 @@
 <?php
-class GridFieldTestPage extends Page {
+class GridFieldTestPage extends TestPage {
 
 	static $has_one = array(
 		"HasOneCompany" => "Company",
@@ -13,21 +13,6 @@ class GridFieldTestPage extends Page {
 		"ManyManyCompanies" => "Company",
 	);
 	
-	public function requireDefaultRecords() {
-		parent::requireDefaultRecords();
-		$page = DataObject::get_one('GridFieldTestPage');
-		
-		if(!$page) {
-			$page = new GridFieldTestPage();
-		}
-		
-		$page->URLSegment = 'gridfieldtest';
-		$page->Title = 'GridField Test';
-		$page->ParentID = 0;
-		$page->write();
-		$page->doPublish();
-	}
-
 	public function getCMSFields() {
 		$fields = parent::getCMSFields();
 
@@ -36,11 +21,11 @@ class GridFieldTestPage extends Page {
 		$fields->addFieldToTab('Root.NoRelation', $grid);
 
 		$config = new GridFieldConfig_RelationEditor();
-		$grid = new GridField('HasManyCompanies', 'HasManyCompanies', new DataList('Company'),$config);
+		$grid = new GridField('HasManyCompanies', 'HasManyCompanies', $this->HasManyCompanies(),$config);
 		$fields->addFieldToTab('Root.HasMany', $grid);
 
 		$config = new GridFieldConfig_RelationEditor();
-		$grid = new GridField('ManyManyCompanies', 'ManyManyCompanies', new DataList('Company'),$config);
+		$grid = new GridField('ManyManyCompanies', 'ManyManyCompanies', $this->ManyManyCompanies(),$config);
 		$fields->addFieldToTab('Root.ManyMany', $grid);
 
 		return $fields;

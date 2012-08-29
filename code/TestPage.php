@@ -9,7 +9,8 @@ class TestPage extends Page {
 	 * We can only create subclasses of TestPage
 	 */
 	function canCreate($member = null) {
-		return $this->class != 'TestPage' && parent::canCreate();
+		// Don't allow creation other than through requireDefaultRecords
+		return false;
 	}
 
 	function requireDefaultRecords(){
@@ -17,10 +18,28 @@ class TestPage extends Page {
 
 		$class = $this->class;
 		if(!DataObject::get_one($class)) {
+			// Try to create common parent
+			$parent = SiteTree::get()
+				->filter('URLSegment', 'feature-test-pages')
+				->First();
+			
+			if(!$parent) {
+				$parent = new Page(array(
+					'Title' => 'Feature Test Pages',
+					'Content' => 'A collection of pages for testing various features in the SilverStripe CMS',
+					'ShowInMenus' => 0
+				));
+				$parent->write();
+				$parent->doPublish();
+			}
+
+			// Create actual page
 			$page = new $class();
-			$page->Title = str_replace("TestPage","",$class) . " Test";
+			$page->Title = str_replace("TestPage","",$class);
+			$page->ShowInMenus = 0;
+			if($parent) $page->ParentID = $parent->ID;
 			$page->write();
-			$page->doPublish();
+			$page->publish('Stage', 'Live');
 		}
 	}
 	
