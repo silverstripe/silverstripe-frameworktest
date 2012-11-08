@@ -1,8 +1,9 @@
 {
-	"name": "silverstripe-labs/frameworktest",
+	"name": "silverstripe/frameworktest",
 	"description": "Aids core and module developers in testing their code against a set of sample data and behaviour.",
 	"type": "silverstripe-module",
-	"keywords": ["silverstripe-labs", "frameworktest", "testing"],
+	"keywords": ["silverstripe", "frameworktest", "testing"],
+	"license": "BSD-3-Clause",
 	"authors": [
 	{
 		"name": "Ingo Schommer",
