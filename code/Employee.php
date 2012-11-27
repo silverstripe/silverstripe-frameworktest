@@ -8,10 +8,12 @@ class Employee extends DataObject {
 	
 	public static $db = array(
 		'Name' => 'Varchar',
+		'Biography' => 'HTMLText'
 	);
 	
 	public static $has_one = array(
-		'Company' => 'Company'
+		'Company' => 'Company',
+		'ProfileImage' => 'Image'
 	);
 	
 	public function requireDefaultRecords() {
