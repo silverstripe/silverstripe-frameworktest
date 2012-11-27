@@ -32,10 +32,6 @@ class RelationFieldsTestPage extends TestPage {
 			TreeMultiselectField::create('ManyManyPages', 'ManyManyPages (with search)', 'SiteTree')->setShowSearch(true)
 		));
 
-//		$fields->addFieldToTab("Root.Tests.ComplexTableField", 
-//			new CheckboxSetField("CheckboxSet", "CheckboxSetField", TestCategory::map()));
-//		$fields->addFieldToTab("Root.Tests.CheckboxSet", new CheckboxSetField("CheckboxSet", "CheckboxSetField", TestCategory::map()));
-
 		return $fields;
 	}
 }
