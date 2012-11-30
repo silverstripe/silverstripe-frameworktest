@@ -21,16 +21,29 @@ class RelationFieldsTestPage extends TestPage {
 	
 	function getCMSFields() {
 		$fields = parent::getCMSFields();
+
+		$allFields = array();
 		
-		$fields->addFieldToTab("Root.CheckboxSet",
+		$checkboxFields = array(
 			new CheckboxSetField("CheckboxSet", "CheckboxSetField", TestCategory::map())
 		);
+		$fields->addFieldsToTab("Root.CheckboxSet", $checkboxFields);
+		$allFields += $checkboxFields;
 
-		$fields->addFieldsToTab('Root.Tree', array(
+		$treeFields = array(
 			TreeDropdownField::create('HasOnePage', 'HasOnePage', 'SiteTree'),
 			TreeMultiselectField::create('HasManyPages', 'HasManyPages', 'SiteTree'),
 			TreeMultiselectField::create('ManyManyPages', 'ManyManyPages (with search)', 'SiteTree')->setShowSearch(true)
-		));
+		);
+		$fields->addFieldsToTab('Root.Tree', $treeFields);
+		$allFields += $treeFields;
+
+		foreach($allFields as $field) {
+			$field
+				->setDescription('This is <strong>bold</strong> help text')
+				->addExtraClass('cms-help');
+				// ->addExtraClass('cms-help cms-help-tooltip');
+		}
 
 		return $fields;
 	}

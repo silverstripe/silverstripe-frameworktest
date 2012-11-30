@@ -115,6 +115,11 @@ class BasicFieldsTestPage extends TestPage {
 		foreach($tabs as $tab) {
 			$tabObj = $fields->fieldByName($tab);
 			foreach($tabObj->FieldList() as $field) {
+				$field
+					->setDescription('This is <strong>bold</strong> help text')
+					->addExtraClass('cms-help');
+					// ->addExtraClass('cms-help cms-help-tooltip');
+
 				$disabledField = $field->performDisabledTransformation();
 				$disabledField->setTitle($disabledField->Title() . ' (disabled)');
 				$disabledField->setName($disabledField->getName() . '_disabled');
