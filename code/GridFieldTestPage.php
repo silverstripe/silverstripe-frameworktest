@@ -35,9 +35,8 @@ class GridFieldTestPage extends TestPage {
 
 		foreach($grids as $grid) {
 			$grid
-				->setDescription('This is <strong>bold</strong> help text')
-				->addExtraClass('cms-help');
-				// ->addExtraClass('cms-help cms-help-tooltip');
+				->setDescription('This is <strong>bold</strong> help text');
+				// ->addExtraClass('cms-description-tooltip');
 		}
 
 		return $fields;

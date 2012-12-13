@@ -9,9 +9,6 @@ class BasicFieldsTestPage extends TestPage {
 		'CalendarDate' => 'Date',
 		'CompositeDate' => 'Date',
 		'Date' => 'Date',
-		"DateDisabled" => "Date",
-		'TimeDisabled' => 'Time',
-		'DateTimeDisabled' => 'Datetime',
 		'DMYCalendarDate' => 'Date',
 		'DMYDate' => 'Date',
 		'DateTime' => 'Datetime',
@@ -33,11 +30,11 @@ class BasicFieldsTestPage extends TestPage {
 		'Autocomplete' => 'Varchar',
 		'CreditCard' => 'Varchar',
 		'GSTNumber' => 'Varchar',
+		'OptionSet' => 'Int',
 	);
 	
 	static $has_one = array(
 		'Dropdown' => 'TestCategory',
-		'OptionSet' => 'TestCategory',
 		'GroupedDropdown' => 'TestCategory',
 		'ListboxField' => 'TestCategory',
 		'File' => 'File',
@@ -50,53 +47,105 @@ class BasicFieldsTestPage extends TestPage {
 
 	static $many_many = array(
 		'ManyManyFiles' => 'File',
+		'MultipleListboxField' => 'TestCategory',
 	);
-	
-	static $defaults = array(
-		'Readonly' => 'Default value for \'readonly\'',
-		"DateDisabled" => "2002-10-23",
-		"DateTimeDisabled" => "2002-10-23 23:59",
-		"TimeDisabled" => "23:59",
-	);
+
+	function requireDefaultRecords() {
+		parent::requireDefaultRecords();
+
+		if($inst = DataObject::get_one('BasicFieldsTestPage')) {
+			$data = $this->getDefaultData();
+			$inst->update($data);
+			$inst->write();
+		}
+	}
+
+	function getDefaultData() {
+		$cats = TestCategory::get();
+		if(!$cats->Count()) return array(); // not initialized yet
+
+		$firstCat = $cats->offsetGet(0);
+		$thirdCat = $cats->offsetGet(2);
+
+		return array(
+			'Readonly' => 'My value (ä!)',
+			'Textarea' => 'My value (ä!)',
+			'Text' => 'My value (ä!)',
+			'Textarea' => 'My value (ä!)',
+			'HTMLField' => 'My value (ä!)',
+			'Email' => 'test@test.com',
+			'Password' => 'My value (ä!)',
+			'Number' => 99,
+			'Price' => 99.99,
+			'PhoneNumber' => '021 1235',
+			'CreditCard' => '4000400040004111',
+			'Checkbox' => 1,
+			'CheckboxSetID' => $firstCat->ID,
+			'DropdownID' => $firstCat->ID,
+			'GroupedDropdownID' => $firstCat->ID,
+			'ListboxFieldID' => $firstCat->ID,
+			'MultipleListboxFieldID' => join(',', array($thirdCat->ID, $firstCat->ID)),
+			'OptionSet' => join(',', array($thirdCat->ID, $firstCat->ID)),
+			'Date' => "2002-10-23",
+			'CalendarDate' => "2002-10-23",
+			'DMYDate' => "2002-10-23",
+			'Time' => "23:59",
+			'TimeWithDropdown' => "23:59",
+			'DateTime' => "2002-10-23 23:59",
+			'DateTimeWithCalendar' => "2002-10-23 23:59",
+		);
+	}
 	
 	function getCMSFields() {
 		$fields = parent::getCMSFields();
+
+		$description = 'This is <strong>bold</strong> help text';
 		
 		$fields->addFieldsToTab('Root.Text', array(
-			new ReadonlyField('Readonly', 'ReadonlyField'),
-			new TextareaField('Textarea', 'TextareaField - 8 rows', 8),
-			new TextField('Text', 'TextField'),
-			new HtmlEditorField('HTMLField', 'HtmlEditorField'),
-			new EmailField('Email', 'EmailField'),
-			new PasswordField('Password', 'PasswordField'),
-			new AjaxUniqueTextField('AjaxUniqueText', 'AjaxUniqueTextField', 'AjaxUniqueText', 'BasicFieldsTestPage'),
+			Object::create('ReadonlyField', 'Readonly', 'ReadonlyField'),
+			Object::create('TextareaField', 'Textarea', 'TextareaField - 8 rows')
+				->setRows(8),
+			Object::create('TextField', 'Text', 'TextField'),
+			Object::create('HtmlEditorField', 'HTMLField', 'HtmlEditorField'),
+			Object::create('EmailField', 'Email', 'EmailField'),
+			Object::create('PasswordField', 'Password', 'PasswordField'),
+			Object::create('AjaxUniqueTextField', 'AjaxUniqueText', 
+				'AjaxUniqueTextField', 'AjaxUniqueText', 'BasicFieldsTestPage'
+			),
 		));
-		
+
 		$fields->addFieldsToTab('Root.Numeric', array(
-			new NumericField('Number', 'NumericField'),
-			new CurrencyField('Price', 'CurrencyField'),
-			new PhoneNumberField('PhoneNumber', 'PhoneNumberField'),
-			new CreditCardField('CreditCard', 'CreditCardField')
+			Object::create('NumericField', 'Number', 'NumericField'),
+			Object::create('CurrencyField', 'Price', 'CurrencyField'),
+			Object::create('PhoneNumberField', 'PhoneNumber', 'PhoneNumberField'),
+			Object::create('CreditCardField', 'CreditCard', 'CreditCardField')
 		));
 		
 		$fields->addFieldsToTab('Root.Option', array(
-			new CheckboxField('Checkbox', 'CheckboxField'),
-			new CheckboxSetField('CheckboxSet', 'CheckboxSetField', TestCategory::map()),
-			new DropdownField('DropdownID', 'DropdownField', TestCategory::map()),
-			new GroupedDropdownField('GroupedDropdownID', 'GroupedDropdown', array('Test Categorys' => TestCategory::map())),
-			new ListboxField('ListboxFieldID', 'ListboxField', TestCategory::map(), array(), 3),
-			new OptionsetField('OptionSetID', 'OptionSetField', TestCategory::map()),
+			Object::create('CheckboxField', 'Checkbox', 'CheckboxField'),
+			Object::create('CheckboxSetField', 'CheckboxSet', 'CheckboxSetField', TestCategory::map()),
+			Object::create('DropdownField', 'DropdownID', 'DropdownField', TestCategory::map())
+				->setHasEmptyDefault(true),
+			Object::create('GroupedDropdownField', 'GroupedDropdownID', 
+				'GroupedDropdown', array('Test Categorys' => TestCategory::map())
+			),
+			Object::create('ListboxField', 'ListboxFieldID', 'ListboxField', TestCategory::map())
+				->setSize(3),
+			Object::create('ListboxField', 'MultipleListboxFieldID', 'ListboxField (multiple)', TestCategory::map())
+				->setMultiple(true)
+				->setSize(3),
+			Object::create('OptionsetField', 'OptionSet', 'OptionSetField', TestCategory::map()),
 		));
 
 		// All these date/time fields generally have issues saving directly in the CMS
 		$fields->addFieldsToTab('Root.DateTime', array(
-			$calendarDateField = new DateField('CalendarDate','DateField with calendar'),
-			new DateField('Date','DateField'),
-			$dmyDateField = new DateField('DMYDate','DateField with separate fields'),
-			new TimeField('Time','TimeField'),
-			$timeFieldDropdown = new TimeField('TimeDropdown','TimeField with dropdown'),
-			new DatetimeField('DateTime', 'DateTime'),
-			$dateTimeShowCalendar = new DatetimeField('DateTimeWithCalendar', 'DateTime with calendar')
+			$calendarDateField = Object::create('DateField', 'CalendarDate','DateField with calendar'),
+			Object::create('DateField', 'Date','DateField'),
+			$dmyDateField = Object::create('DateField', 'DMYDate','DateField with separate fields'),
+			Object::create('TimeField', 'Time','TimeField'),
+			$timeFieldDropdown = Object::create('TimeField', 'TimeWithDropdown','TimeField with dropdown'),
+			Object::create('DatetimeField', 'DateTime', 'DateTime'),
+			$dateTimeShowCalendar = Object::create('DatetimeField', 'DateTimeWithCalendar', 'DateTime with calendar')
 		));
 		$calendarDateField->setConfig('showcalendar', true);
 		$dmyDateField->setConfig('dmyfields', true);
@@ -105,20 +154,35 @@ class BasicFieldsTestPage extends TestPage {
 		$dateTimeShowCalendar->getTimeField()->setConfig('showdropdown', true);
 
 		$fields->addFieldsToTab('Root.File', array(
-			UploadField::create('File','FileUploadField'),
-			UploadField::create('Image','ImageUploadField'),
-			UploadField::create('HasManyFiles','HasManyFilesUploadField'),
+			UploadField::create('File','FileUploadField')
+				->setDescription($description),
+			UploadField::create('Image','ImageUploadField')
+				->setDescription($description),
+			UploadField::create('HasManyFiles','HasManyFilesUploadField')
+				->setDescription($description),
 			UploadField::create('ManyManyFiles','ManyManyFilesUploadField')
+				->setDescription($description)
 		));
+
+		$data = $this->getDefaultData();
+		foreach($fields->dataFields() as $field) {
+			$name = $field->getName();
+			if(isset($data[$name])) {
+				$field->setValue($data[$name]);
+			}
+		}
+
+		$blacklist = array('DMYDate');
 
 		$tabs = array('Root.Text', 'Root.Numeric', 'Root.Option', 'Root.DateTime', 'Root.File');
 		foreach($tabs as $tab) {
 			$tabObj = $fields->fieldByName($tab);
 			foreach($tabObj->FieldList() as $field) {
 				$field
-					->setDescription('This is <strong>bold</strong> help text')
-					->addExtraClass('cms-help');
-					// ->addExtraClass('cms-help cms-help-tooltip');
+					->setDescription($description)
+					->addExtraClass('cms-description-tooltip');
+
+				if(in_array($field->getName(), $blacklist)) continue;
 
 				$disabledField = $field->performDisabledTransformation();
 				$disabledField->setTitle($disabledField->Title() . ' (disabled)');
@@ -132,7 +196,9 @@ class BasicFieldsTestPage extends TestPage {
 			}
 		}
 
-		$fields->addFieldToTab('Root.Text', new TextField('Text_NoLabel', false, 'TextField without label'), 'Text_disabled');
+		$noLabelField = new TextField('Text_NoLabel', false, 'TextField without label');
+		$noLabelField->setDescription($description);
+		$fields->addFieldToTab('Root.Text', $noLabelField, 'Text_disabled');
 
 		return $fields;
 
