@@ -38,6 +38,7 @@ class BasicFieldsTestPage extends TestPage {
 		'GroupedDropdown' => 'TestCategory',
 		'ListboxField' => 'TestCategory',
 		'File' => 'File',
+		'AttachedFile' => 'File',
 		'Image' => 'Image',
 	);
 
@@ -155,12 +156,16 @@ class BasicFieldsTestPage extends TestPage {
 
 		$fields->addFieldsToTab('Root.File', array(
 			UploadField::create('File','FileUploadField')
+				->setDescription($description)
+				->setConfig('allowedMaxFileNumber', 1),
+			UploadField::create('AttachedFile','UploadField with canUpload=false')
+				->setDescription($description)
+				->setConfig('canUpload', false),
+			UploadField::create('Image','UploadField for image')
 				->setDescription($description),
-			UploadField::create('Image','ImageUploadField')
+			UploadField::create('HasManyFiles','UploadField for has_many')
 				->setDescription($description),
-			UploadField::create('HasManyFiles','HasManyFilesUploadField')
-				->setDescription($description),
-			UploadField::create('ManyManyFiles','ManyManyFilesUploadField')
+			UploadField::create('ManyManyFiles','UploadField for many_many')
 				->setDescription($description)
 		));
 
@@ -179,8 +184,8 @@ class BasicFieldsTestPage extends TestPage {
 			$tabObj = $fields->fieldByName($tab);
 			foreach($tabObj->FieldList() as $field) {
 				$field
-					->setDescription($description)
-					->addExtraClass('cms-description-tooltip');
+					->setDescription($description);
+					// ->addExtraClass('cms-description-tooltip');
 
 				if(in_array($field->getName(), $blacklist)) continue;
 
