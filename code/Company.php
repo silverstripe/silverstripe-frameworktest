@@ -22,6 +22,18 @@ class Company extends DataObject {
 		'Employees' => 'Employee'
 	);
 
+	public static $many_many  = array(
+		'PastEmployees' => 'Employee'
+	);
+
+	public static $many_many_extraFields = array(
+		'PastEmployees' => array(
+			'YearStart' => 'Int',
+			'YearEnd' => 'Int',
+			'Role' => 'Text',
+		)
+	);
+
 	static $belongs_many_many = array(
 		'RelationFieldsTestPages' => 'RelationFieldsTestPage',
 		'GridFieldTestPage' => 'GridFieldTestPage'

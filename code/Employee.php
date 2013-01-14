@@ -15,6 +15,25 @@ class Employee extends DataObject {
 		'Company' => 'Company',
 		'ProfileImage' => 'Image'
 	);
+
+	public static $belongs_many_many  = array(
+		'PastCompanies' => 'Company'
+	);
+
+	function getCMSFields() {
+		$fields = parent::getCMSFields();
+
+		if(method_exists('ManyManyList', 'getExtraFields')) {
+			$fields->addFieldToTab('Root.Main', 
+				new NumericField('ManyMany[YearStart]', 'Year started (3.1, many-many only)')
+			);
+			$fields->addFieldToTab('Root.Main', 
+				new TextField('ManyMany[Role]', 'Role (3.1, many-many only)')
+			);	
+		}
+
+		return $fields;
+	}
 	
 	public function requireDefaultRecords() {
 		parent::requireDefaultRecords();
