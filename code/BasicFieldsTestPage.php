@@ -112,7 +112,7 @@ class BasicFieldsTestPage extends TestPage {
 			Object::create('PasswordField', 'Password', 'PasswordField'),
 			Object::create('AjaxUniqueTextField', 'AjaxUniqueText', 
 				'AjaxUniqueTextField', 'AjaxUniqueText', 'BasicFieldsTestPage'
-			),
+			)
 		));
 
 		$fields->addFieldsToTab('Root.Numeric', array(
@@ -204,6 +204,24 @@ class BasicFieldsTestPage extends TestPage {
 		$noLabelField = new TextField('Text_NoLabel', false, 'TextField without label');
 		$noLabelField->setDescription($description);
 		$fields->addFieldToTab('Root.Text', $noLabelField, 'Text_disabled');
+
+		$fields->addFieldToTab('Root.Text',
+			FieldGroup::create(
+				TextField::create('MyFieldGroup1'),
+				TextField::create('MyFieldGroup2'),
+				DropdownField::create('MyFieldGroup3', false, TestCategory::map())
+			)
+		);
+		$fields->addFieldToTab('Root.Text',
+			FieldGroup::create(
+				'MyLabelledFieldGroup',
+				array(
+					TextField::create('MyLabelledFieldGroup1'),
+					TextField::create('MyLabelledFieldGroup2'),
+					DropdownField::create('MyLabelledFieldGroup3', null, TestCategory::map())
+				)
+			)->setTitle('My Labelled Field Group')
+		);
 
 		return $fields;
 
