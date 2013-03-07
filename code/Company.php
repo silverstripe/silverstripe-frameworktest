@@ -39,7 +39,20 @@ class Company extends DataObject {
 		'GridFieldTestPage' => 'GridFieldTestPage'
 	);
 
-	public static $summary_fields = array('Name', 'Category', 'Revenue', 'CEO');
+	public static $summary_fields = array(
+		'Name', 
+		'Category', 
+		'Revenue', 
+		'CEO',
+		'DynamicProperty'
+	);
+
+	public static $searchable_fields = array(
+		'Name', 
+		'Category', 
+		'Revenue', 
+		'CEO',
+	);
 
 	function validate() {
 		if(!$this->Title) {
@@ -48,6 +61,10 @@ class Company extends DataObject {
 			return parent::validate();
 		}
 		
+	}
+
+	public function DynamicProperty() {
+		return sprintf('%s (%s)', $this->Name, $this->CEO);
 	}
 	
 	public function requireDefaultRecords() {
