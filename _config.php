@@ -5,7 +5,7 @@ Member::add_extension('FileUploadRole');
 SiteTree::add_extension('FrameworkTestSiteTreeExtension');
 
 if(class_exists('SiteTreeCMSWorkflow')) {
-	Object::add_extension('SiteConfig', 'CMSWorkflowSiteConfigDecorator');
+	SiteConfig::add_extension('CMSWorkflowSiteConfigDecorator');
 	CMSWorkflowSiteConfigDecorator::apply_active_config();
 }
 
