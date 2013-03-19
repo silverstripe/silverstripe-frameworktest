@@ -1,8 +1,8 @@
 <?php
 
-Object::add_extension('Member', 'FrameworkTestRole');
-Object::add_extension('Member', 'FileUploadRole');
-Object::add_extension('SiteTree', 'FrameworkTestSiteTreeExtension');
+Member::add_extension('FrameworkTestRole');
+Member::add_extension('FileUploadRole');
+SiteTree::add_extension('FrameworkTestSiteTreeExtension');
 
 if(class_exists('SiteTreeCMSWorkflow')) {
 	Object::add_extension('SiteConfig', 'CMSWorkflowSiteConfigDecorator');
@@ -21,7 +21,6 @@ if(@$_GET['db']) {
 	$enabletranslatable = null;
 }
 if($enabletranslatable) {
-	Object::add_extension('SiteTree', 'Translatable');
-	Object::add_extension('SiteConfig', 'Translatable');
+	SiteTree::add_extension('Translatable');
+	SiteConfig::add_extension('Translatable');
 }
-?>
