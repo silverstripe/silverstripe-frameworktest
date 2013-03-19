@@ -1,13 +1,10 @@
 <?php
 
 class FrameworkTestRole extends DataExtension {
-	function extraStatics($class = null, $extension = null) {
-		return array(
-			'has_one' => array(
-				'FavouritePage' => 'SiteTree',
-			),
-		);
-	}
+	
+	static $has_one = array(
+		'FavouritePage' => 'SiteTree',
+	);
 	
 	function updateCMSFields(FieldList $fields) {
 		$fields->push(new TreeDropdownField("FavouritePageID", "Favourite page", "SiteTree"));
