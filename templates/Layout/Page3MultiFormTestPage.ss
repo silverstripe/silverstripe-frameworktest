@@ -32,7 +32,7 @@
 		   </div>
 		<% end_if %>
 		<% if Page3MultiForm %>
-			<% control Page3MultiForm %><% include MultiFormProgressList %><% end_control %>
+			<% with Page3MultiForm %><% include MultiFormProgressList %><% end_with %>
 			$Page3MultiForm
 		<% end_if %>
 		<% if Form %>
