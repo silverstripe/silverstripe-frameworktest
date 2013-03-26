@@ -1,15 +1,15 @@
 <?php
 class GridFieldTestPage extends TestPage {
 
-	static $has_one = array(
+	private static $has_one = array(
 		"HasOneCompany" => "Company",
 	);
 
-	static $has_many = array(
+	private static $has_many = array(
 		"HasManyCompanies" => "Company",
 	);
 
-	static $many_many = array(
+	private static $many_many = array(
 		"ManyManyCompanies" => "Company",
 	);
 	

@@ -2,12 +2,6 @@
 
 class Page3MultiFormTestPage extends Page {
 
-	static $db = array(
-	);
-
-	static $has_one = array(
-   );
-
 }
 
 class Page3MultiFormTestPage_Controller extends Page_Controller {

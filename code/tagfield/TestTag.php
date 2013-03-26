@@ -1,11 +1,11 @@
 <?php
 class TestTag extends DataObject {
 	
-	static $db = array(
+	private static $db = array(
 		'Title' => 'Text'
 	);
 	
-	static $belongs_many_many = array(
+	private static $belongs_many_many = array(
 		'Pages' => 'TestTagFieldPage'
 	);
 	

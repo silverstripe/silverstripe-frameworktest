@@ -1,10 +1,10 @@
 <?php
 
 class TestModelAdmin extends ModelAdmin {
-	static $url_segment = 'test';
-	static $menu_title = 'Test ModelAdmin';
+	private static $url_segment = 'test';
+	private static $menu_title = 'Test ModelAdmin';
 
-	static $managed_models = array(
+	private static $managed_models = array(
 		"Company",
 		"Employee",
 	);

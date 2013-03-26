@@ -2,20 +2,20 @@
 
 class RelationFieldsTestPage extends TestPage {
 	
-	static $has_one = array(
+	private static $has_one = array(
 		"HasOneCompany" => "Company",
 		"HasOnePage" => "SiteTree",
 	);
-	static $has_many = array(
+	private static $has_many = array(
 		"HasManyCompanies" => "Company",
 		"HasManyPages" => "SiteTree",
 	);
-	static $many_many = array(
+	private static $many_many = array(
 		"ManyManyCompanies" => "Company",
 		"ManyManyPages" => "SiteTree",
 	);
 
-	static $defaults = array(
+	private static $defaults = array(
 		'Title' => 'Relational Fields'
 	);
 	

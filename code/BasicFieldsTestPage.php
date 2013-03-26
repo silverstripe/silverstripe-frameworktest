@@ -1,7 +1,7 @@
 <?php
 
 class BasicFieldsTestPage extends TestPage {
-	static $db = array(
+	private static $db = array(
 		'Checkbox' => 'Boolean',
 		'Readonly' => 'Varchar',
 		'Textarea' => 'Text',
@@ -33,7 +33,7 @@ class BasicFieldsTestPage extends TestPage {
 		'OptionSet' => 'Int',
 	);
 	
-	static $has_one = array(
+	private static $has_one = array(
 		'Dropdown' => 'TestCategory',
 		'GroupedDropdown' => 'TestCategory',
 		'ListboxField' => 'TestCategory',
@@ -42,11 +42,11 @@ class BasicFieldsTestPage extends TestPage {
 		'Image' => 'Image',
 	);
 
-	static $has_many = array(
+	private static $has_many = array(
 		'HasManyFiles' => 'File',
 	);
 
-	static $many_many = array(
+	private static $many_many = array(
 		'ManyManyFiles' => 'File',
 		'MultipleListboxField' => 'TestCategory',
 	);

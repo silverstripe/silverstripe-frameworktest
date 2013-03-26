@@ -6,17 +6,17 @@
  */
 class Employee extends DataObject {
 	
-	public static $db = array(
+	private static $db = array(
 		'Name' => 'Varchar',
 		'Biography' => 'HTMLText'
 	);
 	
-	public static $has_one = array(
+	private static $has_one = array(
 		'Company' => 'Company',
 		'ProfileImage' => 'Image'
 	);
 
-	public static $belongs_many_many  = array(
+	private static $belongs_many_many  = array(
 		'PastCompanies' => 'Company'
 	);
 

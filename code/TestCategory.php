@@ -4,10 +4,10 @@
  * A data type that is related many-many to RelationFieldsTestPage, for testing purposes
  */
 class TestCategory extends DataObject {
-	static $db = array(
+	private static $db = array(
 		"Title" => "Varchar",
 	);
-	static $belongs_many_many = array(
+	private static $belongs_many_many = array(
 		"RelationPages" => "RelationFieldsTestPage",
 	);
 	

@@ -2,7 +2,7 @@
 
 class FrameworkTestRole extends DataExtension {
 	
-	static $has_one = array(
+	private static $has_one = array(
 		'FavouritePage' => 'SiteTree',
 	);
 	

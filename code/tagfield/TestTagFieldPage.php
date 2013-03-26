@@ -1,12 +1,12 @@
 <?php
 class TestTagFieldPage extends Page {
 	
-	static $db = array(
+	private static $db = array(
 		'TestTagString' => 'Text',
 		'FixedTags' => 'Text'
 	);
 	
-	static $many_many = array(
+	private static $many_many = array(
 		'TestTags' => 'TestTag',
 	);
 	

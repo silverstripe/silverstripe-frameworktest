@@ -6,27 +6,27 @@ class Company extends DataObject {
 	 *
 	 * @var array
 	 */
-	public static $db = array(
+	private static $db = array(
 		'Name'=>'Varchar(255)',
 		'Category'=>'Varchar(255)',
 		'Revenue'=>'Float',
 		'CEO'=>'Varchar(255)',
 	);
 
-	public static $has_one = array(
+	private static $has_one = array(
 		'RelationFieldsTestPage' => 'RelationFieldsTestPage',
 		'GridFieldTestPageHasOne' => 'GridFieldTestPage'
 	);
 	
-	public static $has_many  = array(
+	private static $has_many  = array(
 		'Employees' => 'Employee'
 	);
 
-	public static $many_many  = array(
+	private static $many_many  = array(
 		'PastEmployees' => 'Employee'
 	);
 
-	public static $many_many_extraFields = array(
+	private static $many_many_extraFields = array(
 		'PastEmployees' => array(
 			'YearStart' => 'Int',
 			'YearEnd' => 'Int',
@@ -34,12 +34,12 @@ class Company extends DataObject {
 		)
 	);
 
-	static $belongs_many_many = array(
+	private static $belongs_many_many = array(
 		'RelationFieldsTestPages' => 'RelationFieldsTestPage',
 		'GridFieldTestPage' => 'GridFieldTestPage'
 	);
 
-	public static $summary_fields = array(
+	private static $summary_fields = array(
 		'Name', 
 		'Category', 
 		'Revenue', 
@@ -47,7 +47,7 @@ class Company extends DataObject {
 		'DynamicProperty'
 	);
 
-	public static $searchable_fields = array(
+	private static $searchable_fields = array(
 		'Name', 
 		'Category', 
 		'Revenue', 
