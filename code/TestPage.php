@@ -49,7 +49,7 @@ class TestPage extends Page {
  * Parent class of all test page controllers
  */
 class TestPage_Controller extends Page_Controller {
-	static $allowed_actions = array(
+	private static $allowed_actions = array(
 		'Form',
 		'save',
 	);
