@@ -5,6 +5,7 @@ class RelationFieldsTestPage extends TestPage {
 	private static $has_one = array(
 		"HasOneCompany" => "Company",
 		"HasOnePage" => "SiteTree",
+		"HasOnePageWithSearch" => "SiteTree",
 	);
 	private static $has_many = array(
 		"HasManyCompanies" => "Company",
@@ -31,7 +32,8 @@ class RelationFieldsTestPage extends TestPage {
 		$allFields += $checkboxFields;
 
 		$treeFields = array(
-			TreeDropdownField::create('HasOnePage', 'HasOnePage', 'SiteTree'),
+			TreeDropdownField::create('HasOnePageID', 'HasOnePage', 'SiteTree'),
+			TreeDropdownField::create('HasOnePageWithSearchID', 'HasOnePageWithSearch', 'SiteTree')->setShowSearch(true),
 			TreeMultiselectField::create('HasManyPages', 'HasManyPages', 'SiteTree'),
 			TreeMultiselectField::create('ManyManyPages', 'ManyManyPages (with search)', 'SiteTree')->setShowSearch(true)
 		);
