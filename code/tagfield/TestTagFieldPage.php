@@ -14,15 +14,15 @@ if(class_exists('TagField')) {
 		function getCMSFields() {
 			$fields = parent::getCMSFields();
 			
-			$tf1 = new TagField('TestTagString', "Single column tags (try 'one', 'two', 'three', 'four')", 'TestTag');
-			$fields->addFieldToTab('Root.Content.Main', $tf1);
+			$tf1 = new TagField('TestTagString', "Single column tags (try 'one', 'two', 'three', 'four')", null, 'TestTagFieldPage');
+			$fields->addFieldToTab('Root.Main', $tf1);
 			
-			$tf2 = new TagField('TestTags', "Relation tags (try 'one', 'two', 'three', 'four')", null, 'TestTag');
-			$fields->addFieldToTab('Root.Content.Main', $tf2);
+			$tf2 = new TagField('TestTags', "Relation tags (try 'one', 'two', 'three', 'four')");
+			$fields->addFieldToTab('Root.Main', $tf2);
 			
 			$tf3 = new TagField('FixedTags', "Fixed tags (try 'PHP', 'Ruby', 'Python')", null, 'TestTag');
 			$tf3->setCustomTags(array('PHP', 'Ruby', 'Python'));
-			$fields->addFieldToTab('Root.Content.Main', $tf3);
+			$fields->addFieldToTab('Root.Main', $tf3);
 			
 			return $fields;
 		}
@@ -37,4 +37,6 @@ if(class_exists('TagField')) {
 		}
 		
 	}
+
+	class TestTagFieldPage_Controller extends Page_Controller {}
 }
