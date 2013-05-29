@@ -19,7 +19,8 @@ class Company extends DataObject {
 	);
 	
 	private static $has_many  = array(
-		'Employees' => 'Employee'
+		'Employees' => 'Employee',
+		'GroupPhotos' => 'Image'
 	);
 
 	private static $many_many  = array(
@@ -53,6 +54,18 @@ class Company extends DataObject {
 		'Revenue', 
 		'CEO',
 	);
+
+	public function getCMSFields() {
+		$fields = parent::getCMSFields();
+		$fields->addFieldToTab('Root.Main',
+			$uploadField = UploadField::create('GroupPhotos')
+		);
+		if(method_exists('UploadField', 'setAllowedFileCategories')) {
+			$uploadField->setAllowedFileCategories('image');
+		}
+
+		return $fields;
+	}
 
 	function validate() {
 		if(!$this->Title) {

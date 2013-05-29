@@ -155,9 +155,10 @@ class BasicFieldsTestPage extends TestPage {
 		$dateTimeShowCalendar->getTimeField()->setConfig('showdropdown', true);
 
 		$fields->addFieldsToTab('Root.File', array(
-			UploadField::create('File','FileUploadField')
+			$bla = UploadField::create('File','FileUploadField')
 				->setDescription($description)
-				->setConfig('allowedMaxFileNumber', 1),
+				->setConfig('allowedMaxFileNumber', 1)
+				->setConfig('canPreviewFolder', false),
 			UploadField::create('AttachedFile','UploadField with canUpload=false')
 				->setDescription($description)
 				->setConfig('canUpload', false),

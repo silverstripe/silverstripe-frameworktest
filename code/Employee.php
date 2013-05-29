@@ -32,6 +32,12 @@ class Employee extends DataObject {
 			);	
 		}
 
+		// 3.1 only
+		if(method_exists('UploadField', 'setAllowedFileCategories')) {
+			$fields->dataFieldByName('ProfileImage')->setAllowedFileCategories('image');
+		}
+		
+
 		return $fields;
 	}
 	
@@ -48,6 +54,12 @@ class Employee extends DataObject {
 			$employee->write();
 		}
 		DB::alteration_message("Added default records to Employee table","created");
+	}
+
+	public function validate() {
+		$result = parent::validate();
+		if(!$this->Name) $result->error('"Name" can\'t be blank');
+		return $result;
 	}
 	
 	/**
