@@ -2,6 +2,8 @@
 
 class BasicFieldsTestPage extends TestPage {
 	private static $db = array(
+		'Required' => 'Text',
+		'Validated' => 'Text',
 		'Checkbox' => 'Boolean',
 		'Readonly' => 'Varchar',
 		'Textarea' => 'Text',
@@ -51,6 +53,10 @@ class BasicFieldsTestPage extends TestPage {
 		'MultipleListboxField' => 'TestCategory',
 	);
 
+	private static $defaults = array(
+		'Validated' => 2
+	);
+
 	function requireDefaultRecords() {
 		parent::requireDefaultRecords();
 
@@ -71,6 +77,8 @@ class BasicFieldsTestPage extends TestPage {
 		return array(
 			'Readonly' => 'My value (ä!)',
 			'Textarea' => 'My value (ä!)',
+			'Required' => 'My required value (delete to test)',
+			'Validated' => '1',
 			'Text' => 'My value (ä!)',
 			'Textarea' => 'My value (ä!)',
 			'HTMLField' => 'My value (ä!)',
@@ -103,6 +111,8 @@ class BasicFieldsTestPage extends TestPage {
 		$description = 'This is <strong>bold</strong> help text';
 		
 		$fields->addFieldsToTab('Root.Text', array(
+			Object::create('TextField', 'Required', 'Required field'),
+			Object::create('TextField', 'Validated', 'Validated field (checks range between 1 and 3)'),
 			Object::create('ReadonlyField', 'Readonly', 'ReadonlyField'),
 			Object::create('TextareaField', 'Textarea', 'TextareaField - 8 rows')
 				->setRows(8),
@@ -178,7 +188,7 @@ class BasicFieldsTestPage extends TestPage {
 			}
 		}
 
-		$blacklist = array('DMYDate');
+		$blacklist = array('DMYDate', 'Required', 'Validated');
 
 		$tabs = array('Root.Text', 'Root.Numeric', 'Root.Option', 'Root.DateTime', 'Root.File');
 		foreach($tabs as $tab) {
@@ -226,6 +236,18 @@ class BasicFieldsTestPage extends TestPage {
 
 		return $fields;
 
+	}
+
+	public function getCMSValidator() {
+		return new RequiredFields('Required');
+	}
+
+	public function validate() {
+		$result = parent::validate();
+		if(!$this->Validated || $this->Validated < 1 || $this->Validated > 3) {
+			$result->error('"Validated" field needs to be between 1 and 3');
+		}
+		return $result;
 	}
 }
 
