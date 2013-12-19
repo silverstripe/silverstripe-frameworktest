@@ -119,10 +119,7 @@ class BasicFieldsTestPage extends TestPage {
 			Object::create('TextField', 'Text', 'TextField'),
 			Object::create('HtmlEditorField', 'HTMLField', 'HtmlEditorField'),
 			Object::create('EmailField', 'Email', 'EmailField'),
-			Object::create('PasswordField', 'Password', 'PasswordField'),
-			Object::create('AjaxUniqueTextField', 'AjaxUniqueText', 
-				'AjaxUniqueTextField', 'AjaxUniqueText', 'BasicFieldsTestPage'
-			)
+			Object::create('PasswordField', 'Password', 'PasswordField')
 		));
 
 		$fields->addFieldsToTab('Root.Numeric', array(
