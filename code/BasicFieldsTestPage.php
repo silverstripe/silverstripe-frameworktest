@@ -17,6 +17,7 @@ class BasicFieldsTestPage extends TestPage {
 		'DateTimeWithCalendar' => 'Datetime',
 		'Time' => 'Time',
 		'TimeWithDropdown' => 'Time',
+		'Money' => 'Money',
 		'Number' => 'Int',
 		'Price' => 'Double',
 		'Email' => 'Varchar',
@@ -86,6 +87,8 @@ class BasicFieldsTestPage extends TestPage {
 			'Password' => 'My value (ä!)',
 			'Number' => 99,
 			'Price' => 99.99,
+			'MoneyAmount' => 99.99,
+			'MoneyCurrency' => 'EUR',
 			'PhoneNumber' => '021 1235',
 			'CreditCard' => '4000400040004111',
 			'Checkbox' => 1,
@@ -125,6 +128,7 @@ class BasicFieldsTestPage extends TestPage {
 		$fields->addFieldsToTab('Root.Numeric', array(
 			Object::create('NumericField', 'Number', 'NumericField'),
 			Object::create('CurrencyField', 'Price', 'CurrencyField'),
+			Object::create('MoneyField', 'Money', 'MoneyField', array('Amount' => 99.99, 'Currency' => 'EUR')),
 			Object::create('PhoneNumberField', 'PhoneNumber', 'PhoneNumberField'),
 			Object::create('CreditCardField', 'CreditCard', 'CreditCardField')
 		));
