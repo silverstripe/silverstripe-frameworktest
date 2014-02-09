@@ -147,6 +147,12 @@ class BasicFieldsTestPage extends TestPage {
 				->setMultiple(true)
 				->setSize(3),
 			Object::create('OptionsetField', 'OptionSet', 'OptionSetField', TestCategory::map()),
+			Object::create('ToggleCompositeField', 'ToggleCompositeField', 'ToggleCompositeField', new FieldList(
+				Object::create('TextField', 'ToggleCompositeTextField1'),
+				Object::create('TextField', 'ToggleCompositeTextField2'),
+				Object::create('DropdownField', 'ToggleCompositeDropdownField', 'ToggleCompositeDropdownField', TestCategory::map()),
+				Object::create('TextField', 'ToggleCompositeTextField3')
+			))
 		));
 
 		// All these date/time fields generally have issues saving directly in the CMS
@@ -189,7 +195,9 @@ class BasicFieldsTestPage extends TestPage {
 			}
 		}
 
-		$blacklist = array('DMYDate', 'Required', 'Validated');
+		$blacklist = array(
+			'DMYDate', 'Required', 'Validated', 'ToggleCompositeField', 
+		);
 
 		$tabs = array('Root.Text', 'Root.Numeric', 'Root.Option', 'Root.DateTime', 'Root.File');
 		foreach($tabs as $tab) {
