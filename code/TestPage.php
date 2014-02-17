@@ -72,11 +72,11 @@ class TestPage_Controller extends Page_Controller {
 	function save($data, $form) {
 		$form->saveInto($this->dataRecord);
 		$this->dataRecord->write();
-		Director::redirectBack();
+		$this->redirectBack();
 	}
 	
 	function gohome() {
-		Director::redirect("./");
+		$this->redirect("./");
 	}
 
 	function EmailForm() {

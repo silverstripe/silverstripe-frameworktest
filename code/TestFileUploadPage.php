@@ -25,6 +25,6 @@ class TestFileUploadPage_Controller extends TestPage_Controller{
 		$member = new Member();
 		$form->saveInto($member);
 		$member->write();
-		Director::redirectBack();
+		$this->redirectBack();
 	}
 }

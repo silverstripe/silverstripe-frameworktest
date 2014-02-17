@@ -21,7 +21,7 @@ class TestMultiForm extends MultiForm {
 		
 		Session::set("MultiFormMessage", "Your information has been submitted.");
 		
-		Director::redirect(Director::BaseURL() . $this->Controller()->URLSegment);
+		$this->Controller()->redirect(Director::BaseURL() . $this->Controller()->URLSegment);
 	}
 }
 
