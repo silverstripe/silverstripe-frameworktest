@@ -5,6 +5,10 @@ class TestFileUploadPage extends TestPage{
 }
 
 class TestFileUploadPage_Controller extends TestPage_Controller{
+
+	private static $allowed_actions = array(
+		'Form'
+	);
 	
 	function Form(){
 		$fields = new FieldList(
@@ -25,6 +29,6 @@ class TestFileUploadPage_Controller extends TestPage_Controller{
 		$member = new Member();
 		$form->saveInto($member);
 		$member->write();
-		Director::redirectBack();
+		$this->redirectBack();
 	}
 }
