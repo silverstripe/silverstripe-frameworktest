@@ -5,6 +5,10 @@ class TestFileUploadPage extends TestPage{
 }
 
 class TestFileUploadPage_Controller extends TestPage_Controller{
+
+	private static $allowed_actions = array(
+		'Form'
+	);
 	
 	function Form(){
 		$fields = new FieldList(
