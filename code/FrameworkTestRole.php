@@ -7,7 +7,10 @@ class FrameworkTestRole extends DataExtension {
 	);
 	
 	function updateCMSFields(FieldList $fields) {
-		$fields->push(new TreeDropdownField("FavouritePageID", "Favourite page", "SiteTree"));
+		$fields->addFieldToTab(
+			'Root.Main',
+			new TreeDropdownField("FavouritePageID", "Favourite page", "SiteTree")
+		);
 	}
 	
 	function requireDefaultRecords() {
