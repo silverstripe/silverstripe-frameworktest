@@ -5,11 +5,11 @@
  */
 class TestPage extends Page
 {
-    
+
     /**
      * We can only create subclasses of TestPage
      */
-    public function canCreate($member = null)
+    public function canCreate($member = null, $context = array())
     {
         // Don't allow creation other than through requireDefaultRecords
         return false;
@@ -27,7 +27,7 @@ class TestPage extends Page
             $parent = SiteTree::get()
                 ->filter('URLSegment', 'feature-test-pages')
                 ->First();
-            
+
             if (!$parent) {
                 $parent = new Page(array(
                     'Title' => 'Feature Test Pages',
@@ -60,7 +60,7 @@ class TestPage_Controller extends Page_Controller
         'Form',
         'save',
     );
-    
+
     /**
      * This form is exactly like the CMS form.  It gives us an opportunity to test the fields outside of the CMS context
      */
@@ -76,14 +76,14 @@ class TestPage_Controller extends Page_Controller
         $form->loadDataFrom($this->dataRecord);
         return $form;
     }
-    
+
     public function save($data, $form)
     {
         $form->saveInto($this->dataRecord);
         $this->dataRecord->write();
         $this->redirectBack();
     }
-    
+
     public function gohome()
     {
         $this->redirect("./");
@@ -97,7 +97,7 @@ class TestPage_Controller extends Page_Controller
             new FormAction("sendEmail", "Send test email to this address")
         ));
     }
-    
+
     public function email()
     {
         return array(
@@ -105,7 +105,7 @@ class TestPage_Controller extends Page_Controller
             'Form' => $this->EmailForm()
         );
     }
-    
+
     public function sendEmail($data, $form)
     {
         $email = new Email();
@@ -114,7 +114,7 @@ class TestPage_Controller extends Page_Controller
         $email->setSubject('A subject with some umlauts: öäüß');
         $email->setBody('A body with some umlauts: öäüß');
         $email->send();
-        
+
         echo "<p>email sent to " . $data['Email'] . "</p>";
     }
 }

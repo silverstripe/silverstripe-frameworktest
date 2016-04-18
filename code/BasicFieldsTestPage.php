@@ -36,11 +36,10 @@ class BasicFieldsTestPage extends TestPage
         'GSTNumber' => 'Varchar',
         'OptionSet' => 'Int',
     );
-    
+
     private static $has_one = array(
         'Dropdown' => 'TestCategory',
         'GroupedDropdown' => 'TestCategory',
-        'ListboxField' => 'TestCategory',
         'File' => 'File',
         'AttachedFile' => 'File',
         'Image' => 'Image',
@@ -100,7 +99,6 @@ class BasicFieldsTestPage extends TestPage
             'CheckboxSetID' => $firstCat->ID,
             'DropdownID' => $firstCat->ID,
             'GroupedDropdownID' => $firstCat->ID,
-            'ListboxFieldID' => $firstCat->ID,
             'MultipleListboxFieldID' => join(',', array($thirdCat->ID, $firstCat->ID)),
             'OptionSet' => join(',', array($thirdCat->ID, $firstCat->ID)),
             'Date' => "2002-10-23",
@@ -112,13 +110,13 @@ class BasicFieldsTestPage extends TestPage
             'DateTimeWithCalendar' => "2002-10-23 23:59",
         );
     }
-    
+
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
 
         $description = 'This is <strong>bold</strong> help text';
-        
+
         $fields->addFieldsToTab('Root.Text', array(
             Object::create('TextField', 'Required', 'Required field'),
             Object::create('TextField', 'Validated', 'Validated field (checks range between 1 and 3)'),
@@ -138,7 +136,7 @@ class BasicFieldsTestPage extends TestPage
             Object::create('PhoneNumberField', 'PhoneNumber', 'PhoneNumberField'),
             Object::create('CreditCardField', 'CreditCard', 'CreditCardField')
         ));
-        
+
         $fields->addFieldsToTab('Root.Option', array(
             Object::create('CheckboxField', 'Checkbox', 'CheckboxField'),
             Object::create('CheckboxSetField', 'CheckboxSet', 'CheckboxSetField', TestCategory::map()),
@@ -147,10 +145,7 @@ class BasicFieldsTestPage extends TestPage
             Object::create('GroupedDropdownField', 'GroupedDropdownID',
                 'GroupedDropdown', array('Test Categorys' => TestCategory::map())
             ),
-            Object::create('ListboxField', 'ListboxFieldID', 'ListboxField', TestCategory::map())
-                ->setSize(3),
             Object::create('ListboxField', 'MultipleListboxFieldID', 'ListboxField (multiple)', TestCategory::map())
-                ->setMultiple(true)
                 ->setSize(3),
             Object::create('OptionsetField', 'OptionSet', 'OptionSetField', TestCategory::map()),
             Object::create('ToggleCompositeField', 'ToggleCompositeField', 'ToggleCompositeField', new FieldList(
