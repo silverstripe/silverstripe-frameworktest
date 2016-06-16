@@ -35,6 +35,7 @@ class BasicFieldsTestPage extends TestPage
         'CreditCard' => 'Varchar',
         'GSTNumber' => 'Varchar',
         'OptionSet' => 'Int',
+        'DBFile' => 'DBFile',
     );
 
     private static $has_one = array(
@@ -134,7 +135,8 @@ class BasicFieldsTestPage extends TestPage
             Object::create('TextField', 'Text', 'TextField'),
             Object::create('HtmlEditorField', 'HTMLField', 'HtmlEditorField'),
             Object::create('EmailField', 'Email', 'EmailField'),
-            Object::create('PasswordField', 'Password', 'PasswordField')
+            Object::create('PasswordField', 'Password', 'PasswordField'),
+            Object::create('ConfirmedPasswordField', 'ConfirmedPasswordField', 'ConfirmedPasswordField')
         ));
 
         $fields->addFieldsToTab('Root.Numeric', array(
@@ -193,6 +195,7 @@ class BasicFieldsTestPage extends TestPage
         $dateTimeShowCalendar->getTimeField()->setConfig('showdropdown', true);
 
         $fields->addFieldsToTab('Root.File', array(
+            AssetField::create('DBFile'),
             $bla = UploadField::create('File', 'FileUploadField')
                 ->setDescription($description)
                 ->setConfig('allowedMaxFileNumber', 1)
@@ -250,6 +253,10 @@ class BasicFieldsTestPage extends TestPage
         
         $fields->addFieldToTab('Root.Text', 
             LabelField::create('LabelField', 'LabelField')
+        );
+        
+        $fields->addFieldToTab('Root.Text', 
+            LiteralField::create('LiteralField', 'LiteralField')
         );
 
         $fields->addFieldToTab('Root.Text',
