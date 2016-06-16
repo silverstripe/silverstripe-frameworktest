@@ -253,7 +253,7 @@ class BasicFieldsTestPage extends TestPage
         );
         
         $fields->addFieldToTab('Root.Text', 
-            LiteralField::create('LiteralField', 'LiteralField')
+            LiteralField::create('LiteralField', 'LiteralField with <b>some bold text</b> and <a href="http://silverstripe.com">a link</a>')
         );
 
         $fields->addFieldToTab('Root.Text',
