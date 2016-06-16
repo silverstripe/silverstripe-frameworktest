@@ -17,7 +17,7 @@ class BasicFieldsTestPage extends TestPage
         'DateTime' => 'Datetime',
         'DateTimeWithCalendar' => 'Datetime',
         'Time' => 'Time',
-        'TimeWithDropdown' => 'Time',
+
         'Money' => 'Money',
         'Number' => 'Int',
         'Price' => 'Double',
@@ -106,7 +106,6 @@ class BasicFieldsTestPage extends TestPage
             'CalendarDate' => "2002-10-23",
             'DMYDate' => "2002-10-23",
             'Time' => "23:59",
-            'TimeWithDropdown' => "23:59",
             'DateTime' => "2002-10-23 23:59",
             'DateTimeWithCalendar' => "2002-10-23 23:59",
             'MyFieldGroup1' => 'My value (ä!)',
@@ -184,13 +183,11 @@ class BasicFieldsTestPage extends TestPage
             Object::create('DateField', 'Date', 'DateField'),
             $dmyDateField = Object::create('DateField', 'DMYDate', 'DateField with separate fields'),
             Object::create('TimeField', 'Time', 'TimeField'),
-            $timeFieldDropdown = Object::create('TimeField', 'TimeWithDropdown', 'TimeField with dropdown'),
             Object::create('DatetimeField', 'DateTime', 'DateTime'),
             $dateTimeShowCalendar = Object::create('DatetimeField', 'DateTimeWithCalendar', 'DateTime with calendar')
         ));
         $calendarDateField->setConfig('showcalendar', true);
         $dmyDateField->setConfig('dmyfields', true);
-        $timeFieldDropdown->setConfig('showdropdown', true);
         $dateTimeShowCalendar->getDateField()->setConfig('showcalendar', true);
         $dateTimeShowCalendar->getTimeField()->setConfig('showdropdown', true);
 
