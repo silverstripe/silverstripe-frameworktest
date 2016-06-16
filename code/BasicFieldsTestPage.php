@@ -108,6 +108,14 @@ class BasicFieldsTestPage extends TestPage
             'TimeWithDropdown' => "23:59",
             'DateTime' => "2002-10-23 23:59",
             'DateTimeWithCalendar' => "2002-10-23 23:59",
+            'MyFieldGroup1' => 'My value (ä!)',
+            'MyFieldGroup2' => 'My value (ä!)',
+            'MyFieldGroup3' => 'My value (ä!)',
+            'MyFieldGroupCheckbox' => true,
+            'MyCompositeField1' => 'My value (ä!)',
+            'MyCompositeField2' => 'My value (ä!)',
+            'MyCompositeField3' => 'My value (ä!)',
+            'MyCompositeFieldCheckbox' => true,
         );
     }
 
@@ -148,6 +156,18 @@ class BasicFieldsTestPage extends TestPage
             Object::create('ListboxField', 'MultipleListboxFieldID', 'ListboxField (multiple)', TestCategory::map())
                 ->setSize(3),
             Object::create('OptionsetField', 'OptionSet', 'OptionSetField', TestCategory::map()),
+            Object::create('SelectionGroup', 'SelectionGroup', array(
+                new SelectionGroup_Item(
+                    'one',
+                    new LiteralField('one', 'one view'),
+                    'SelectionGroup Option One'
+                ),
+                    new SelectionGroup_Item(
+                    'two',
+                    new LiteralField('two', 'two view'),
+                    'SelectionGroup Option Two'
+                )
+            )),
             Object::create('ToggleCompositeField', 'ToggleCompositeField', 'ToggleCompositeField', new FieldList(
                 Object::create('TextField', 'ToggleCompositeTextField1'),
                 Object::create('TextField', 'ToggleCompositeTextField2'),
@@ -227,12 +247,17 @@ class BasicFieldsTestPage extends TestPage
         $noLabelField = new TextField('Text_NoLabel', false, 'TextField without label');
         $noLabelField->setDescription($description);
         $fields->addFieldToTab('Root.Text', $noLabelField, 'Text_disabled');
+        
+        $fields->addFieldToTab('Root.Text', 
+            LabelField::create('LabelField', 'LabelField')
+        );
 
         $fields->addFieldToTab('Root.Text',
             FieldGroup::create(
                 TextField::create('MyFieldGroup1'),
                 TextField::create('MyFieldGroup2'),
-                DropdownField::create('MyFieldGroup3', false, TestCategory::map())
+                DropdownField::create('MyFieldGroup3', false, TestCategory::map()),
+                CheckboxField::create('MyFieldGroupCheckbox')
             )
         );
         $fields->addFieldToTab('Root.Text',
@@ -241,9 +266,19 @@ class BasicFieldsTestPage extends TestPage
                 array(
                     TextField::create('MyLabelledFieldGroup1'),
                     TextField::create('MyLabelledFieldGroup2'),
-                    DropdownField::create('MyLabelledFieldGroup3', null, TestCategory::map())
+                    DropdownField::create('MyLabelledFieldGroup3', null, TestCategory::map()),
+                    CheckboxField::create('MyLabelledFieldGroupCheckbox')
                 )
             )->setTitle('My Labelled Field Group')
+        );
+        
+        $fields->addFieldToTab('Root.Text',
+            CompositeField::create(
+                TextField::create('MyCompositeField1'),
+                TextField::create('MyCompositeField2'),
+                DropdownField::create('MyCompositeField3', 'MyCompositeField3', TestCategory::map()),
+                CheckboxField::create('MyCompositeFieldCheckbox')
+            )
         );
 
         return $fields;
