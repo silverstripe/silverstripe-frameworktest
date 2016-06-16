@@ -160,12 +160,12 @@ class BasicFieldsTestPage extends TestPage
             Object::create('SelectionGroup', 'SelectionGroup', array(
                 new SelectionGroup_Item(
                     'one',
-                    new LiteralField('one', 'one view'),
+                    TextField::create('SelectionGroupOne', 'one view'),
                     'SelectionGroup Option One'
                 ),
                     new SelectionGroup_Item(
                     'two',
-                    new LiteralField('two', 'two view'),
+                    TextField::create('SelectionGroupOneTwo', 'two view'),
                     'SelectionGroup Option Two'
                 )
             )),
@@ -217,7 +217,7 @@ class BasicFieldsTestPage extends TestPage
         }
 
         $blacklist = array(
-            'DMYDate', 'Required', 'Validated', 'ToggleCompositeField',
+            'DMYDate', 'Required', 'Validated', 'ToggleCompositeField', 'SelectionGroup'
         );
 
         $tabs = array('Root.Text', 'Root.Numeric', 'Root.Option', 'Root.DateTime', 'Root.File');
