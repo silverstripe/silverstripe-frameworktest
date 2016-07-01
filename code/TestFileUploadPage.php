@@ -1,5 +1,8 @@
 <?php
 
+use SilverStripe\FrameworkTest\Model\TestPage;
+use SilverStripe\FrameworkTest\Model\TestPage_Controller;
+
 class TestFileUploadPage extends TestPage
 {
 }

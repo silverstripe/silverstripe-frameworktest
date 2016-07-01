@@ -1,19 +1,23 @@
 <?php
 
+use SilverStripe\FrameworkTest\Model\TestCategory;
+use SilverStripe\FrameworkTest\Model\TestPage;
+use SilverStripe\FrameworkTest\Model\TestPage_Controller;
+
 class RelationFieldsTestPage extends TestPage
 {
-    
+
     private static $has_one = array(
-        "HasOneCompany" => "Company",
+        "HasOneCompany" => "SilverStripe\\FrameworkTest\\Model\\Company",
         "HasOnePage" => "SiteTree",
         "HasOnePageWithSearch" => "SiteTree",
     );
     private static $has_many = array(
-        "HasManyCompanies" => "Company",
+        "HasManyCompanies" => "SilverStripe\\FrameworkTest\\Model\\Company",
         "HasManyPages" => "SiteTree",
     );
     private static $many_many = array(
-        "ManyManyCompanies" => "Company",
+        "ManyManyCompanies" => "SilverStripe\\FrameworkTest\\Model\\Company",
         "ManyManyPages" => "SiteTree",
     );
 

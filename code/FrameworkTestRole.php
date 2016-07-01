@@ -1,5 +1,9 @@
 <?php
 
+use SilverStripe\ORM\DataObject;
+use SilverStripe\ORM\DB;
+use SilverStripe\ORM\DataExtension;
+
 class FrameworkTestRole extends DataExtension
 {
     

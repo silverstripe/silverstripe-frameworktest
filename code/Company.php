@@ -1,7 +1,21 @@
 <?php
 
+namespace SilverStripe\FrameworkTest\Model;
+
+
+use UploadField;
+
+
+use SilverStripe\ORM\ValidationResult;
+use SilverStripe\ORM\DataObject;
+use SilverStripe\ORM\DB;
+
+
+
 class Company extends DataObject
 {
+
+    private static $table_name = 'Company';
 
     /**
      *
@@ -20,12 +34,12 @@ class Company extends DataObject
     );
     
     private static $has_many  = array(
-        'Employees' => 'Employee',
+        'Employees' => 'SilverStripe\\FrameworkTest\\Model\\Employee',
         'GroupPhotos' => 'Image'
     );
 
     private static $many_many  = array(
-        'PastEmployees' => 'Employee'
+        'PastEmployees' => 'SilverStripe\\FrameworkTest\\Model\\Employee'
     );
 
     private static $many_many_extraFields = array(
@@ -86,7 +100,7 @@ class Company extends DataObject
     public function requireDefaultRecords()
     {
         parent::requireDefaultRecords();
-        $companySet = DataObject::get('Company');
+        $companySet = DataObject::get('SilverStripe\\FrameworkTest\\Model\\Company');
         foreach ($companySet as $company) {
             $company->delete();
         }

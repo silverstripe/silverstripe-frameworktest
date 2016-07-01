@@ -6,7 +6,7 @@ class TestModelAdmin extends ModelAdmin
     private static $menu_title = 'Test ModelAdmin';
 
     private static $managed_models = array(
-        "Company",
-        "Employee",
+        "SilverStripe\\FrameworkTest\\Model\\Company",
+        "SilverStripe\\FrameworkTest\\Model\\Employee",
     );
 }

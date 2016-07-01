@@ -1,5 +1,20 @@
 <?php
 
+namespace SilverStripe\FrameworkTest\Model;
+
+use Page;
+
+use SiteTree;
+use Page_Controller;
+use FieldList;
+use FormAction;
+use Form;
+use TextField;
+use Email;
+use SilverStripe\ORM\DataObject;
+
+
+
 /**
  * Parent class of all test pages
  */
@@ -17,7 +32,7 @@ class TestPage extends Page
 
     public function requireDefaultRecords()
     {
-        if ($this->class == 'TestPage') {
+        if ($this->class == 'SilverStripe\\FrameworkTest\\Model\\TestPage') {
             return;
         }
 
@@ -40,7 +55,7 @@ class TestPage extends Page
 
             // Create actual page
             $page = new $class();
-            $page->Title = str_replace("TestPage", "", $class);
+            $page->Title = str_replace("SilverStripe\\FrameworkTest\\Model\\TestPage", "", $class);
             $page->ShowInMenus = 0;
             if ($parent) {
                 $page->ParentID = $parent->ID;
