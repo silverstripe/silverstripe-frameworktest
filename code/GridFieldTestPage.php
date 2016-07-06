@@ -1,17 +1,20 @@
 <?php
+
+use SilverStripe\ORM\DataList;
+use SilverStripe\FrameworkTest\Model\TestPage;
 class GridFieldTestPage extends TestPage
 {
 
     private static $has_one = array(
-        "HasOneCompany" => "Company",
+        "HasOneCompany" => "SilverStripe\\FrameworkTest\\Model\\Company",
     );
 
     private static $has_many = array(
-        "HasManyCompanies" => "Company",
+        "HasManyCompanies" => "SilverStripe\\FrameworkTest\\Model\\Company",
     );
 
     private static $many_many = array(
-        "ManyManyCompanies" => "Company",
+        "ManyManyCompanies" => "SilverStripe\\FrameworkTest\\Model\\Company",
     );
     
     public function getCMSFields()
@@ -21,7 +24,7 @@ class GridFieldTestPage extends TestPage
         $grids = array();
 
         $config = new GridFieldConfig_RecordEditor();
-        $grid = new GridField('Companies', 'Companies', new DataList('Company'), $config);
+        $grid = new GridField('Companies', 'Companies', new DataList('SilverStripe\\FrameworkTest\\Model\\Company'), $config);
         $fields->addFieldToTab('Root.NoRelation', $grid);
         $grids[] = $grid;
 
@@ -72,7 +75,7 @@ class GridFieldTestPage_Controller extends Page_Controller
     {
         $config = new GridFieldConfig_RecordEditor();
         
-        $grid = new GridField('Companies', 'Companies', new DataList('Company'), $config);
+        $grid = new GridField('Companies', 'Companies', new DataList('SilverStripe\\FrameworkTest\\Model\\Company'), $config);
         return new Form($this, 'Form', new FieldList($grid), new FieldList());
     }
 }

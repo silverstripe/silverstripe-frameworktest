@@ -1,31 +1,42 @@
 <?php
 
+namespace SilverStripe\FrameworkTest\Model;
+
+
+use NumericField;
+use TextField;
+
+use SilverStripe\ORM\DataObject;
+use SilverStripe\ORM\DB;
+
+
+
 /**
  * Description of Employees
  *
  */
 class Employee extends DataObject
 {
-    
+
     private static $db = array(
         'Name' => 'Varchar',
         'Biography' => 'HTMLText'
     );
-    
+
     private static $has_one = array(
-        'Company' => 'Company',
+        'Company' => 'SilverStripe\\FrameworkTest\\Model\\Company',
         'ProfileImage' => 'Image'
     );
 
     private static $belongs_many_many  = array(
-        'PastCompanies' => 'Company'
+        'PastCompanies' => 'SilverStripe\\FrameworkTest\\Model\\Company'
     );
 
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
 
-        if (method_exists('ManyManyList', 'getExtraFields')) {
+        if (method_exists('SilverStripe\\ORM\\ManyManyList', 'getExtraFields')) {
             $fields->addFieldToTab('Root.Main',
                 new NumericField('ManyMany[YearStart]', 'Year started (3.1, many-many only)')
             );
@@ -36,21 +47,21 @@ class Employee extends DataObject
 
         // 3.1 only
         if (method_exists('UploadField', 'setAllowedFileCategories')) {
-            $fields->dataFieldByName('ProfileImage')->setAllowedFileCategories('image');
+            $fields->dataFieldByName('ProfileImageID')->setAllowedFileCategories('image');
         }
-        
+
 
         return $fields;
     }
-    
+
     public function requireDefaultRecords()
     {
         parent::requireDefaultRecords();
-        $employeeSet = DataObject::get('Employee');
+        $employeeSet = DataObject::get('SilverStripe\\FrameworkTest\\Model\\Employee');
         foreach ($employeeSet as $employee) {
             $employee->delete();
         }
-        
+
         foreach ($this->data() as $employeeName) {
             $employee = new Employee();
             $employee->Name = $employeeName;
@@ -67,7 +78,7 @@ class Employee extends DataObject
         }
         return $result;
     }
-    
+
     /**
      * Contains test data
      *

@@ -1,5 +1,7 @@
 <?php
 
+use SilverStripe\ORM\DataObject;
+
 class Page2MultiForm extends MultiForm
 {
     

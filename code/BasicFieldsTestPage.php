@@ -1,5 +1,10 @@
 <?php
 
+use SilverStripe\ORM\DataObject;
+use SilverStripe\FrameworkTest\Model\TestCategory;
+use SilverStripe\FrameworkTest\Model\TestPage;
+use SilverStripe\FrameworkTest\Model\TestPage_Controller;
+
 class BasicFieldsTestPage extends TestPage
 {
     private static $db = array(
@@ -39,8 +44,8 @@ class BasicFieldsTestPage extends TestPage
     );
 
     private static $has_one = array(
-        'Dropdown' => 'TestCategory',
-        'GroupedDropdown' => 'TestCategory',
+        'Dropdown' => 'SilverStripe\\FrameworkTest\\Model\\TestCategory',
+        'GroupedDropdown' => 'SilverStripe\\FrameworkTest\\Model\\TestCategory',
         'File' => 'File',
         'AttachedFile' => 'File',
         'Image' => 'Image',
@@ -52,7 +57,7 @@ class BasicFieldsTestPage extends TestPage
 
     private static $many_many = array(
         'ManyManyFiles' => 'File',
-        'MultipleListboxField' => 'TestCategory',
+        'MultipleListboxField' => 'SilverStripe\\FrameworkTest\\Model\\TestCategory',
     );
 
     private static $defaults = array(

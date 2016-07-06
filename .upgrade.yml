@@ -1,0 +1,6 @@
+mappings:
+  TestCategory: SilverStripe\FrameworkTest\Model\TestCategory
+  Company: SilverStripe\FrameworkTest\Model\Company
+  Employee: SilverStripe\FrameworkTest\Model\Employee
+  TestPage: SilverStripe\FrameworkTest\Model\TestPage
+  TestPage_Controller: SilverStripe\FrameworkTest\Model\TestPage_Controller

@@ -1,4 +1,6 @@
 <?php
+
+use SilverStripe\ORM\DataExtension;
 class FrameworkTestSiteTreeExtension extends DataExtension
 {
     
