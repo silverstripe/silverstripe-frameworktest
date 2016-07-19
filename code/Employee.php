@@ -32,6 +32,8 @@ class Employee extends DataObject
         'PastCompanies' => 'SilverStripe\\FrameworkTest\\Model\\Company'
     );
 
+    private static $table_name = 'Employee';
+
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
