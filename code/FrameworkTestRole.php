@@ -3,14 +3,16 @@
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\DB;
 use SilverStripe\ORM\DataExtension;
+use SilverStripe\Security\Member;
+
 
 class FrameworkTestRole extends DataExtension
 {
-    
+
     private static $has_one = array(
         'FavouritePage' => 'SiteTree',
     );
-    
+
     public function updateCMSFields(FieldList $fields)
     {
         $fields->addFieldToTab(
@@ -18,10 +20,10 @@ class FrameworkTestRole extends DataExtension
             new TreeDropdownField("FavouritePageID", "Favourite page", "SiteTree")
         );
     }
-    
+
     public function requireDefaultRecords()
     {
-        $hasTestMembers = DataObject::get('Member')->find('Email', 'hayley@test.com');
+        $hasTestMembers = Member::get()->find('Email', 'hayley@test.com');
         if (!$hasTestMembers) {
             foreach ($this->data() as $name) {
                 $member = new Member(array(

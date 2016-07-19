@@ -1,12 +1,13 @@
 <?php
 
 use SilverStripe\ORM\DataObject;
+use SilverStripe\Security\Member;
 
 class Page2MultiForm extends MultiForm
 {
-    
+
     public static $start_step = 'Page2PersonalDetailsFormStep';
-    
+
     public function finish($data, $form)
     {
         parent::finish($data, $form);
@@ -44,9 +45,9 @@ class Page2MultiForm extends MultiForm
 
 class Page2PersonalDetailsFormStep extends MultiFormStep
 {
-    
+
     public static $next_steps = 'Page2OrganisationDetailsFormStep';
-    
+
     public function getFields()
     {
         return new FieldList(
@@ -58,7 +59,7 @@ class Page2PersonalDetailsFormStep extends MultiFormStep
 
 class Page2OrganisationDetailsFormStep extends MultiFormStep
 {
- 
+
     public static $is_final_step = true;
 
     public function getFields()
