@@ -129,9 +129,11 @@ class BasicFieldsTestPage extends TestPage
         $fields = parent::getCMSFields();
 
         $description = 'This is <strong>bold</strong> help text';
+        $rightTitle = 'This is right title';
 
         $fields->addFieldsToTab('Root.Text', array(
-            Object::create('TextField', 'Required', 'Required field'),
+            Object::create('TextField', 'Required', 'Required field')
+                ->setRightTitle('right title'),
             Object::create('TextField', 'Validated', 'Validated field (checks range between 1 and 3)'),
             Object::create('ReadonlyField', 'Readonly', 'ReadonlyField'),
             Object::create('TextareaField', 'Textarea', 'TextareaField - 8 rows')
@@ -195,22 +197,28 @@ class BasicFieldsTestPage extends TestPage
         $dmyDateField->setConfig('dmyfields', true);
         $dateTimeShowCalendar->getDateField()->setConfig('showcalendar', true);
         $dateTimeShowCalendar->getTimeField()->setConfig('showdropdown', true);
+        $dateTimeShowCalendar->setRightTitle('Right title');
 
         $fields->addFieldsToTab('Root.File', array(
             AssetField::create('DBFile'),
             $bla = UploadField::create('File', 'FileUploadField')
                 ->setDescription($description)
+                ->setRightTitle($rightTitle)
                 ->setConfig('allowedMaxFileNumber', 1)
                 ->setConfig('canPreviewFolder', false),
             UploadField::create('AttachedFile', 'UploadField with canUpload=false')
                 ->setDescription($description)
+                ->setRightTitle($rightTitle)
                 ->setConfig('canUpload', false),
             UploadField::create('Image', 'UploadField for image')
-                ->setDescription($description),
+                ->setDescription($description)
+                ->setRightTitle($rightTitle),
             UploadField::create('HasManyFiles', 'UploadField for has_many')
+                ->setRightTitle($rightTitle)
                 ->setDescription($description),
             UploadField::create('ManyManyFiles', 'UploadField for many_many')
                 ->setDescription($description)
+                ->setRightTitle($rightTitle),
         ));
 
         $data = $this->getDefaultData();
@@ -230,7 +238,8 @@ class BasicFieldsTestPage extends TestPage
             $tabObj = $fields->fieldByName($tab);
             foreach ($tabObj->FieldList() as $field) {
                 $field
-                    ->setDescription($description);
+                    ->setDescription($description)
+                    ->setRightTitle($rightTitle);
                     // ->addExtraClass('cms-description-tooltip');
 
                 if (in_array($field->getName(), $blacklist)) {
@@ -251,13 +260,14 @@ class BasicFieldsTestPage extends TestPage
 
         $noLabelField = new TextField('Text_NoLabel', false, 'TextField without label');
         $noLabelField->setDescription($description);
+        $noLabelField->setRightTitle($rightTitle);
         $fields->addFieldToTab('Root.Text', $noLabelField, 'Text_disabled');
-        
-        $fields->addFieldToTab('Root.Text', 
+
+        $fields->addFieldToTab('Root.Text',
             LabelField::create('LabelField', 'LabelField')
         );
-        
-        $fields->addFieldToTab('Root.Text', 
+
+        $fields->addFieldToTab('Root.Text',
             LiteralField::create('LiteralField', '<div class="form__divider">LiteralField with <b>some bold text</b> and <a href="http://silverstripe.com">a link</a></div>')
         );
 
@@ -268,6 +278,8 @@ class BasicFieldsTestPage extends TestPage
                 DropdownField::create('MyFieldGroup3', false, TestCategory::map()),
                 CheckboxField::create('MyFieldGroupCheckbox')
             )
+                ->setDescription($description)
+                ->setRightTitle($rightTitle)
         );
         $fields->addFieldToTab('Root.Text',
             FieldGroup::create(
@@ -278,9 +290,12 @@ class BasicFieldsTestPage extends TestPage
                     DropdownField::create('MyLabelledFieldGroup3', null, TestCategory::map()),
                     CheckboxField::create('MyLabelledFieldGroupCheckbox')
                 )
-            )->setTitle('My Labelled Field Group')
+            )
+                ->setTitle('My Labelled Field Group')
+                ->setDescription($description)
+                ->setRightTitle($rightTitle)
         );
-        
+
         $fields->addFieldToTab('Root.Text',
             CompositeField::create(
                 TextField::create('MyCompositeField1'),
