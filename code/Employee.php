@@ -36,23 +36,10 @@ class Employee extends DataObject
 
     public function getCMSFields()
     {
-        $fields = parent::getCMSFields();
-
-        if (method_exists('SilverStripe\\ORM\\ManyManyList', 'getExtraFields')) {
-            $fields->addFieldToTab('Root.Main',
-                new NumericField('ManyMany[YearStart]', 'Year started (3.1, many-many only)')
-            );
-            $fields->addFieldToTab('Root.Main',
-                new TextField('ManyMany[Role]', 'Role (3.1, many-many only)')
-            );
-        }
-
-        // 3.1 only
-        if (method_exists('UploadField', 'setAllowedFileCategories')) {
-            $fields->dataFieldByName('ProfileImageID')->setAllowedFileCategories('image');
-        }
-
-
+        // Use basic scaffolder (no tabs)
+        $fields = $this->scaffoldFormFields();
+        $fields->push(new NumericField('ManyMany[YearStart]', 'Year started (3.1, many-many only)'));
+        $fields->push(new TextField('ManyMany[Role]', 'Role (3.1, many-many only)'));
         return $fields;
     }
 
