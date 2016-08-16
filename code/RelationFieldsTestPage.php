@@ -9,16 +9,16 @@ class RelationFieldsTestPage extends TestPage
 
     private static $has_one = array(
         "HasOneCompany" => "SilverStripe\\FrameworkTest\\Model\\Company",
-        "HasOnePage" => "SiteTree",
-        "HasOnePageWithSearch" => "SiteTree",
+        "HasOnePage" => "SilverStripe\\CMS\\Model\\SiteTree",
+        "HasOnePageWithSearch" => "SilverStripe\\CMS\\Model\\SiteTree",
     );
     private static $has_many = array(
         "HasManyCompanies" => "SilverStripe\\FrameworkTest\\Model\\Company",
-        "HasManyPages" => "SiteTree",
+        "HasManyPages" => "SilverStripe\\CMS\\Model\\SiteTree",
     );
     private static $many_many = array(
         "ManyManyCompanies" => "SilverStripe\\FrameworkTest\\Model\\Company",
-        "ManyManyPages" => "SiteTree",
+        "ManyManyPages" => "SilverStripe\\CMS\\Model\\SiteTree",
     );
 
     private static $defaults = array(
@@ -38,10 +38,10 @@ class RelationFieldsTestPage extends TestPage
         $allFields += $checkboxFields;
 
         $treeFields = array(
-            TreeDropdownField::create('HasOnePageID', 'HasOnePage', 'SiteTree'),
-            TreeDropdownField::create('HasOnePageWithSearchID', 'HasOnePageWithSearch', 'SiteTree')->setShowSearch(true),
-            TreeMultiselectField::create('HasManyPages', 'HasManyPages', 'SiteTree'),
-            TreeMultiselectField::create('ManyManyPages', 'ManyManyPages (with search)', 'SiteTree')->setShowSearch(true)
+            TreeDropdownField::create('HasOnePageID', 'HasOnePage', 'SilverStripe\\CMS\\Model\\SiteTree'),
+            TreeDropdownField::create('HasOnePageWithSearchID', 'HasOnePageWithSearch', 'SilverStripe\\CMS\\Model\\SiteTree')->setShowSearch(true),
+            TreeMultiselectField::create('HasManyPages', 'HasManyPages', 'SilverStripe\\CMS\\Model\\SiteTree'),
+            TreeMultiselectField::create('ManyManyPages', 'ManyManyPages (with search)', 'SilverStripe\\CMS\\Model\\SiteTree')->setShowSearch(true)
         );
         $fields->addFieldsToTab('Root.Tree', $treeFields);
         $allFields += $treeFields;

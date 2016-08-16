@@ -10,14 +10,14 @@ class FrameworkTestRole extends DataExtension
 {
 
     private static $has_one = array(
-        'FavouritePage' => 'SiteTree',
+        'FavouritePage' => 'SilverStripe\\CMS\\Model\\SiteTree',
     );
 
     public function updateCMSFields(FieldList $fields)
     {
         $fields->addFieldToTab(
             'Root.Main',
-            new TreeDropdownField("FavouritePageID", "Favourite page", "SiteTree")
+            new TreeDropdownField("FavouritePageID", "Favourite page", "SilverStripe\\CMS\\Model\\SiteTree")
         );
     }
 
