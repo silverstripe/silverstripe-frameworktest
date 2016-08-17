@@ -4,7 +4,7 @@ namespace SilverStripe\FrameworkTest\Model;
 
 use Page;
 
-use SiteTree;
+
 use Page_Controller;
 use FieldList;
 use FormAction;
@@ -12,6 +12,8 @@ use Form;
 use TextField;
 use Email;
 use SilverStripe\ORM\DataObject;
+use SilverStripe\CMS\Model\SiteTree;
+
 
 
 

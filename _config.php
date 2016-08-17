@@ -1,6 +1,8 @@
 <?php
 
 use SilverStripe\Security\Member;
+use SilverStripe\CMS\Model\SiteTree;
+
 
 Member::add_extension('FrameworkTestRole');
 Member::add_extension('FileUploadRole');
