@@ -1,5 +1,7 @@
 <?php
 
+use SilverStripe\Admin\ModelAdmin;
+
 class TestModelAdmin extends ModelAdmin
 {
     private static $url_segment = 'test';
