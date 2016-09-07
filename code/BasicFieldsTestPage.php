@@ -4,6 +4,20 @@ use SilverStripe\ORM\DataObject;
 use SilverStripe\FrameworkTest\Model\TestCategory;
 use SilverStripe\FrameworkTest\Model\TestPage;
 use SilverStripe\FrameworkTest\Model\TestPage_Controller;
+use SilverStripe\Core\Object;
+use SilverStripe\Forms\TextField;
+use SilverStripe\Forms\SelectionGroup_Item;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\AssetField;
+use SilverStripe\Forms\UploadField;
+use SilverStripe\Forms\LabelField;
+use SilverStripe\Forms\LiteralField;
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\Forms\CheckboxField;
+use SilverStripe\Forms\FieldGroup;
+use SilverStripe\Forms\CompositeField;
+use SilverStripe\Forms\RequiredFields;
+
 
 class BasicFieldsTestPage extends TestPage
 {
@@ -46,17 +60,17 @@ class BasicFieldsTestPage extends TestPage
     private static $has_one = array(
         'Dropdown' => 'SilverStripe\\FrameworkTest\\Model\\TestCategory',
         'GroupedDropdown' => 'SilverStripe\\FrameworkTest\\Model\\TestCategory',
-        'File' => 'File',
-        'AttachedFile' => 'File',
-        'Image' => 'Image',
+        'File' => 'SilverStripe\\Assets\\File',
+        'AttachedFile' => 'SilverStripe\\Assets\\File',
+        'Image' => 'SilverStripe\\Assets\\Image',
     );
 
     private static $has_many = array(
-        'HasManyFiles' => 'File',
+        'HasManyFiles' => 'SilverStripe\\Assets\\File',
     );
 
     private static $many_many = array(
-        'ManyManyFiles' => 'File',
+        'ManyManyFiles' => 'SilverStripe\\Assets\\File',
         'MultipleListboxField' => 'SilverStripe\\FrameworkTest\\Model\\TestCategory',
     );
 
@@ -132,39 +146,39 @@ class BasicFieldsTestPage extends TestPage
         $rightTitle = 'This is right title';
 
         $fields->addFieldsToTab('Root.Text', array(
-            Object::create('TextField', 'Required', 'Required field')
+            Object::create('SilverStripe\\Forms\\TextField', 'Required', 'Required field')
                 ->setRightTitle('right title'),
-            Object::create('TextField', 'Validated', 'Validated field (checks range between 1 and 3)'),
-            Object::create('ReadonlyField', 'Readonly', 'ReadonlyField'),
-            Object::create('TextareaField', 'Textarea', 'TextareaField - 8 rows')
+            Object::create('SilverStripe\\Forms\\TextField', 'Validated', 'Validated field (checks range between 1 and 3)'),
+            Object::create('SilverStripe\\Forms\\ReadonlyField', 'Readonly', 'SilverStripe\\Forms\\ReadonlyField'),
+            Object::create('SilverStripe\\Forms\\TextareaField', 'Textarea', 'TextareaField - 8 rows')
                 ->setRows(8),
-            Object::create('TextField', 'Text', 'TextField'),
-            Object::create('HtmlEditorField', 'HTMLField', 'HtmlEditorField'),
-            Object::create('EmailField', 'Email', 'EmailField'),
-            Object::create('PasswordField', 'Password', 'PasswordField'),
-            Object::create('ConfirmedPasswordField', 'ConfirmedPasswordField', 'ConfirmedPasswordField')
+            Object::create('SilverStripe\\Forms\\TextField', 'Text', 'SilverStripe\\Forms\\TextField'),
+            Object::create('SilverStripe\\Forms\\HTMLEditor\\HTMLEditorField', 'HTMLField', 'HtmlEditorField'),
+            Object::create('SilverStripe\\Forms\\EmailField', 'SilverStripe\\Control\\Email\\Email', 'SilverStripe\\Forms\\EmailField'),
+            Object::create('SilverStripe\\Forms\\PasswordField', 'Password', 'SilverStripe\\Forms\\PasswordField'),
+            Object::create('SilverStripe\\Forms\\ConfirmedPasswordField', 'SilverStripe\\Forms\\ConfirmedPasswordField', 'SilverStripe\\Forms\\ConfirmedPasswordField')
         ));
 
         $fields->addFieldsToTab('Root.Numeric', array(
-            Object::create('NumericField', 'Number', 'NumericField'),
-            Object::create('CurrencyField', 'Price', 'CurrencyField'),
-            Object::create('MoneyField', 'Money', 'MoneyField', array('Amount' => 99.99, 'Currency' => 'EUR')),
-            Object::create('PhoneNumberField', 'PhoneNumber', 'PhoneNumberField'),
-            Object::create('CreditCardField', 'CreditCard', 'CreditCardField')
+            Object::create('SilverStripe\\Forms\\NumericField', 'Number', 'SilverStripe\\Forms\\NumericField'),
+            Object::create('SilverStripe\\Forms\\CurrencyField', 'Price', 'SilverStripe\\Forms\\CurrencyField'),
+            Object::create('SilverStripe\\Forms\\MoneyField', 'Money', 'SilverStripe\\Forms\\MoneyField', array('Amount' => 99.99, 'Currency' => 'EUR')),
+            Object::create('SilverStripe\\Forms\\PhoneNumberField', 'PhoneNumber', 'SilverStripe\\Forms\\PhoneNumberField'),
+            Object::create('SilverStripe\\Forms\\CreditCardField', 'CreditCard', 'SilverStripe\\Forms\\CreditCardField')
         ));
 
         $fields->addFieldsToTab('Root.Option', array(
-            Object::create('CheckboxField', 'Checkbox', 'CheckboxField'),
-            Object::create('CheckboxSetField', 'CheckboxSet', 'CheckboxSetField', TestCategory::map()),
-            Object::create('DropdownField', 'DropdownID', 'DropdownField', TestCategory::map())
+            Object::create('SilverStripe\\Forms\\CheckboxField', 'Checkbox', 'SilverStripe\\Forms\\CheckboxField'),
+            Object::create('SilverStripe\\Forms\\CheckboxSetField', 'CheckboxSet', 'SilverStripe\\Forms\\CheckboxSetField', TestCategory::map()),
+            Object::create('SilverStripe\\Forms\\DropdownField', 'DropdownID', 'SilverStripe\\Forms\\DropdownField', TestCategory::map())
                 ->setHasEmptyDefault(true),
-            Object::create('GroupedDropdownField', 'GroupedDropdownID',
+            Object::create('SilverStripe\\Forms\\GroupedDropdownField', 'GroupedDropdownID',
                 'GroupedDropdown', array('Test Categorys' => TestCategory::map())
             ),
-            Object::create('ListboxField', 'MultipleListboxFieldID', 'ListboxField (multiple)', TestCategory::map())
+            Object::create('SilverStripe\\Forms\\ListboxField', 'MultipleListboxFieldID', 'ListboxField (multiple)', TestCategory::map())
                 ->setSize(3),
-            Object::create('OptionsetField', 'OptionSet', 'OptionSetField', TestCategory::map()),
-            Object::create('SelectionGroup', 'SelectionGroup', array(
+            Object::create('SilverStripe\\Forms\\OptionsetField', 'OptionSet', 'OptionSetField', TestCategory::map()),
+            Object::create('SilverStripe\\Forms\\SelectionGroup', 'SilverStripe\\Forms\\SelectionGroup', array(
                 new SelectionGroup_Item(
                     'one',
                     TextField::create('SelectionGroupOne', 'one view'),
@@ -176,22 +190,22 @@ class BasicFieldsTestPage extends TestPage
                     'SelectionGroup Option Two'
                 )
             )),
-            Object::create('ToggleCompositeField', 'ToggleCompositeField', 'ToggleCompositeField', new FieldList(
-                Object::create('TextField', 'ToggleCompositeTextField1'),
-                Object::create('TextField', 'ToggleCompositeTextField2'),
-                Object::create('DropdownField', 'ToggleCompositeDropdownField', 'ToggleCompositeDropdownField', TestCategory::map()),
-                Object::create('TextField', 'ToggleCompositeTextField3')
+            Object::create('SilverStripe\\Forms\\ToggleCompositeField', 'SilverStripe\\Forms\\ToggleCompositeField', 'SilverStripe\\Forms\\ToggleCompositeField', new FieldList(
+                Object::create('SilverStripe\\Forms\\TextField', 'ToggleCompositeTextField1'),
+                Object::create('SilverStripe\\Forms\\TextField', 'ToggleCompositeTextField2'),
+                Object::create('SilverStripe\\Forms\\DropdownField', 'ToggleCompositeDropdownField', 'ToggleCompositeDropdownField', TestCategory::map()),
+                Object::create('SilverStripe\\Forms\\TextField', 'ToggleCompositeTextField3')
             ))
         ));
 
         // All these date/time fields generally have issues saving directly in the CMS
         $fields->addFieldsToTab('Root.DateTime', array(
-            $calendarDateField = Object::create('DateField', 'CalendarDate', 'DateField with calendar'),
-            Object::create('DateField', 'Date', 'DateField'),
-            $dmyDateField = Object::create('DateField', 'DMYDate', 'DateField with separate fields'),
-            Object::create('TimeField', 'Time', 'TimeField'),
-            Object::create('DatetimeField', 'DateTime', 'DateTime'),
-            $dateTimeShowCalendar = Object::create('DatetimeField', 'DateTimeWithCalendar', 'DateTime with calendar')
+            $calendarDateField = Object::create('SilverStripe\\Forms\\DateField', 'CalendarDate', 'DateField with calendar'),
+            Object::create('SilverStripe\\Forms\\DateField', 'Date', 'SilverStripe\\Forms\\DateField'),
+            $dmyDateField = Object::create('SilverStripe\\Forms\\DateField', 'DMYDate', 'DateField with separate fields'),
+            Object::create('SilverStripe\\Forms\\TimeField', 'Time', 'SilverStripe\\Forms\\TimeField'),
+            Object::create('SilverStripe\\Forms\\DatetimeField', 'DateTime', 'DateTime'),
+            $dateTimeShowCalendar = Object::create('SilverStripe\\Forms\\DatetimeField', 'DateTimeWithCalendar', 'DateTime with calendar')
         ));
         $calendarDateField->setConfig('showcalendar', true);
         $dmyDateField->setConfig('dmyfields', true);
@@ -201,7 +215,7 @@ class BasicFieldsTestPage extends TestPage
 
         $fields->addFieldsToTab('Root.File', array(
             AssetField::create('DBFile'),
-            $bla = UploadField::create('File', 'FileUploadField')
+            $bla = UploadField::create('SilverStripe\\Assets\\File', 'FileUploadField')
                 ->setDescription($description)
                 ->setRightTitle($rightTitle)
                 ->setConfig('allowedMaxFileNumber', 1)
@@ -210,7 +224,7 @@ class BasicFieldsTestPage extends TestPage
                 ->setDescription($description)
                 ->setRightTitle($rightTitle)
                 ->setConfig('canUpload', false),
-            UploadField::create('Image', 'UploadField for image')
+            UploadField::create('SilverStripe\\Assets\\Image', 'UploadField for image')
                 ->setDescription($description)
                 ->setRightTitle($rightTitle),
             UploadField::create('HasManyFiles', 'UploadField for has_many')
@@ -230,7 +244,7 @@ class BasicFieldsTestPage extends TestPage
         }
 
         $blacklist = array(
-            'DMYDate', 'Required', 'Validated', 'ToggleCompositeField', 'SelectionGroup'
+            'DMYDate', 'Required', 'Validated', 'SilverStripe\\Forms\\ToggleCompositeField', 'SilverStripe\\Forms\\SelectionGroup'
         );
 
         $tabs = array('Root.Text', 'Root.Numeric', 'Root.Option', 'Root.DateTime', 'Root.File');
@@ -264,11 +278,11 @@ class BasicFieldsTestPage extends TestPage
         $fields->addFieldToTab('Root.Text', $noLabelField, 'Text_disabled');
 
         $fields->addFieldToTab('Root.Text',
-            LabelField::create('LabelField', 'LabelField')
+            LabelField::create('SilverStripe\\Forms\\LabelField', 'SilverStripe\\Forms\\LabelField')
         );
 
         $fields->addFieldToTab('Root.Text',
-            LiteralField::create('LiteralField', '<div class="form__divider">LiteralField with <b>some bold text</b> and <a href="http://silverstripe.com">a link</a></div>')
+            LiteralField::create('SilverStripe\\Forms\\LiteralField', '<div class="form__divider">LiteralField with <b>some bold text</b> and <a href="http://silverstripe.com">a link</a></div>')
         );
 
         $fields->addFieldToTab('Root.Text',

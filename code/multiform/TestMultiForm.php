@@ -1,4 +1,10 @@
 <?php
+
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\LiteralField;
+use SilverStripe\Control\Session;
+use SilverStripe\Control\Director;
+use SilverStripe\Forms\TextField;
 class TestMultiForm extends MultiForm
 {
     public static $start_step = 'TestMultiFormStepOne';

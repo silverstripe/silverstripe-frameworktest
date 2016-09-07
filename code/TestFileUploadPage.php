@@ -3,6 +3,13 @@
 use SilverStripe\FrameworkTest\Model\TestPage;
 use SilverStripe\FrameworkTest\Model\TestPage_Controller;
 use SilverStripe\Security\Member;
+use SilverStripe\Forms\EmailField;
+use SilverStripe\Forms\FileField;
+use SilverStripe\Forms\UploadField;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\FormAction;
+use SilverStripe\Forms\Form;
+
 
 class TestFileUploadPage extends TestPage
 {

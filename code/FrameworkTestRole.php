@@ -4,6 +4,9 @@ use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\DB;
 use SilverStripe\ORM\DataExtension;
 use SilverStripe\Security\Member;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\TreeDropdownField;
+
 
 
 class FrameworkTestRole extends DataExtension

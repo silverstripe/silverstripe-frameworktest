@@ -2,6 +2,13 @@
 
 use SilverStripe\ORM\DataList;
 use SilverStripe\FrameworkTest\Model\TestPage;
+use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
+use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\GridField\GridFieldConfig_RelationEditor;
+use SilverStripe\View\Requirements;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\Form;
+
 class GridFieldTestPage extends TestPage
 {
 

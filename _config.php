@@ -2,6 +2,10 @@
 
 use SilverStripe\Security\Member;
 use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Assets\File;
+use SilverStripe\SiteConfig\SiteConfig;
+use SilverStripe\Control\Director;
+
 
 
 Member::add_extension('FrameworkTestRole');
@@ -13,10 +17,6 @@ if(class_exists('SiteTreeCMSWorkflow')) {
 	SiteConfig::add_extension('CMSWorkflowSiteConfigDecorator');
 	CMSWorkflowSiteConfigDecorator::apply_active_config();
 }
-
-Director::addRules(100, array(
-	'dev/regress/$Action/$ID' => 'FrameworktestRegressSessionAdmin'
-));
 
 if(@$_GET['db']) {
 	$enabletranslatable = @$_GET['enabletranslatable'];

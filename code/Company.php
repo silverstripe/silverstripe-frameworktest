@@ -3,12 +3,14 @@
 namespace SilverStripe\FrameworkTest\Model;
 
 
-use UploadField;
+
 
 
 use SilverStripe\ORM\ValidationResult;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\DB;
+use SilverStripe\Forms\UploadField;
+
 
 
 
@@ -35,7 +37,7 @@ class Company extends DataObject
     
     private static $has_many  = array(
         'Employees' => 'SilverStripe\\FrameworkTest\\Model\\Employee',
-        'GroupPhotos' => 'Image'
+        'GroupPhotos' => 'SilverStripe\\Assets\\Image'
     );
 
     private static $many_many  = array(
@@ -76,7 +78,7 @@ class Company extends DataObject
         $fields->addFieldToTab('Root.Main',
             $uploadField = UploadField::create('GroupPhotos')
         );
-        if (method_exists('UploadField', 'setAllowedFileCategories')) {
+        if (method_exists('SilverStripe\\Forms\\UploadField', 'setAllowedFileCategories')) {
             $uploadField->setAllowedFileCategories('image');
         }
 
