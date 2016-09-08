@@ -1,4 +1,6 @@
 <?php
+
+use SilverStripe\Dev\BuildTask;
 /**
  * Creates sample page structure, useful to test tree performance,
  * UI behaviour on deeply nested pages etc.

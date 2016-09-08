@@ -3,6 +3,10 @@
 use SilverStripe\FrameworkTest\Model\TestCategory;
 use SilverStripe\FrameworkTest\Model\TestPage;
 use SilverStripe\FrameworkTest\Model\TestPage_Controller;
+use SilverStripe\Forms\CheckboxSetField;
+use SilverStripe\Forms\TreeDropdownField;
+use SilverStripe\Forms\TreeMultiselectField;
+
 
 class RelationFieldsTestPage extends TestPage
 {

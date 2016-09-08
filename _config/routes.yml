@@ -1,0 +1,6 @@
+---
+Name: frameworktestroutes
+---
+SilverStripe\Control\Director:
+  rules:
+    'dev/regress/$Action/$ID': 'FrameworktestRegressSessionAdmin'

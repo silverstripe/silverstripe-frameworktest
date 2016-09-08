@@ -2,6 +2,16 @@
 
 use SilverStripe\Security\Permission;
 use SilverStripe\Security\Security;
+use SilverStripe\Control\Controller;
+use SilverStripe\Control\Session;
+use SilverStripe\Forms\FormAction;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\HeaderField;
+use SilverStripe\Forms\LiteralField;
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\Forms\CheckboxField;
+use SilverStripe\Forms\Form;
+
 
 /**
  * Starts a test session with various configurations set in session.
@@ -43,7 +53,7 @@ class FrameworktestRegressSessionAdmin extends Controller
 
         $form = new Form(
             $this,
-            'Form',
+            'SilverStripe\\Forms\\Form',
             new FieldList(
                 new HeaderField('Header1', ($isRunning) ? 'Session is already running' : 'Start new regress session'),
                 new LiteralField('Lit1',

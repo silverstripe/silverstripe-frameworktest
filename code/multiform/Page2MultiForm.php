@@ -2,6 +2,9 @@
 
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Security\Member;
+use SilverStripe\Forms\TextField;
+use SilverStripe\Forms\FieldList;
+
 
 class Page2MultiForm extends MultiForm
 {

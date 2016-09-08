@@ -3,11 +3,14 @@
 namespace SilverStripe\FrameworkTest\Model;
 
 
-use NumericField;
-use TextField;
+
+
 
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\DB;
+use SilverStripe\Forms\NumericField;
+use SilverStripe\Forms\TextField;
+
 
 
 
@@ -25,7 +28,7 @@ class Employee extends DataObject
 
     private static $has_one = array(
         'Company' => 'SilverStripe\\FrameworkTest\\Model\\Company',
-        'ProfileImage' => 'Image'
+        'ProfileImage' => 'SilverStripe\\Assets\\Image'
     );
 
     private static $belongs_many_many  = array(
