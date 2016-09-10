@@ -215,7 +215,7 @@ class BasicFieldsTestPage extends TestPage
 
         $fields->addFieldsToTab('Root.File', array(
             AssetField::create('DBFile'),
-            $bla = UploadField::create('SilverStripe\\Assets\\File', 'FileUploadField')
+            $bla = UploadField::create('File', 'FileUploadField')
                 ->setDescription($description)
                 ->setRightTitle($rightTitle)
                 ->setConfig('allowedMaxFileNumber', 1)
@@ -224,7 +224,7 @@ class BasicFieldsTestPage extends TestPage
                 ->setDescription($description)
                 ->setRightTitle($rightTitle)
                 ->setConfig('canUpload', false),
-            UploadField::create('SilverStripe\\Assets\\Image', 'UploadField for image')
+            UploadField::create('Image', 'UploadField for image')
                 ->setDescription($description)
                 ->setRightTitle($rightTitle),
             UploadField::create('HasManyFiles', 'UploadField for has_many')
