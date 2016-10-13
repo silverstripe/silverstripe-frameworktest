@@ -106,7 +106,7 @@ class BasicFieldsTestPage extends TestPage
             'Validated' => '1',
             'Text' => 'My value (ä!)',
             'Textarea' => 'My value (ä!)',
-            'HTMLField' => 'My value (ä!)',
+            'HTMLField' => 'My <strong>value</strong> (ä!)',
             'Email' => 'test@test.com',
             'Password' => 'My value (ä!)',
             'Number' => 99,
