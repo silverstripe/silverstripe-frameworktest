@@ -153,7 +153,7 @@ class BasicFieldsTestPage extends TestPage
             Object::create('SilverStripe\\Forms\\TextareaField', 'Textarea', 'TextareaField - 8 rows')
                 ->setRows(8),
             Object::create('SilverStripe\\Forms\\TextField', 'Text'),
-            Object::create('SilverStripe\\Forms\\HTMLEditor\\HTMLEditorField', 'HtmlEditor'),
+            Object::create('SilverStripe\\Forms\\HTMLEditor\\HTMLEditorField', 'HTMLField', 'HTMLField'),
             Object::create('SilverStripe\\Forms\\EmailField', 'Email'),
             Object::create('SilverStripe\\Forms\\PasswordField', 'Password'),
             Object::create('SilverStripe\\Forms\\ConfirmedPasswordField', 'ConfirmedPassword')
