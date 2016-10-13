@@ -106,7 +106,7 @@ class BasicFieldsTestPage extends TestPage
             'Validated' => '1',
             'Text' => 'My value (ä!)',
             'Textarea' => 'My value (ä!)',
-            'HTMLField' => 'My value (ä!)',
+            'HTMLField' => 'My <strong>value</strong> (ä!)',
             'Email' => 'test@test.com',
             'Password' => 'My value (ä!)',
             'Number' => 99,
@@ -153,7 +153,7 @@ class BasicFieldsTestPage extends TestPage
             Object::create('SilverStripe\\Forms\\TextareaField', 'Textarea', 'TextareaField - 8 rows')
                 ->setRows(8),
             Object::create('SilverStripe\\Forms\\TextField', 'Text'),
-            Object::create('SilverStripe\\Forms\\HTMLEditor\\HTMLEditorField', 'HtmlEditor'),
+            Object::create('SilverStripe\\Forms\\HTMLEditor\\HTMLEditorField', 'HTMLField', 'HTMLField'),
             Object::create('SilverStripe\\Forms\\EmailField', 'Email'),
             Object::create('SilverStripe\\Forms\\PasswordField', 'Password'),
             Object::create('SilverStripe\\Forms\\ConfirmedPasswordField', 'ConfirmedPassword')
@@ -263,11 +263,13 @@ class BasicFieldsTestPage extends TestPage
                 $disabledField = $field->performDisabledTransformation();
                 $disabledField->setTitle($disabledField->Title() . ' (disabled)');
                 $disabledField->setName($disabledField->getName() . '_disabled');
+                $disabledField->setValue($field->Value());
                 $tabObj->insertAfter($disabledField, $field->getName());
 
                 $readonlyField = $field->performReadonlyTransformation();
                 $readonlyField->setTitle($readonlyField->Title() . ' (readonly)');
                 $readonlyField->setName($readonlyField->getName() . '_readonly');
+                $readonlyField->setValue($field->Value());
                 $tabObj->insertAfter($readonlyField, $field->getName());
             }
         }
