@@ -24,7 +24,6 @@ class BasicFieldsTestPage extends TestPage
     private static $db = array(
         'CalendarDate' => 'Date',
         'Checkbox' => 'Boolean',
-        'CheckboxSetID' => 'Int',
         'ConfirmedPassword' => 'Varchar',
         'CreditCard' => 'Varchar',
         'Date' => 'Date',
@@ -78,7 +77,8 @@ class BasicFieldsTestPage extends TestPage
 
     private static $many_many = array(
         'ManyManyFiles' => 'SilverStripe\\Assets\\File',
-        'MultipleListboxField' => 'SilverStripe\\FrameworkTest\\Model\\TestCategory',
+        'CheckboxSet' => 'SilverStripe\\FrameworkTest\\Model\\TestCategory',
+        'Listbox' => 'SilverStripe\\FrameworkTest\\Model\\TestCategory',
     );
 
     private static $defaults = array(
@@ -98,8 +98,10 @@ class BasicFieldsTestPage extends TestPage
             $cats = TestCategory::get();
             $firstCat = $cats->offsetGet(0);
             $thirdCat = $cats->offsetGet(2);
-            $inst->MultipleListboxField()->add($firstCat);
-            $inst->MultipleListboxField()->add($thirdCat);
+            $inst->Listbox()->add($firstCat);
+            $inst->Listbox()->add($thirdCat);
+            $inst->CheckboxSet()->add($firstCat);
+            $inst->CheckboxSet()->add($thirdCat);
 
         }
     }
@@ -117,7 +119,7 @@ class BasicFieldsTestPage extends TestPage
         return array(
             'CalendarDate' => "2002-10-23",
             'Checkbox' => 1,
-            'CheckboxSetID' => $firstCat->ID,
+            // 'CheckboxSet' => null,
             'ConfirmedPassword' => 'secret',
             'CreditCard' => '4000400040004111',
             'Date' => "2002-10-23",
@@ -130,7 +132,7 @@ class BasicFieldsTestPage extends TestPage
             'HTMLField' => 'My <strong>value</strong> (ä!)',
             'MoneyAmount' => 99.99,
             'MoneyCurrency' => 'EUR',
-            // 'MultipleListboxFieldID' => null,
+            // 'ListboxID' => null,
             'MyCompositeField1' => 'My value (ä!)',
             'MyCompositeField2' => 'My value (ä!)',
             'MyCompositeField3' => 'My value (ä!)',
@@ -189,13 +191,13 @@ class BasicFieldsTestPage extends TestPage
 
         $fields->addFieldsToTab('Root.Option', array(
             Object::create('SilverStripe\\Forms\\CheckboxField', 'Checkbox'),
-            Object::create('SilverStripe\\Forms\\CheckboxSetField', 'CheckboxSetID', 'CheckboxSet', TestCategory::map()),
+            Object::create('SilverStripe\\Forms\\CheckboxSetField', 'CheckboxSet', 'CheckboxSet', TestCategory::map()),
             Object::create('SilverStripe\\Forms\\DropdownField', 'DropdownID', 'DropdownField', TestCategory::map())
                 ->setHasEmptyDefault(true),
             Object::create('SilverStripe\\Forms\\GroupedDropdownField', 'GroupedDropdownID',
                 'GroupedDropdown', array('Test Categories' => TestCategory::map())
             ),
-            Object::create('SilverStripe\\Forms\\ListboxField', 'MultipleListboxField', 'ListboxField (multiple)', TestCategory::map())
+            Object::create('SilverStripe\\Forms\\ListboxField', 'Listbox', 'ListboxField (multiple)', TestCategory::map())
                 ->setSize(3),
             Object::create('SilverStripe\\Forms\\OptionsetField', 'OptionSet', 'OptionSetField', TestCategory::map()),
             Object::create('SilverStripe\\Forms\\SelectionGroup', 'SelectionGroup', array(
