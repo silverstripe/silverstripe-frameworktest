@@ -43,6 +43,10 @@ class BasicFieldsTestPage extends TestPage
         'MyFieldGroup2' => 'Varchar',
         'MyFieldGroup3' => 'Varchar',
         'MyFieldGroupCheckbox' => 'Boolean',
+        'MyLabelledFieldGroup1' => 'Varchar',
+        'MyLabelledFieldGroup2' => 'Varchar',
+        'MyLabelledFieldGroup3' => 'Int',
+        'MyLabelledFieldGroupCheckbox' => 'Boolean',
         'Number' => 'Int',
         'OptionSet' => 'Varchar',
         'Password' => 'Varchar',
@@ -55,6 +59,8 @@ class BasicFieldsTestPage extends TestPage
         'Required' => 'Varchar',
         'Readonly' => 'Varchar',
         'Time' => 'Time',
+        'ToggleCompositeTextField1' => 'Varchar',
+        'ToggleCompositeDropdownField' => 'Varchar',
         'Validated' => 'Text',
     );
 
@@ -87,6 +93,14 @@ class BasicFieldsTestPage extends TestPage
             $data = $this->getDefaultData();
             $inst->update($data);
             $inst->write();
+
+            TestCategory::create()->requireDefaultRecords();
+            $cats = TestCategory::get();
+            $firstCat = $cats->offsetGet(0);
+            $thirdCat = $cats->offsetGet(2);
+            $inst->MultipleListboxField()->add($firstCat);
+            $inst->MultipleListboxField()->add($thirdCat);
+
         }
     }
 
@@ -116,7 +130,7 @@ class BasicFieldsTestPage extends TestPage
             'HTMLField' => 'My <strong>value</strong> (ä!)',
             'MoneyAmount' => 99.99,
             'MoneyCurrency' => 'EUR',
-            'MultipleListboxFieldID' => join(',', array($thirdCat->ID, $firstCat->ID)),
+            // 'MultipleListboxFieldID' => null,
             'MyCompositeField1' => 'My value (ä!)',
             'MyCompositeField2' => 'My value (ä!)',
             'MyCompositeField3' => 'My value (ä!)',
@@ -125,6 +139,10 @@ class BasicFieldsTestPage extends TestPage
             'MyFieldGroup2' => 'My value (ä!)',
             'MyFieldGroup3' => 'My value (ä!)',
             'MyFieldGroupCheckbox' => true,
+            'MyLabelledFieldGroup1' => 'My value (ä!)',
+            'MyLabelledFieldGroup2' => 'My value (ä!)',
+            'MyLabelledFieldGroup3' => 2,
+            'MyLabelledFieldGroupCheckbox' => true,
             'Number' => 99,
             'OptionSet' => join(',', array($thirdCat->ID, $firstCat->ID)),
             'Password' => 'My value (ä!)',
@@ -135,6 +153,7 @@ class BasicFieldsTestPage extends TestPage
             'Text' => 'My value (ä!)',
             'Textarea' => 'My value (ä!)',
             'Time' => "23:59",
+            'ToggleCompositeTextField1' => 'My value (ä!)',
             'Validated' => '1',
         );
     }
@@ -170,13 +189,13 @@ class BasicFieldsTestPage extends TestPage
 
         $fields->addFieldsToTab('Root.Option', array(
             Object::create('SilverStripe\\Forms\\CheckboxField', 'Checkbox'),
-            Object::create('SilverStripe\\Forms\\CheckboxSetField', 'CheckboxSet', 'CheckboxSet', TestCategory::map()),
+            Object::create('SilverStripe\\Forms\\CheckboxSetField', 'CheckboxSetID', 'CheckboxSet', TestCategory::map()),
             Object::create('SilverStripe\\Forms\\DropdownField', 'DropdownID', 'DropdownField', TestCategory::map())
                 ->setHasEmptyDefault(true),
             Object::create('SilverStripe\\Forms\\GroupedDropdownField', 'GroupedDropdownID',
                 'GroupedDropdown', array('Test Categories' => TestCategory::map())
             ),
-            Object::create('SilverStripe\\Forms\\ListboxField', 'MultipleListboxFieldID', 'ListboxField (multiple)', TestCategory::map())
+            Object::create('SilverStripe\\Forms\\ListboxField', 'MultipleListboxField', 'ListboxField (multiple)', TestCategory::map())
                 ->setSize(3),
             Object::create('SilverStripe\\Forms\\OptionsetField', 'OptionSet', 'OptionSetField', TestCategory::map()),
             Object::create('SilverStripe\\Forms\\SelectionGroup', 'SelectionGroup', array(
@@ -193,9 +212,7 @@ class BasicFieldsTestPage extends TestPage
             )),
             Object::create('SilverStripe\\Forms\\ToggleCompositeField', 'ToggleCompositeField', 'ToggleCompositeField', new FieldList(
                 Object::create('SilverStripe\\Forms\\TextField', 'ToggleCompositeTextField1'),
-                Object::create('SilverStripe\\Forms\\TextField', 'ToggleCompositeTextField2'),
-                Object::create('SilverStripe\\Forms\\DropdownField', 'ToggleCompositeDropdownField', 'ToggleCompositeDropdownField', TestCategory::map()),
-                Object::create('SilverStripe\\Forms\\TextField', 'ToggleCompositeTextField3')
+                Object::create('SilverStripe\\Forms\\DropdownField', 'ToggleCompositeDropdownField', 'ToggleCompositeDropdownField', TestCategory::map())
             ))
         ));
 
@@ -236,14 +253,6 @@ class BasicFieldsTestPage extends TestPage
                 ->setRightTitle($rightTitle),
         ));
 
-        $data = $this->getDefaultData();
-        foreach ($fields->dataFields() as $field) {
-            $name = $field->getName();
-            if (isset($data[$name])) {
-                $field->setValue($data[$name]);
-            }
-        }
-
         $blacklist = array(
             'DMYDate', 'Required', 'Validated', 'ToggleCompositeField', 'SelectionGroup'
         );
@@ -264,13 +273,13 @@ class BasicFieldsTestPage extends TestPage
                 $disabledField = $field->performDisabledTransformation();
                 $disabledField->setTitle($disabledField->Title() . ' (disabled)');
                 $disabledField->setName($disabledField->getName() . '_disabled');
-                $disabledField->setValue($field->Value());
+                $disabledField->setValue($this->getField($field->getName()));
                 $tabObj->insertAfter($disabledField, $field->getName());
 
                 $readonlyField = $field->performReadonlyTransformation();
                 $readonlyField->setTitle($readonlyField->Title() . ' (readonly)');
                 $readonlyField->setName($readonlyField->getName() . '_readonly');
-                $readonlyField->setValue($field->Value());
+                $readonlyField->setValue($this->getField($field->getName()));
                 $tabObj->insertAfter($readonlyField, $field->getName());
             }
         }
