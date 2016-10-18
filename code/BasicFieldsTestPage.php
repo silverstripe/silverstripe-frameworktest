@@ -22,27 +22,29 @@ use SilverStripe\Forms\RequiredFields;
 class BasicFieldsTestPage extends TestPage
 {
     private static $db = array(
-        'AjaxUniqueText' => 'Varchar',
-        'Autocomplete' => 'Varchar',
-        'BankNumber' => 'Varchar',
         'CalendarDate' => 'Date',
         'Checkbox' => 'Boolean',
-        'CompositeDate' => 'Date',
+        'CheckboxSetID' => 'Int',
         'ConfirmedPassword' => 'Varchar',
         'CreditCard' => 'Varchar',
         'Date' => 'Date',
         'DateTime' => 'Datetime',
         'DateTimeWithCalendar' => 'Datetime',
         'DBFile' => 'DBFile',
-        'DMYCalendarDate' => 'Date',
         'DMYDate' => 'Date',
         'Email' => 'Varchar',
-        'GSTNumber' => 'Varchar',
         'HTMLField' => 'HTMLText',
-        'HTMLOneLine' => 'HTMLVarchar',
         'Money' => 'Money',
+        'MyCompositeField1' => 'Varchar',
+        'MyCompositeField2' => 'Varchar',
+        'MyCompositeField3' => 'Varchar',
+        'MyCompositeFieldCheckbox' => 'Boolean',
+        'MyFieldGroup1' => 'Varchar',
+        'MyFieldGroup2' => 'Varchar',
+        'MyFieldGroup3' => 'Varchar',
+        'MyFieldGroupCheckbox' => 'Boolean',
         'Number' => 'Int',
-        'OptionSet' => 'Int',
+        'OptionSet' => 'Varchar',
         'Password' => 'Varchar',
         'PhoneNumber' => 'Varchar',
         'Price' => 'Double',
@@ -50,9 +52,9 @@ class BasicFieldsTestPage extends TestPage
         'Required' => 'Text',
         'Text' => 'Varchar',
         'Textarea' => 'Text',
+        'Required' => 'Varchar',
+        'Readonly' => 'Varchar',
         'Time' => 'Time',
-        'UniqueRestrictedText' => 'Varchar',
-        'UniqueText' => 'Varchar',
         'Validated' => 'Text',
     );
 
@@ -102,6 +104,7 @@ class BasicFieldsTestPage extends TestPage
             'CalendarDate' => "2002-10-23",
             'Checkbox' => 1,
             'CheckboxSetID' => $firstCat->ID,
+            'ConfirmedPassword' => 'secret',
             'CreditCard' => '4000400040004111',
             'Date' => "2002-10-23",
             'DateTime' => "2002-10-23 23:59",
@@ -130,7 +133,6 @@ class BasicFieldsTestPage extends TestPage
             'Readonly' => 'My value (ä!)',
             'Required' => 'My required value (delete to test)',
             'Text' => 'My value (ä!)',
-            'Textarea' => 'My value (ä!)',
             'Textarea' => 'My value (ä!)',
             'Time' => "23:59",
             'Validated' => '1',
@@ -340,14 +342,5 @@ class BasicFieldsTestPage extends TestPage
 
 class BasicFieldsTestPage_Controller extends TestPage_Controller
 {
-    public function AutoCompleteItems()
-    {
-        $items = array(
-            'TestItem1',
-            'TestItem2',
-            'TestItem3',
-            'TestItem4',
-        );
-        return implode(',', $items);
-    }
+
 }
