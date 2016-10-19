@@ -146,7 +146,7 @@ class BasicFieldsTestPage extends TestPage
             'MyLabelledFieldGroup3' => 2,
             'MyLabelledFieldGroupCheckbox' => true,
             'Number' => 99,
-            'OptionSet' => join(',', array($thirdCat->ID, $firstCat->ID)),
+            'OptionSet' => $thirdCat->ID,
             'Password' => 'My value (ä!)',
             'PhoneNumber' => '021 1235',
             'Price' => 99.99,
