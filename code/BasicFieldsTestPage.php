@@ -160,6 +160,22 @@ class BasicFieldsTestPage extends TestPage
         );
     }
 
+    public function Listbox_readonly() {
+        return $this->Listbox();
+    }
+
+    public function Listbox_disabled() {
+        return $this->Listbox();
+    }
+
+    public function CheckboxSet_readonly() {
+        return $this->CheckboxSet();
+    }
+
+    public function CheckboxSet_disabled() {
+        return $this->CheckboxSet();
+    }
+
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
