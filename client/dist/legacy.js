@@ -11,4 +11,4 @@ setTimeout(function(){return t._renderForm()},100),this[0].style.setProperty("ov
 a["default"].render(c["default"].createElement(l.Provider,{store:e},c["default"].createElement(d["default"],{schemaUrl:r,handleSubmit:function o(){return t._handleSubmit.apply(t,arguments)}})),this[0])
 
 },_clearForm:function u(){a["default"].unmountComponentAtNode(this[0])},_handleSubmit:function s(t,e,n){return t.preventDefault(),n()}}),t(".TestReactFormBuilder .nav-link").entwine({onclick:function f(t){
-t.preventDefault()}})})},function(t,e){t.exports=jQuery},function(t,e){t.exports=React},function(t,e){t.exports=ReactDom},function(t,e){t.exports=ReactRedux},function(t,e){t.exports=FormBuilder}])
+t.preventDefault()}})})},function(t,e){t.exports=jQuery},function(t,e){t.exports=React},function(t,e){t.exports=ReactDom},function(t,e){t.exports=ReactRedux},function(t,e){t.exports=FormBuilderLoader}])
