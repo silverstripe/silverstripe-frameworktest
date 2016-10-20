@@ -24,9 +24,10 @@ class TestReactFormBuilder extends LeftAndMain
     }
     public function getTestEditForm($id = null) {
         /* @var $page BasicFieldsTestPage */
-        $page = BasicFieldsTestPage::create();
+        $page = BasicFieldsTestPage::get()->First();
 
         $form = Form::create($this, 'TestEditForm', $page->getCMSFields(), FieldList::create([]));
+        $form->loadDataFrom($page);
         return $form;
     }
 

@@ -17,51 +17,58 @@ use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\FieldGroup;
 use SilverStripe\Forms\CompositeField;
 use SilverStripe\Forms\RequiredFields;
+use SilverStripe\Forms\HTMLReadonlyField;
 
 
 class BasicFieldsTestPage extends TestPage
 {
     private static $db = array(
-        'Required' => 'Text',
-        'Validated' => 'Text',
-        'Checkbox' => 'Boolean',
-        'Readonly' => 'Varchar',
-        'Textarea' => 'Text',
-        'Text' => 'Varchar',
         'CalendarDate' => 'Date',
-        'CompositeDate' => 'Date',
+        'Checkbox' => 'Boolean',
+        'ConfirmedPassword' => 'Varchar',
+        'CreditCard' => 'Varchar',
         'Date' => 'Date',
-        'DMYCalendarDate' => 'Date',
-        'DMYDate' => 'Date',
         'DateTime' => 'Datetime',
         'DateTimeWithCalendar' => 'Datetime',
-        'Time' => 'Time',
-
-        'Money' => 'Money',
-        'Number' => 'Int',
-        'Price' => 'Double',
-        'Email' => 'Varchar',
-        'Password' => 'Varchar',
-        'ConfirmedPassword' => 'Varchar',
-        'HTMLField' => 'HTMLText',
-        'HTMLOneLine' => 'HTMLVarchar',
-        'UniqueText' => 'Varchar',
-        'AjaxUniqueText' => 'Varchar',
-        'UniqueRestrictedText' => 'Varchar',
-        'BankNumber' => 'Varchar',
-        'PhoneNumber' => 'Varchar',
-        'Autocomplete' => 'Varchar',
-        'CreditCard' => 'Varchar',
-        'GSTNumber' => 'Varchar',
-        'OptionSet' => 'Int',
         'DBFile' => 'DBFile',
+        'DMYDate' => 'Date',
+        'Email' => 'Varchar',
+        'HTMLField' => 'HTMLText',
+        'Money' => 'Money',
+        'MyCompositeField1' => 'Varchar',
+        'MyCompositeField2' => 'Varchar',
+        'MyCompositeField3' => 'Varchar',
+        'MyCompositeFieldCheckbox' => 'Boolean',
+        'MyFieldGroup1' => 'Varchar',
+        'MyFieldGroup2' => 'Varchar',
+        'MyFieldGroup3' => 'Varchar',
+        'MyFieldGroupCheckbox' => 'Boolean',
+        'MyLabelledFieldGroup1' => 'Varchar',
+        'MyLabelledFieldGroup2' => 'Varchar',
+        'MyLabelledFieldGroup3' => 'Int',
+        'MyLabelledFieldGroupCheckbox' => 'Boolean',
+        'Number' => 'Int',
+        'OptionSet' => 'Varchar',
+        'Password' => 'Varchar',
+        'PhoneNumber' => 'Varchar',
+        'Price' => 'Double',
+        'Readonly' => 'Varchar',
+        'Required' => 'Text',
+        'Text' => 'Varchar',
+        'Textarea' => 'Text',
+        'Required' => 'Varchar',
+        'Readonly' => 'Varchar',
+        'Time' => 'Time',
+        'ToggleCompositeTextField1' => 'Varchar',
+        'ToggleCompositeDropdownField' => 'Varchar',
+        'Validated' => 'Text',
     );
 
     private static $has_one = array(
-        'Dropdown' => 'SilverStripe\\FrameworkTest\\Model\\TestCategory',
-        'GroupedDropdown' => 'SilverStripe\\FrameworkTest\\Model\\TestCategory',
-        'File' => 'SilverStripe\\Assets\\File',
         'AttachedFile' => 'SilverStripe\\Assets\\File',
+        'Dropdown' => 'SilverStripe\\FrameworkTest\\Model\\TestCategory',
+        'File' => 'SilverStripe\\Assets\\File',
+        'GroupedDropdown' => 'SilverStripe\\FrameworkTest\\Model\\TestCategory',
         'Image' => 'SilverStripe\\Assets\\Image',
     );
 
@@ -71,7 +78,8 @@ class BasicFieldsTestPage extends TestPage
 
     private static $many_many = array(
         'ManyManyFiles' => 'SilverStripe\\Assets\\File',
-        'MultipleListboxField' => 'SilverStripe\\FrameworkTest\\Model\\TestCategory',
+        'CheckboxSet' => 'SilverStripe\\FrameworkTest\\Model\\TestCategory',
+        'Listbox' => 'SilverStripe\\FrameworkTest\\Model\\TestCategory',
     );
 
     private static $defaults = array(
@@ -86,6 +94,16 @@ class BasicFieldsTestPage extends TestPage
             $data = $this->getDefaultData();
             $inst->update($data);
             $inst->write();
+
+            TestCategory::create()->requireDefaultRecords();
+            $cats = TestCategory::get();
+            $firstCat = $cats->offsetGet(0);
+            $thirdCat = $cats->offsetGet(2);
+            $inst->Listbox()->add($firstCat);
+            $inst->Listbox()->add($thirdCat);
+            $inst->CheckboxSet()->add($firstCat);
+            $inst->CheckboxSet()->add($thirdCat);
+
         }
     }
 
@@ -100,42 +118,63 @@ class BasicFieldsTestPage extends TestPage
         $thirdCat = $cats->offsetGet(2);
 
         return array(
-            'Readonly' => 'My value (ä!)',
-            'Textarea' => 'My value (ä!)',
-            'Required' => 'My required value (delete to test)',
-            'Validated' => '1',
-            'Text' => 'My value (ä!)',
-            'Textarea' => 'My value (ä!)',
-            'HTMLField' => 'My <strong>value</strong> (ä!)',
-            'Email' => 'test@test.com',
-            'Password' => 'My value (ä!)',
-            'Number' => 99,
-            'Price' => 99.99,
-            'MoneyAmount' => 99.99,
-            'MoneyCurrency' => 'EUR',
-            'PhoneNumber' => '021 1235',
-            'CreditCard' => '4000400040004111',
-            'Checkbox' => 1,
-            'CheckboxSetID' => $firstCat->ID,
-            'DropdownID' => $firstCat->ID,
-            'GroupedDropdownID' => $firstCat->ID,
-            'MultipleListboxFieldID' => join(',', array($thirdCat->ID, $firstCat->ID)),
-            'OptionSet' => join(',', array($thirdCat->ID, $firstCat->ID)),
-            'Date' => "2002-10-23",
             'CalendarDate' => "2002-10-23",
-            'DMYDate' => "2002-10-23",
-            'Time' => "23:59",
+            'Checkbox' => 1,
+            // 'CheckboxSet' => null,
+            'ConfirmedPassword' => 'secret',
+            'CreditCard' => '4000400040004111',
+            'Date' => "2002-10-23",
             'DateTime' => "2002-10-23 23:59",
             'DateTimeWithCalendar' => "2002-10-23 23:59",
-            'MyFieldGroup1' => 'My value (ä!)',
-            'MyFieldGroup2' => 'My value (ä!)',
-            'MyFieldGroup3' => 'My value (ä!)',
-            'MyFieldGroupCheckbox' => true,
+            'DMYDate' => "2002-10-23",
+            'DropdownID' => $firstCat->ID,
+            'Email' => 'test@test.com',
+            'GroupedDropdownID' => $firstCat->ID,
+            'HTMLField' => 'My <strong>value</strong> (ä!)',
+            'MoneyAmount' => 99.99,
+            'MoneyCurrency' => 'EUR',
+            // 'ListboxID' => null,
             'MyCompositeField1' => 'My value (ä!)',
             'MyCompositeField2' => 'My value (ä!)',
             'MyCompositeField3' => 'My value (ä!)',
             'MyCompositeFieldCheckbox' => true,
+            'MyFieldGroup1' => 'My value (ä!)',
+            'MyFieldGroup2' => 'My value (ä!)',
+            'MyFieldGroup3' => 'My value (ä!)',
+            'MyFieldGroupCheckbox' => true,
+            'MyLabelledFieldGroup1' => 'My value (ä!)',
+            'MyLabelledFieldGroup2' => 'My value (ä!)',
+            'MyLabelledFieldGroup3' => 2,
+            'MyLabelledFieldGroupCheckbox' => true,
+            'Number' => 99,
+            'OptionSet' => $thirdCat->ID,
+            'Password' => 'My value (ä!)',
+            'PhoneNumber' => '021 1235',
+            'Price' => 99.99,
+            'Readonly' => 'My value (ä!)',
+            'Required' => 'My required value (delete to test)',
+            'Text' => 'My value (ä!)',
+            'Textarea' => 'My value (ä!)',
+            'Time' => "23:59",
+            'ToggleCompositeTextField1' => 'My value (ä!)',
+            'Validated' => '1',
         );
+    }
+
+    public function Listbox_readonly() {
+        return $this->Listbox();
+    }
+
+    public function Listbox_disabled() {
+        return $this->Listbox();
+    }
+
+    public function CheckboxSet_readonly() {
+        return $this->CheckboxSet();
+    }
+
+    public function CheckboxSet_disabled() {
+        return $this->CheckboxSet();
     }
 
     public function getCMSFields()
@@ -175,7 +214,7 @@ class BasicFieldsTestPage extends TestPage
             Object::create('SilverStripe\\Forms\\GroupedDropdownField', 'GroupedDropdownID',
                 'GroupedDropdown', array('Test Categories' => TestCategory::map())
             ),
-            Object::create('SilverStripe\\Forms\\ListboxField', 'MultipleListboxFieldID', 'ListboxField (multiple)', TestCategory::map())
+            Object::create('SilverStripe\\Forms\\ListboxField', 'Listbox', 'ListboxField (multiple)', TestCategory::map())
                 ->setSize(3),
             Object::create('SilverStripe\\Forms\\OptionsetField', 'OptionSet', 'OptionSetField', TestCategory::map()),
             Object::create('SilverStripe\\Forms\\SelectionGroup', 'SelectionGroup', array(
@@ -192,9 +231,7 @@ class BasicFieldsTestPage extends TestPage
             )),
             Object::create('SilverStripe\\Forms\\ToggleCompositeField', 'ToggleCompositeField', 'ToggleCompositeField', new FieldList(
                 Object::create('SilverStripe\\Forms\\TextField', 'ToggleCompositeTextField1'),
-                Object::create('SilverStripe\\Forms\\TextField', 'ToggleCompositeTextField2'),
-                Object::create('SilverStripe\\Forms\\DropdownField', 'ToggleCompositeDropdownField', 'ToggleCompositeDropdownField', TestCategory::map()),
-                Object::create('SilverStripe\\Forms\\TextField', 'ToggleCompositeTextField3')
+                Object::create('SilverStripe\\Forms\\DropdownField', 'ToggleCompositeDropdownField', 'ToggleCompositeDropdownField', TestCategory::map())
             ))
         ));
 
@@ -235,14 +272,6 @@ class BasicFieldsTestPage extends TestPage
                 ->setRightTitle($rightTitle),
         ));
 
-        $data = $this->getDefaultData();
-        foreach ($fields->dataFields() as $field) {
-            $name = $field->getName();
-            if (isset($data[$name])) {
-                $field->setValue($data[$name]);
-            }
-        }
-
         $blacklist = array(
             'DMYDate', 'Required', 'Validated', 'ToggleCompositeField', 'SelectionGroup'
         );
@@ -263,13 +292,13 @@ class BasicFieldsTestPage extends TestPage
                 $disabledField = $field->performDisabledTransformation();
                 $disabledField->setTitle($disabledField->Title() . ' (disabled)');
                 $disabledField->setName($disabledField->getName() . '_disabled');
-                $disabledField->setValue($field->Value());
+                $disabledField->setValue($this->getField($field->getName()));
                 $tabObj->insertAfter($disabledField, $field->getName());
 
                 $readonlyField = $field->performReadonlyTransformation();
                 $readonlyField->setTitle($readonlyField->Title() . ' (readonly)');
                 $readonlyField->setName($readonlyField->getName() . '_readonly');
-                $readonlyField->setValue($field->Value());
+                $readonlyField->setValue($this->getField($field->getName()));
                 $tabObj->insertAfter($readonlyField, $field->getName());
             }
         }
@@ -284,7 +313,20 @@ class BasicFieldsTestPage extends TestPage
         );
 
         $fields->addFieldToTab('Root.Text',
-            LiteralField::create('SilverStripe\\Forms\\LiteralField', '<div class="form__divider">LiteralField with <b>some bold text</b> and <a href="http://silverstripe.com">a link</a></div>')
+            Object::create(
+                LiteralField::class,
+                'LiteralField',
+                '<div class="form__divider">LiteralField with <b>some bold text</b> and <a href="http://silverstripe.com">a link</a></div>'
+            )
+        );
+
+        $fields->addFieldToTab('Root.Text',
+            Object::create(
+                HTMLReadonlyField::class,
+                'HTMLReadonlyField',
+                'HTMLReadonlyField',
+                '<div class="form__divider">HTMLReadonlyField with <b>some bold text</b></div>'
+            )
         );
 
         $fields->addFieldToTab('Root.Text',
@@ -341,14 +383,5 @@ class BasicFieldsTestPage extends TestPage
 
 class BasicFieldsTestPage_Controller extends TestPage_Controller
 {
-    public function AutoCompleteItems()
-    {
-        $items = array(
-            'TestItem1',
-            'TestItem2',
-            'TestItem3',
-            'TestItem4',
-        );
-        return implode(',', $items);
-    }
+
 }

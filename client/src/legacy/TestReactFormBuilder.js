@@ -2,7 +2,7 @@ import jQuery from 'jQuery';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import FormBuilder from 'components/FormBuilder/FormBuilder';
+import FormBuilderLoader from 'containers/FormBuilderLoader/FormBuilderLoader';
 
 jQuery.entwine('ss', ($) => {
   /**
@@ -37,7 +37,7 @@ jQuery.entwine('ss', ($) => {
 
       ReactDOM.render(
         <Provider store={store}>
-          <FormBuilder
+          <FormBuilderLoader
             schemaUrl={schemaUrl}
             handleSubmit={(...args) => this._handleSubmit(...args)}
           />
