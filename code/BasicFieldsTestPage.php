@@ -17,6 +17,7 @@ use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\FieldGroup;
 use SilverStripe\Forms\CompositeField;
 use SilverStripe\Forms\RequiredFields;
+use SilverStripe\Forms\HTMLReadonlyField;
 
 
 class BasicFieldsTestPage extends TestPage
@@ -312,7 +313,20 @@ class BasicFieldsTestPage extends TestPage
         );
 
         $fields->addFieldToTab('Root.Text',
-            LiteralField::create('SilverStripe\\Forms\\LiteralField', '<div class="form__divider">LiteralField with <b>some bold text</b> and <a href="http://silverstripe.com">a link</a></div>')
+            Object::create(
+                LiteralField::class,
+                'LiteralField',
+                '<div class="form__divider">LiteralField with <b>some bold text</b> and <a href="http://silverstripe.com">a link</a></div>'
+            )
+        );
+
+        $fields->addFieldToTab('Root.Text',
+            Object::create(
+                HTMLReadonlyField::class,
+                'HTMLReadonlyField',
+                'HTMLReadonlyField',
+                '<div class="form__divider">HTMLReadonlyField with <b>some bold text</b></div>'
+            )
         );
 
         $fields->addFieldToTab('Root.Text',
