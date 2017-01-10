@@ -56,8 +56,6 @@ class BasicFieldsTestPage extends TestPage
         'Required' => 'Text',
         'Text' => 'Varchar',
         'Textarea' => 'Text',
-        'Required' => 'Varchar',
-        'Readonly' => 'Varchar',
         'Time' => 'Time',
         'ToggleCompositeTextField1' => 'Varchar',
         'ToggleCompositeDropdownField' => 'Varchar',
