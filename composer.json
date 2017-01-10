@@ -13,6 +13,7 @@
 	"require":
 	{
 		"silverstripe/framework": "~4.0",
-		"silverstripe/cms": "~4.0"
+		"silverstripe/cms": "~4.0",
+        "guzzlehttp/guzzle": "5.x"
 	}
 }
