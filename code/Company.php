@@ -2,21 +2,13 @@
 
 namespace SilverStripe\FrameworkTest\Model;
 
-
-
-
-
 use SilverStripe\ORM\ValidationResult;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\DB;
 use SilverStripe\Forms\UploadField;
 
-
-
-
 class Company extends DataObject
 {
-
     private static $table_name = 'Company';
 
     /**
@@ -34,7 +26,7 @@ class Company extends DataObject
         'RelationFieldsTestPage' => 'RelationFieldsTestPage',
         'GridFieldTestPageHasOne' => 'GridFieldTestPage'
     );
-    
+
     private static $has_many  = array(
         'Employees' => 'SilverStripe\\FrameworkTest\\Model\\Employee',
         'GroupPhotos' => 'SilverStripe\\Assets\\Image'
@@ -75,20 +67,17 @@ class Company extends DataObject
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
-        $fields->addFieldToTab('Root.Main',
-            $uploadField = UploadField::create('GroupPhotos')
-        );
-        if (method_exists('SilverStripe\\Forms\\UploadField', 'setAllowedFileCategories')) {
-            $uploadField->setAllowedFileCategories('image');
-        }
-
+        $fields->addFieldToTab('Root.Main', $uploadField = UploadField::create('GroupPhotos'));
+        $uploadField->setAllowedFileCategories('image');
         return $fields;
     }
 
     public function validate()
     {
         if (!$this->Title) {
-            return new ValidationResult(false, 'Title is required');
+            $result = new ValidationResult();
+            $result->addError('Title is required');
+            return $result;
         } else {
             return parent::validate();
         }
@@ -98,15 +87,15 @@ class Company extends DataObject
     {
         return sprintf('%s (%s)', $this->Name, $this->CEO);
     }
-    
+
     public function requireDefaultRecords()
     {
         parent::requireDefaultRecords();
-        $companySet = DataObject::get('SilverStripe\\FrameworkTest\\Model\\Company');
+        $companySet = static::get();
         foreach ($companySet as $company) {
             $company->delete();
         }
-        
+
         foreach ($this->data() as $companyData) {
             $company = new Company();
             $company->Name = $companyData[0];
