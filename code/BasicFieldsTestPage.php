@@ -18,7 +18,7 @@ use SilverStripe\Forms\FieldGroup;
 use SilverStripe\Forms\CompositeField;
 use SilverStripe\Forms\RequiredFields;
 use SilverStripe\Forms\HTMLReadonlyField;
-
+use SilverStripe\AssetAdmin\Forms\UploadField as NewUploadField;
 
 class BasicFieldsTestPage extends TestPage
 {
@@ -266,6 +266,19 @@ class BasicFieldsTestPage extends TestPage
                 ->setRightTitle($rightTitle)
                 ->setDescription($description),
             UploadField::create('ManyManyFiles', 'UploadField for many_many')
+                ->setDescription($description)
+                ->setRightTitle($rightTitle),
+//            NewUploadField::create('AttachedFile', 'New UploadField with canUpload=false')
+//                ->setDescription($description)
+//                ->setRightTitle($rightTitle),
+//                ->setConfig('canUpload', false),
+            NewUploadField::create('Image', 'New UploadField for image')
+                ->setDescription($description)
+                ->setRightTitle($rightTitle),
+            NewUploadField::create('HasManyFiles', 'New UploadField for has_many')
+                ->setRightTitle($rightTitle)
+                ->setDescription($description),
+            NewUploadField::create('ManyManyFiles', 'New UploadField for many_many')
                 ->setDescription($description)
                 ->setRightTitle($rightTitle),
         ));
