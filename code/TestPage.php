@@ -11,10 +11,8 @@ use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\Form;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Control\Email\Email;
-
-
-
-
+use SilverStripe\Security\Member;
+use SilverStripe\Security\Security;
 
 /**
  * Parent class of all test pages
@@ -40,29 +38,31 @@ class TestPage extends Page
         $class = $this->class;
         if (!DataObject::get_one($class)) {
             // Try to create common parent
-            $parent = SiteTree::get()
-                ->filter('URLSegment', 'feature-test-pages')
-                ->First();
+            Member::actAs(Security::findAnAdministrator(), function () use ($class) {
+                $parent = SiteTree::get()
+                    ->filter('URLSegment', 'feature-test-pages')
+                    ->First();
 
-            if (!$parent) {
-                $parent = new Page(array(
-                    'Title' => 'Feature Test Pages',
-                    'Content' => 'A collection of pages for testing various features in the SilverStripe CMS',
-                    'ShowInMenus' => 0
-                ));
-                $parent->write();
-                $parent->doPublish();
-            }
+                if (!$parent) {
+                    $parent = new Page(array(
+                        'Title' => 'Feature Test Pages',
+                        'Content' => 'A collection of pages for testing various features in the SilverStripe CMS',
+                        'ShowInMenus' => 0
+                    ));
+                    $parent->write();
+                    $parent->doPublish();
+                }
 
-            // Create actual page
-            $page = new $class();
-            $page->Title = str_replace("SilverStripe\\FrameworkTest\\Model\\TestPage", "", $class);
-            $page->ShowInMenus = 0;
-            if ($parent) {
-                $page->ParentID = $parent->ID;
-            }
-            $page->write();
-            $page->publish('Stage', 'Live');
+                // Create actual page
+                $page = new $class();
+                $page->Title = str_replace("SilverStripe\\FrameworkTest\\Model\\TestPage", "", $class);
+                $page->ShowInMenus = 0;
+                if ($parent) {
+                    $page->ParentID = $parent->ID;
+                }
+                $page->write();
+                $page->publish('Stage', 'Live');
+            });
         }
     }
 }
