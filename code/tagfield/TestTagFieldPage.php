@@ -37,4 +37,4 @@
 
 // }
 
-// class TestTagFieldPage_Controller extends Page_Controller {}
+// class TestTagFieldPage_Controller extends PageController {}

@@ -11,9 +11,9 @@ class RecaptchaTestPage extends Page
 {
 }
 
-class RecaptchaTestPage_Controller extends Page_Controller
+class RecaptchaTestPage_Controller extends PageController
 {
-    
+
     public function Form()
     {
         $fields = new FieldList(
@@ -24,7 +24,7 @@ class RecaptchaTestPage_Controller extends Page_Controller
         } else {
             $fields->push(new LiteralField('<p class="message error">RecaptchaField class not found</p>'));
         }
-        
+
         $form = new Form(
             $this,
             'Form',
@@ -34,14 +34,14 @@ class RecaptchaTestPage_Controller extends Page_Controller
             ),
             new RequiredFields(array('MyText'))
         );
-        
+
         return $form;
     }
-    
+
     public function submit($data, $form)
     {
         $form->sessionMessage('Hooray!', 'good');
-        
+
         return Director::redirectBack();
     }
 }

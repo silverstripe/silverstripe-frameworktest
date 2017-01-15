@@ -4,9 +4,9 @@ class Page3MultiFormTestPage extends Page
 {
 }
 
-class Page3MultiFormTestPage_Controller extends Page_Controller
+class Page3MultiFormTestPage_Controller extends PageController
 {
-    
+
     public function Page3MultiForm()
     {
         return new Page3MultiForm($this, 'Page3MultiForm');

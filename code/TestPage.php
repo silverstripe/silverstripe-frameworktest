@@ -3,14 +3,7 @@
 namespace SilverStripe\FrameworkTest\Model;
 
 use Page;
-
-
-use Page_Controller;
-
-
-
-
-
+use PageController;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Forms\FormAction;
@@ -77,7 +70,7 @@ class TestPage extends Page
 /**
  * Parent class of all test page controllers
  */
-class TestPage_Controller extends Page_Controller
+class TestPage_Controller extends PageController
 {
     private static $allowed_actions = array(
         'Form',

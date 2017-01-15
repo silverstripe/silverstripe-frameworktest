@@ -1,25 +1,25 @@
-<?php 
+<?php
 use SilverStripe\Forms\LiteralField;
 
 class SifrPage extends Page
 {
-    
+
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
         $fields->addFieldToTab("Root.Content.SifrSampleImage", new LiteralField("SifrSampleImage", '<p><img src="frameworktest/images/sifr_sample.png"/></p>'));
-        
+
         return $fields;
     }
 }
 
-class SifrPage_Controller extends Page_Controller
+class SifrPage_Controller extends PageController
 {
-    
+
     public function init()
     {
         parent::init();
-        
+
         Sifr::add_font('blackout', 'themes/fonts/blackout.swf');
         Sifr::replace_element('blackout', 'h2', "'.sIFR-root { text-align: left; color: red;'");
         Sifr::replace_element('blackout', 'h3', "'.sIFR-root { text-align: left; color: red;'");

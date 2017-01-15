@@ -23,7 +23,7 @@ class GridFieldTestPage extends TestPage
     private static $many_many = array(
         "ManyManyCompanies" => "SilverStripe\\FrameworkTest\\Model\\Company",
     );
-    
+
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
@@ -55,33 +55,33 @@ class GridFieldTestPage extends TestPage
     }
 }
 
-class GridFieldTestPage_Controller extends Page_Controller
+class GridFieldTestPage_Controller extends PageController
 {
 
     private static $allowed_actions = array(
         'Form',
     );
-    
+
     /**
      *
      * @var string
      */
     public $Title = "GridFieldTestPage";
-    
+
     public function init()
     {
         parent::init();
         Requirements::css('frameworktest/css/gridfieldtest.css', 'screen');
     }
-    
+
     /**
      *
-     * @return Form 
+     * @return Form
      */
     public function Form()
     {
         $config = new GridFieldConfig_RecordEditor();
-        
+
         $grid = new GridField('Companies', 'Companies', new DataList('SilverStripe\\FrameworkTest\\Model\\Company'), $config);
         return new Form($this, 'Form', new FieldList($grid), new FieldList());
     }
