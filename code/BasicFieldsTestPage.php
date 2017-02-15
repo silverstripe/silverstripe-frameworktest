@@ -47,7 +47,7 @@ class BasicFieldsTestPage extends TestPage
         'MyLabelledFieldGroup2' => 'Varchar',
         'MyLabelledFieldGroup3' => 'Int',
         'MyLabelledFieldGroupCheckbox' => 'Boolean',
-        'Number' => 'Int',
+        'Number' => 'Float',
         'OptionSet' => 'Varchar',
         'Password' => 'Varchar',
         'PhoneNumber' => 'Varchar',
@@ -144,7 +144,7 @@ class BasicFieldsTestPage extends TestPage
             'MyLabelledFieldGroup2' => 'My value (ä!)',
             'MyLabelledFieldGroup3' => 2,
             'MyLabelledFieldGroupCheckbox' => true,
-            'Number' => 99,
+            'Number' => 99.123,
             'OptionSet' => $thirdCat->ID,
             'Password' => 'My value (ä!)',
             'PhoneNumber' => '021 1235',
@@ -197,7 +197,8 @@ class BasicFieldsTestPage extends TestPage
         ));
 
         $fields->addFieldsToTab('Root.Numeric', array(
-            Object::create('SilverStripe\\Forms\\NumericField', 'Number'),
+            Object::create('SilverStripe\\Forms\\NumericField', 'Number')
+                ->setScale(4),
             Object::create('SilverStripe\\Forms\\CurrencyField', 'Price'),
             Object::create('SilverStripe\\Forms\\MoneyField', 'Money', 'Money', array('Amount' => 99.99, 'Currency' => 'EUR')),
             Object::create('SilverStripe\\Forms\\PhoneNumberField', 'PhoneNumber'),
