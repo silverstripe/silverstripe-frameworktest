@@ -238,13 +238,12 @@ class BasicFieldsTestPage extends TestPage
         $fields->addFieldsToTab('Root.DateTime', array(
             $calendarDateField = Object::create('SilverStripe\\Forms\\DateField', 'CalendarDate', 'DateField with calendar'),
             Object::create('SilverStripe\\Forms\\DateField', 'Date', 'DateField'),
-            $dmyDateField = Object::create('SilverStripe\\Forms\\DateField', 'DMYDate', 'DateField with separate fields'),
+            $dmyDateField = Object::create('SilverStripe\\Forms\\SeparatedDateField', 'DMYDate', 'DateField with separate fields'),
             Object::create('SilverStripe\\Forms\\TimeField', 'Time', 'TimeField'),
             Object::create('SilverStripe\\Forms\\DatetimeField', 'DateTime', 'DateTime'),
             $dateTimeShowCalendar = Object::create('SilverStripe\\Forms\\DatetimeField', 'DateTimeWithCalendar', 'DateTime with calendar')
         ));
         $calendarDateField->setConfig('showcalendar', true);
-        $dmyDateField->setConfig('dmyfields', true);
         $dateTimeShowCalendar->getDateField()->setConfig('showcalendar', true);
         $dateTimeShowCalendar->getTimeField()->setConfig('showdropdown', true);
         $dateTimeShowCalendar->setRightTitle('Right title');
