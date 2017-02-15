@@ -243,9 +243,9 @@ class BasicFieldsTestPage extends TestPage
             Object::create('SilverStripe\\Forms\\DatetimeField', 'DateTime', 'DateTime'),
             $dateTimeShowCalendar = Object::create('SilverStripe\\Forms\\DatetimeField', 'DateTimeWithCalendar', 'DateTime with calendar')
         ));
-        $calendarDateField->setConfig('showcalendar', true);
-        $dateTimeShowCalendar->getDateField()->setConfig('showcalendar', true);
-        $dateTimeShowCalendar->getTimeField()->setConfig('showdropdown', true);
+        $calendarDateField->setShowCalendar(true);
+        $dateTimeShowCalendar->getDateField()->setShowCalendar(true);
+//        $dateTimeShowCalendar->getTimeField()->setConfig('showdropdown', true);
         $dateTimeShowCalendar->setRightTitle('Right title');
 
         $fields->addFieldsToTab('Root.File', array(
