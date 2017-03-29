@@ -8,8 +8,7 @@ use SilverStripe\Core\Object;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\SelectionGroup_Item;
 use SilverStripe\Forms\FieldList;
-use SilverStripe\Forms\AssetField;
-use SilverStripe\Forms\UploadField;
+use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\Forms\LabelField;
 use SilverStripe\Forms\LiteralField;
 use SilverStripe\Forms\DropdownField;
@@ -18,7 +17,6 @@ use SilverStripe\Forms\FieldGroup;
 use SilverStripe\Forms\CompositeField;
 use SilverStripe\Forms\RequiredFields;
 use SilverStripe\Forms\HTMLReadonlyField;
-use SilverStripe\AssetAdmin\Forms\UploadField as NewUploadField;
 
 class BasicFieldsTestPage extends TestPage
 {
@@ -249,16 +247,14 @@ class BasicFieldsTestPage extends TestPage
         $dateTimeShowCalendar->setRightTitle('Right title');
 
         $fields->addFieldsToTab('Root.File', array(
-            AssetField::create('DBFile'),
-            $bla = UploadField::create('File', 'FileUploadField')
+            $bla = UploadField::create('File', 'UploadField with multiUpload=false')
                 ->setDescription($description)
                 ->setRightTitle($rightTitle)
-                ->setConfig('allowedMaxFileNumber', 1)
-                ->setConfig('canPreviewFolder', false),
-            UploadField::create('AttachedFile', 'UploadField with canUpload=false')
-                ->setDescription($description)
-                ->setRightTitle($rightTitle)
-                ->setConfig('canUpload', false),
+                ->setIsMultiUpload(false),
+//            UploadField::create('AttachedFile', 'UploadField with canUpload=false')
+//                ->setDescription($description)
+//                ->setRightTitle($rightTitle)
+//                ->setConfig('canUpload', false),
             UploadField::create('Image', 'UploadField for image')
                 ->setDescription($description)
                 ->setRightTitle($rightTitle),
@@ -266,19 +262,6 @@ class BasicFieldsTestPage extends TestPage
                 ->setRightTitle($rightTitle)
                 ->setDescription($description),
             UploadField::create('ManyManyFiles', 'UploadField for many_many')
-                ->setDescription($description)
-                ->setRightTitle($rightTitle),
-//            NewUploadField::create('AttachedFile', 'New UploadField with canUpload=false')
-//                ->setDescription($description)
-//                ->setRightTitle($rightTitle),
-//                ->setConfig('canUpload', false),
-            NewUploadField::create('Image', 'New UploadField for image')
-                ->setDescription($description)
-                ->setRightTitle($rightTitle),
-            NewUploadField::create('HasManyFiles', 'New UploadField for has_many')
-                ->setRightTitle($rightTitle)
-                ->setDescription($description),
-            NewUploadField::create('ManyManyFiles', 'New UploadField for many_many')
                 ->setDescription($description)
                 ->setRightTitle($rightTitle),
         ));
