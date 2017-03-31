@@ -55,6 +55,7 @@ class BasicFieldsTestPage extends TestPage
         'Text' => 'Varchar',
         'Textarea' => 'Text',
         'Time' => 'Time',
+        'TimeHTML5' => 'Time',
         'ToggleCompositeTextField1' => 'Varchar',
         'ToggleCompositeDropdownField' => 'Varchar',
         'Validated' => 'Text',
@@ -152,6 +153,7 @@ class BasicFieldsTestPage extends TestPage
             'Text' => 'My value (ä!)',
             'Textarea' => 'My value (ä!)',
             'Time' => "23:59",
+            'TimeHTML5' => "23:59",
             'ToggleCompositeTextField1' => 'My value (ä!)',
             'Validated' => '1',
         );
@@ -234,16 +236,18 @@ class BasicFieldsTestPage extends TestPage
 
         // All these date/time fields generally have issues saving directly in the CMS
         $fields->addFieldsToTab('Root.DateTime', array(
-            $calendarDateField = Object::create('SilverStripe\\Forms\\DateField', 'CalendarDate', 'DateField with calendar'),
+            Object::create('SilverStripe\\Forms\\DateField', 'CalendarDate', 'DateField with HTML5')
+                ->setHTML5(true),
             Object::create('SilverStripe\\Forms\\DateField', 'Date', 'DateField'),
-            $dmyDateField = Object::create('SilverStripe\\Forms\\SeparatedDateField', 'DMYDate', 'DateField with separate fields'),
+            Object::create('SilverStripe\\Forms\\SeparatedDateField', 'DMYDate', 'DateField with separate fields'),
             Object::create('SilverStripe\\Forms\\TimeField', 'Time', 'TimeField'),
+            Object::create('SilverStripe\\Forms\\TimeField', 'TimeHTML5', 'TimeField with HTML5')
+                ->setHTML5(true),
             Object::create('SilverStripe\\Forms\\DatetimeField', 'DateTime', 'DateTime'),
             $dateTimeShowCalendar = Object::create('SilverStripe\\Forms\\DatetimeField', 'DateTimeWithCalendar', 'DateTime with calendar')
         ));
-        $calendarDateField->setShowCalendar(true);
-        $dateTimeShowCalendar->getDateField()->setShowCalendar(true);
 //        $dateTimeShowCalendar->getTimeField()->setConfig('showdropdown', true);
+        $dateTimeShowCalendar->getDateField()->setHTML5(true);
         $dateTimeShowCalendar->setRightTitle('Right title');
 
         $fields->addFieldsToTab('Root.File', array(
