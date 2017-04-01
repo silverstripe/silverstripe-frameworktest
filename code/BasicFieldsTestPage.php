@@ -192,8 +192,7 @@ class BasicFieldsTestPage extends TestPage
             Object::create('SilverStripe\\Forms\\TextField', 'Text'),
             Object::create('SilverStripe\\Forms\\HTMLEditor\\HTMLEditorField', 'HTMLField', 'HTMLField'),
             Object::create('SilverStripe\\Forms\\EmailField', 'Email'),
-            Object::create('SilverStripe\\Forms\\PasswordField', 'Password'),
-            Object::create('SilverStripe\\Forms\\ConfirmedPasswordField', 'ConfirmedPassword')
+//            Object::create('SilverStripe\\Forms\\ConfirmedPasswordField', 'ConfirmedPassword')
         ));
 
         $fields->addFieldsToTab('Root.Numeric', array(
@@ -235,19 +234,20 @@ class BasicFieldsTestPage extends TestPage
         ));
 
         // All these date/time fields generally have issues saving directly in the CMS
+        $minDate = date('Y-m-d', strtotime('-7 days'));
         $fields->addFieldsToTab('Root.DateTime', array(
-            Object::create('SilverStripe\\Forms\\DateField', 'CalendarDate', 'DateField with HTML5')
-                ->setHTML5(true),
-            Object::create('SilverStripe\\Forms\\DateField', 'Date', 'DateField'),
-            Object::create('SilverStripe\\Forms\\SeparatedDateField', 'DMYDate', 'DateField with separate fields'),
-            Object::create('SilverStripe\\Forms\\TimeField', 'Time', 'TimeField'),
-            Object::create('SilverStripe\\Forms\\TimeField', 'TimeHTML5', 'TimeField with HTML5')
-                ->setHTML5(true),
-            Object::create('SilverStripe\\Forms\\DatetimeField', 'DateTime', 'DateTime'),
-            $dateTimeShowCalendar = Object::create('SilverStripe\\Forms\\DatetimeField', 'DateTimeWithCalendar', 'DateTime with calendar')
+            Object::create('SilverStripe\\Forms\\DateField', 'CalendarDate', 'DateField with HTML5 (min date: ' . $minDate . ')')
+                ->setMinDate($minDate),
+            Object::create('SilverStripe\\Forms\\DateField', 'Date', 'DateField without HTML5')
+                ->setHTML5(false),
+            Object::create('SilverStripe\\Forms\\TimeField', 'Time', 'TimeField without HTML5')
+                ->setHTML5(false),
+            Object::create('SilverStripe\\Forms\\TimeField', 'TimeHTML5', 'TimeField with HTML5'),
+            $dateTime = Object::create('SilverStripe\\Forms\\DatetimeField', 'DateTime', 'DateTime without HTML5'),
+            $dateTimeShowCalendar = Object::create('SilverStripe\\Forms\\DatetimeField', 'DateTimeWithCalendar', 'DateTime with HTML5')
         ));
-//        $dateTimeShowCalendar->getTimeField()->setConfig('showdropdown', true);
-        $dateTimeShowCalendar->getDateField()->setHTML5(true);
+        $dateTime->getDateField()->setHTML5(true);
+        $dateTime->getTimeField()->setHTML5(true);
         $dateTimeShowCalendar->setRightTitle('Right title');
 
         $fields->addFieldsToTab('Root.File', array(
