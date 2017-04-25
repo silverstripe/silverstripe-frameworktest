@@ -242,12 +242,12 @@ class BasicFieldsTestPage extends TestPage
             Object::create('SilverStripe\\Forms\\TimeField', 'Time', 'TimeField without HTML5')
                 ->setHTML5(false),
             Object::create('SilverStripe\\Forms\\TimeField', 'TimeHTML5', 'TimeField with HTML5'),
-            $dateTime = Object::create('SilverStripe\\Forms\\DatetimeField', 'DateTime', 'DateTime without HTML5'),
-            $dateTimeShowCalendar = Object::create('SilverStripe\\Forms\\DatetimeField', 'DateTimeWithCalendar', 'DateTime with HTML5')
+            Object::create('SilverStripe\\Forms\\DatetimeField', 'DateTime', 'DateTime without HTML5 (min date/time: ' . $minDateTime . ')')
+                ->setHTML5(false)
+                ->setMinDatetime($minDateTime),
+            Object::create('SilverStripe\\Forms\\DatetimeField', 'DateTimeWithCalendar', 'DateTime with HTML5 (min date/time: ' . $minDateTime . ')')
+                ->setMinDatetime($minDateTime),
         ));
-        $dateTime->getDateField()->setHTML5(true);
-        $dateTime->getTimeField()->setHTML5(true);
-        $dateTimeShowCalendar->setRightTitle('Right title');
 
         $fields->addFieldsToTab('Root.File', array(
             $bla = UploadField::create('File', 'UploadField with multiUpload=false')
