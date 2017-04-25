@@ -29,7 +29,6 @@ class BasicFieldsTestPage extends TestPage
         'DateTime' => 'Datetime',
         'DateTimeWithCalendar' => 'Datetime',
         'DBFile' => 'DBFile',
-        'DMYDate' => 'Date',
         'Email' => 'Varchar',
         'HTMLField' => 'HTMLText',
         'Money' => 'Money',
@@ -123,7 +122,6 @@ class BasicFieldsTestPage extends TestPage
             'Date' => "2002-10-23",
             'DateTime' => "2002-10-23 23:59",
             'DateTimeWithCalendar' => "2002-10-23 23:59",
-            'DMYDate' => "2002-10-23",
             'DropdownID' => $firstCat->ID,
             'Email' => 'test@test.com',
             'GroupedDropdownID' => $firstCat->ID,
@@ -271,7 +269,7 @@ class BasicFieldsTestPage extends TestPage
         ));
 
         $blacklist = array(
-            'DMYDate', 'Required', 'Validated', 'ToggleCompositeField', 'SelectionGroup'
+            'Required', 'Validated', 'ToggleCompositeField', 'SelectionGroup'
         );
 
         $tabs = array('Root.Text', 'Root.Numeric', 'Root.Option', 'Root.DateTime', 'Root.File');
