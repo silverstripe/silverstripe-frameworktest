@@ -29,7 +29,6 @@ class BasicFieldsTestPage extends TestPage
         'DateTime' => 'Datetime',
         'DateTimeWithCalendar' => 'Datetime',
         'DBFile' => 'DBFile',
-        'DMYDate' => 'Date',
         'Email' => 'Varchar',
         'HTMLField' => 'HTMLText',
         'Money' => 'Money',
@@ -115,15 +114,14 @@ class BasicFieldsTestPage extends TestPage
         $thirdCat = $cats->offsetGet(2);
 
         return array(
-            'CalendarDate' => "2002-10-23",
+            'CalendarDate' => "2017-01-31",
             'Checkbox' => 1,
             // 'CheckboxSet' => null,
             'ConfirmedPassword' => 'secret',
             'CreditCard' => '4000400040004111',
-            'Date' => "2002-10-23",
-            'DateTime' => "2002-10-23 23:59",
-            'DateTimeWithCalendar' => "2002-10-23 23:59",
-            'DMYDate' => "2002-10-23",
+            'Date' => "2017-01-31",
+            'DateTime' => "2017-01-31 23:59",
+            'DateTimeWithCalendar' => "2017-01-31 23:59",
             'DropdownID' => $firstCat->ID,
             'Email' => 'test@test.com',
             'GroupedDropdownID' => $firstCat->ID,
@@ -233,22 +231,23 @@ class BasicFieldsTestPage extends TestPage
             ))
         ));
 
-        // All these date/time fields generally have issues saving directly in the CMS
-        $minDate = date('Y-m-d', strtotime('-7 days'));
+        $minDate = '2017-01-01';
+        $minDateTime = '2017-01-01 23:59:00';
         $fields->addFieldsToTab('Root.DateTime', array(
             Object::create('SilverStripe\\Forms\\DateField', 'CalendarDate', 'DateField with HTML5 (min date: ' . $minDate . ')')
                 ->setMinDate($minDate),
-            Object::create('SilverStripe\\Forms\\DateField', 'Date', 'DateField without HTML5')
-                ->setHTML5(false),
+            Object::create('SilverStripe\\Forms\\DateField', 'Date', 'DateField without HTML5 (min date: ' . $minDate . ')')
+                ->setHTML5(false)
+                ->setMinDate($minDate),
             Object::create('SilverStripe\\Forms\\TimeField', 'Time', 'TimeField without HTML5')
                 ->setHTML5(false),
             Object::create('SilverStripe\\Forms\\TimeField', 'TimeHTML5', 'TimeField with HTML5'),
-            $dateTime = Object::create('SilverStripe\\Forms\\DatetimeField', 'DateTime', 'DateTime without HTML5'),
-            $dateTimeShowCalendar = Object::create('SilverStripe\\Forms\\DatetimeField', 'DateTimeWithCalendar', 'DateTime with HTML5')
+            Object::create('SilverStripe\\Forms\\DatetimeField', 'DateTime', 'DateTime without HTML5 (min date/time: ' . $minDateTime . ')')
+                ->setHTML5(false)
+                ->setMinDatetime($minDateTime),
+            Object::create('SilverStripe\\Forms\\DatetimeField', 'DateTimeWithCalendar', 'DateTime with HTML5 (min date/time: ' . $minDateTime . ')')
+                ->setMinDatetime($minDateTime),
         ));
-        $dateTime->getDateField()->setHTML5(true);
-        $dateTime->getTimeField()->setHTML5(true);
-        $dateTimeShowCalendar->setRightTitle('Right title');
 
         $fields->addFieldsToTab('Root.File', array(
             $bla = UploadField::create('File', 'UploadField with multiUpload=false')
@@ -271,7 +270,7 @@ class BasicFieldsTestPage extends TestPage
         ));
 
         $blacklist = array(
-            'DMYDate', 'Required', 'Validated', 'ToggleCompositeField', 'SelectionGroup'
+            'Required', 'Validated', 'ToggleCompositeField', 'SelectionGroup'
         );
 
         $tabs = array('Root.Text', 'Root.Numeric', 'Root.Option', 'Root.DateTime', 'Root.File');
