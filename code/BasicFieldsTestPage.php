@@ -197,9 +197,7 @@ class BasicFieldsTestPage extends TestPage
             Object::create('SilverStripe\\Forms\\NumericField', 'Number')
                 ->setScale(4),
             Object::create('SilverStripe\\Forms\\CurrencyField', 'Price'),
-            Object::create('SilverStripe\\Forms\\MoneyField', 'Money', 'Money', array('Amount' => 99.99, 'Currency' => 'EUR')),
-            Object::create('SilverStripe\\Forms\\PhoneNumberField', 'PhoneNumber'),
-            Object::create('SilverStripe\\Forms\\CreditCardField', 'CreditCard')
+            Object::create('SilverStripe\\Forms\\MoneyField', 'Money', 'Money', array('Amount' => 99.99, 'Currency' => 'EUR'))
         ));
 
         $fields->addFieldsToTab('Root.Option', array(
