@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import FormBuilderLoader from 'containers/FormBuilderLoader/FormBuilderLoader';
 
+const sectionConfigKey = 'TestReactFormBuilder';
+
 jQuery.entwine('ss', ($) => {
   /**
    * Kick off Test React FormBuilder admin section.
@@ -32,7 +34,7 @@ jQuery.entwine('ss', ($) => {
     _renderForm() {
       const store = window.ss.store;
       const sectionConfig = store.getState()
-        .config.sections['TestReactFormBuilder'];
+        .config.sections.find((section) => section.name === sectionConfigKey);
       const schemaUrl = sectionConfig.form.TestEditForm.schemaUrl;
 
       ReactDOM.render(
