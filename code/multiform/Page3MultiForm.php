@@ -7,10 +7,8 @@ use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextField;
 
-
 class Page3MultiForm extends MultiForm
 {
-
     public static $start_step = 'Page3StartFormStep';
 
     public function finish($data, $form)
@@ -19,7 +17,7 @@ class Page3MultiForm extends MultiForm
         $steps = DataObject::get('MultiFormStep', "SessionID = {$this->session->ID}");
         if ($steps) {
             foreach ($steps as $step) {
-                if ($step->class == 'Page3PersonalDetailsFormStep') {
+                if ($step->ClassName == 'Page3PersonalDetailsFormStep') {
                     $member = new Member();
                     $data = $step->loadData();
                     if ($data) {
@@ -28,7 +26,7 @@ class Page3MultiForm extends MultiForm
                     }
                 }
 
-                if ($step->class == 'Page3OrganisationDetailsFormStep') {
+                if ($step->ClassName == 'Page3OrganisationDetailsFormStep') {
                     $organisation = new Organisation();
                     $data = $step->loadData();
                     if ($data) {
