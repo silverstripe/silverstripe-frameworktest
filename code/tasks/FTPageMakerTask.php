@@ -10,27 +10,44 @@ use SilverStripe\Dev\BuildTask;
 class FTPageMakerTask extends BuildTask
 {
     
+    /**
+     * Defaults create 15,000 pages
+     */
+    protected $pageCountByDepth = [
+        10,
+        100,
+        5,
+        1,
+        1
+    ];
 
     public function run($request)
     {
-        echo "<h1>Making pages</h1>";
-        // Creates 3^5 pages
-        $this->makePages(3, 5);
+        $this->generatePages();
     }
-    
-    protected function makePages($count, $depth, $prefix = "", $parentID = 0)
+
+    protected function generatePages($depth = 0, $prefix = "", $parentID = 0)
     {
-        for ($i=1;$i<=$count;$i++) {
+        $maxDepth = count($this->pageCountByDepth);
+        $pageCount = $this->pageCountByDepth[$depth];
+
+        for ($i=1; $i<=$pageCount; $i++) {
+            $fullPrefix = $prefix ? "{$prefix}-{$i}" : $i;
             $page = new Page();
             $page->ParentID = $parentID;
-            $page->Title = "Test page $prefix$i";
+            $page->Title = "Test page {$fullPrefix}";
             $page->write();
             $page->publish('Stage', 'Live');
 
-            echo "<li>Created '$page->Title'";
-            if ($depth > 1) {
-                $this->makePages($count, $depth-1, $prefix."$i.", $page->ID);
+            echo "Created '$page->Title'\n";
+            
+            $pageID = $page->ID;
+            unset($page);
+
+            if ($depth < $maxDepth-1) {
+                $this->generatePages($depth+1, $fullPrefix, $pageID);
             }
         }
     }
+    
 }
