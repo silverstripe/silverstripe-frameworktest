@@ -31,14 +31,13 @@ class TestPage extends Page
 
     public function requireDefaultRecords()
     {
-        if ($this->class == 'SilverStripe\\FrameworkTest\\Model\\TestPage') {
+        if (static::class === self::class) {
             return;
         }
 
-        $class = $this->class;
-        if (!DataObject::get_one($class)) {
+        if (!DataObject::get_one(static::class)) {
             // Try to create common parent
-            Member::actAs(Security::findAnAdministrator(), function () use ($class) {
+            Member::actAs(Security::findAnAdministrator(), function () {
                 $parent = SiteTree::get()
                     ->filter('URLSegment', 'feature-test-pages')
                     ->First();
@@ -54,8 +53,8 @@ class TestPage extends Page
                 }
 
                 // Create actual page
-                $page = new $class();
-                $page->Title = str_replace("SilverStripe\\FrameworkTest\\Model\\TestPage", "", $class);
+                $page = new static();
+                $page->Title = str_replace(self::class, "", static::class);
                 $page->ShowInMenus = 0;
                 if ($parent) {
                     $page->ParentID = $parent->ID;

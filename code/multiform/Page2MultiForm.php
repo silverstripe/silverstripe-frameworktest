@@ -17,7 +17,7 @@ class Page2MultiForm extends MultiForm
         $steps = DataObject::get('MultiFormStep', "SessionID = {$this->session->ID}");
         if ($steps) {
             foreach ($steps as $step) {
-                if ($step->class == 'Page2PersonalDetailsFormStep') {
+                if ($step->ClassName == 'Page2PersonalDetailsFormStep') {
                     $member = new Member();
                     $data = $step->loadData();
                     if ($data) {
@@ -26,7 +26,7 @@ class Page2MultiForm extends MultiForm
                     }
                 }
 
-                if ($step->class == 'Page2OrganisationDetailsFormStep') {
+                if ($step->ClassName == 'Page2OrganisationDetailsFormStep') {
                     $organisation = new Organisation();
                     $data = $step->loadData();
                     if ($data) {

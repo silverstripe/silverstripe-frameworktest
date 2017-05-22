@@ -36,10 +36,9 @@ class TestCategory extends DataObject
 
     public function requireDefaultRecords()
     {
-        $class = $this->class;
-        if (!DataObject::get_one($class)) {
+        if (!DataObject::get_one(static::class)) {
             foreach (array("A", "B", "C", "D") as $item) {
-                $page = new $class();
+                $page = new static();
                 $page->Title = "Test Category $item";
                 $page->write();
             }

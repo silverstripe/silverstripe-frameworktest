@@ -1,10 +1,26 @@
 <?php
 
+use SilverStripe\Core\Injector\Injector;
+use SilverStripe\Forms\CheckboxSetField;
+use SilverStripe\Forms\CurrencyField;
+use SilverStripe\Forms\DateField;
+use SilverStripe\Forms\DatetimeField;
+use SilverStripe\Forms\EmailField;
+use SilverStripe\Forms\GroupedDropdownField;
+use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
+use SilverStripe\Forms\ListboxField;
+use SilverStripe\Forms\MoneyField;
+use SilverStripe\Forms\NumericField;
+use SilverStripe\Forms\OptionsetField;
+use SilverStripe\Forms\ReadonlyField;
+use SilverStripe\Forms\SelectionGroup;
+use SilverStripe\Forms\TextareaField;
+use SilverStripe\Forms\TimeField;
+use SilverStripe\Forms\ToggleCompositeField;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\FrameworkTest\Model\TestCategory;
 use SilverStripe\FrameworkTest\Model\TestPage;
 use SilverStripe\FrameworkTest\Model\TestPage_Controller;
-use SilverStripe\Core\Object;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\SelectionGroup_Item;
 use SilverStripe\Forms\FieldList;
@@ -180,70 +196,76 @@ class BasicFieldsTestPage extends TestPage
         $description = 'This is <strong>bold</strong> help text';
         $rightTitle = 'This is right title';
 
-        $fields->addFieldsToTab('Root.Text', array(
-            Object::create('SilverStripe\\Forms\\TextField', 'Required', 'Required field')
+        $fields->addFieldsToTab('Root.Text', [
+            Injector::inst()->create(TextField::class, 'Required', 'Required field')
                 ->setRightTitle('right title'),
-            Object::create('SilverStripe\\Forms\\TextField', 'Validated', 'Validated field (checks range between 1 and 3)'),
-            Object::create('SilverStripe\\Forms\\ReadonlyField', 'Readonly', 'ReadonlyField'),
-            Object::create('SilverStripe\\Forms\\TextareaField', 'Textarea', 'TextareaField - 8 rows')
+            Injector::inst()->create(TextField::class, 'Validated', 'Validated field (checks range between 1 and 3)'),
+            Injector::inst()->create(ReadonlyField::class, 'Readonly', 'ReadonlyField'),
+            Injector::inst()->create(TextareaField::class, 'Textarea', 'TextareaField - 8 rows')
                 ->setRows(8),
-            Object::create('SilverStripe\\Forms\\TextField', 'Text'),
-            Object::create('SilverStripe\\Forms\\HTMLEditor\\HTMLEditorField', 'HTMLField', 'HTMLField'),
-            Object::create('SilverStripe\\Forms\\EmailField', 'Email'),
-//            Object::create('SilverStripe\\Forms\\ConfirmedPasswordField', 'ConfirmedPassword')
-        ));
+            Injector::inst()->create(TextField::class, 'Text'),
+            Injector::inst()->create(HTMLEditorField::class, 'HTMLField', 'HTMLField'),
+            Injector::inst()->create(EmailField::class, 'Email'),
+        ]);
 
         $fields->addFieldsToTab('Root.Numeric', array(
-            Object::create('SilverStripe\\Forms\\NumericField', 'Number')
+            Injector::inst()->create(NumericField::class, 'Number')
                 ->setScale(4),
-            Object::create('SilverStripe\\Forms\\CurrencyField', 'Price'),
-            Object::create('SilverStripe\\Forms\\MoneyField', 'Money', 'Money', array('Amount' => 99.99, 'Currency' => 'EUR'))
+            Injector::inst()->create(CurrencyField::class, 'Price'),
+            Injector::inst()->create(MoneyField::class, 'Money', 'Money', array('Amount' => 99.99, 'Currency' => 'EUR'))
         ));
 
         $fields->addFieldsToTab('Root.Option', array(
-            Object::create('SilverStripe\\Forms\\CheckboxField', 'Checkbox'),
-            Object::create('SilverStripe\\Forms\\CheckboxSetField', 'CheckboxSet', 'CheckboxSet', TestCategory::map()),
-            Object::create('SilverStripe\\Forms\\DropdownField', 'DropdownID', 'DropdownField', TestCategory::map())
+            Injector::inst()->create(CheckboxField::class, 'Checkbox'),
+            Injector::inst()->create(CheckboxSetField::class, 'CheckboxSet', 'CheckboxSet', TestCategory::map()),
+            Injector::inst()->create(DropdownField::class, 'DropdownID', 'DropdownField', TestCategory::map())
                 ->setHasEmptyDefault(true),
-            Object::create('SilverStripe\\Forms\\GroupedDropdownField', 'GroupedDropdownID',
-                'GroupedDropdown', array('Test Categories' => TestCategory::map())
+            Injector::inst()->create(
+                GroupedDropdownField::class,
+                'GroupedDropdownID',
+                'GroupedDropdown',
+                array('Test Categories' => TestCategory::map())
             ),
-            Object::create('SilverStripe\\Forms\\ListboxField', 'Listbox', 'ListboxField (multiple)', TestCategory::map())
+            Injector::inst()->create(ListboxField::class, 'Listbox', 'ListboxField (multiple)', TestCategory::map())
                 ->setSize(3),
-            Object::create('SilverStripe\\Forms\\OptionsetField', 'OptionSet', 'OptionSetField', TestCategory::map()),
-            Object::create('SilverStripe\\Forms\\SelectionGroup', 'SelectionGroup', array(
-                new SelectionGroup_Item(
-                    'one',
-                    TextField::create('SelectionGroupOne', 'one view'),
-                    'SelectionGroup Option One'
-                ),
+            Injector::inst()->create(OptionsetField::class, 'OptionSet', 'OptionSetField', TestCategory::map()),
+            Injector::inst()->create(
+                SelectionGroup::class,
+                'SelectionGroup',
+                [
                     new SelectionGroup_Item(
-                    'two',
-                    TextField::create('SelectionGroupOneTwo', 'two view'),
-                    'SelectionGroup Option Two'
-                )
-            )),
-            Object::create('SilverStripe\\Forms\\ToggleCompositeField', 'ToggleCompositeField', 'ToggleCompositeField', new FieldList(
-                Object::create('SilverStripe\\Forms\\TextField', 'ToggleCompositeTextField1'),
-                Object::create('SilverStripe\\Forms\\DropdownField', 'ToggleCompositeDropdownField', 'ToggleCompositeDropdownField', TestCategory::map())
+                        'one',
+                        TextField::create('SelectionGroupOne', 'one view'),
+                        'SelectionGroup Option One'
+                    ),
+                    new SelectionGroup_Item(
+                        'two',
+                        TextField::create('SelectionGroupOneTwo', 'two view'),
+                        'SelectionGroup Option Two'
+                    )
+                ]
+            ),
+            Injector::inst()->create(ToggleCompositeField::class, 'ToggleCompositeField', 'ToggleCompositeField', new FieldList(
+                Injector::inst()->create(TextField::class, 'ToggleCompositeTextField1'),
+                Injector::inst()->create(DropdownField::class, 'ToggleCompositeDropdownField', 'ToggleCompositeDropdownField', TestCategory::map())
             ))
         ));
 
         $minDate = '2017-01-01';
         $minDateTime = '2017-01-01 23:59:00';
         $fields->addFieldsToTab('Root.DateTime', array(
-            Object::create('SilverStripe\\Forms\\DateField', 'CalendarDate', 'DateField with HTML5 (min date: ' . $minDate . ')')
+            Injector::inst()->create(DateField::class, 'CalendarDate', 'DateField with HTML5 (min date: ' . $minDate . ')')
                 ->setMinDate($minDate),
-            Object::create('SilverStripe\\Forms\\DateField', 'Date', 'DateField without HTML5 (min date: ' . $minDate . ')')
+            Injector::inst()->create(DateField::class, 'Date', 'DateField without HTML5 (min date: ' . $minDate . ')')
                 ->setHTML5(false)
                 ->setMinDate($minDate),
-            Object::create('SilverStripe\\Forms\\TimeField', 'Time', 'TimeField without HTML5')
+            Injector::inst()->create(TimeField::class, 'Time', 'TimeField without HTML5')
                 ->setHTML5(false),
-            Object::create('SilverStripe\\Forms\\TimeField', 'TimeHTML5', 'TimeField with HTML5'),
-            Object::create('SilverStripe\\Forms\\DatetimeField', 'DateTime', 'DateTime without HTML5 (min date/time: ' . $minDateTime . ')')
+            Injector::inst()->create(TimeField::class, 'TimeHTML5', 'TimeField with HTML5'),
+            Injector::inst()->create(DatetimeField::class, 'DateTime', 'DateTime without HTML5 (min date/time: ' . $minDateTime . ')')
                 ->setHTML5(false)
                 ->setMinDatetime($minDateTime),
-            Object::create('SilverStripe\\Forms\\DatetimeField', 'DateTimeWithCalendar', 'DateTime with HTML5 (min date/time: ' . $minDateTime . ')')
+            Injector::inst()->create(DatetimeField::class, 'DateTimeWithCalendar', 'DateTime with HTML5 (min date/time: ' . $minDateTime . ')')
                 ->setMinDatetime($minDateTime),
         ));
 
@@ -252,10 +274,6 @@ class BasicFieldsTestPage extends TestPage
                 ->setDescription($description)
                 ->setRightTitle($rightTitle)
                 ->setIsMultiUpload(false),
-//            UploadField::create('AttachedFile', 'UploadField with canUpload=false')
-//                ->setDescription($description)
-//                ->setRightTitle($rightTitle)
-//                ->setConfig('canUpload', false),
             UploadField::create('Image', 'UploadField for image')
                 ->setDescription($description)
                 ->setRightTitle($rightTitle),
@@ -308,7 +326,7 @@ class BasicFieldsTestPage extends TestPage
         );
 
         $fields->addFieldToTab('Root.Text',
-            Object::create(
+            Injector::inst()->create(
                 LiteralField::class,
                 'LiteralField',
                 '<div class="form__divider">LiteralField with <b>some bold text</b> and <a href="http://silverstripe.com">a link</a></div>'
@@ -316,7 +334,7 @@ class BasicFieldsTestPage extends TestPage
         );
 
         $fields->addFieldToTab('Root.Text',
-            Object::create(
+            Injector::inst()->create(
                 HTMLReadonlyField::class,
                 'HTMLReadonlyField',
                 'HTMLReadonlyField',
