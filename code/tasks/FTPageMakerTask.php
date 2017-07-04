@@ -11,12 +11,12 @@ class FTPageMakerTask extends BuildTask
 {
     
     /**
-     * Defaults create 15,000 pages
+     * Defaults create 2,000 pages
      */
     protected $pageCountByDepth = [
-        10,
-        100,
         5,
+        100,
+        1,
         1,
         1
     ];
