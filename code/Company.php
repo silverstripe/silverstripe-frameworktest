@@ -5,11 +5,16 @@ namespace SilverStripe\FrameworkTest\Model;
 use SilverStripe\ORM\ValidationResult;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\DB;
-use SilverStripe\Forms\UploadField;
+use SilverStripe\AssetAdmin\Forms\UploadField;
+use SilverStripe\Versioned\Versioned;
 
 class Company extends DataObject
 {
     private static $table_name = 'Company';
+
+    private static $extensions = [
+        Versioned::class
+    ];
 
     /**
      *
