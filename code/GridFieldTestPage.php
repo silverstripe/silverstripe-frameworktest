@@ -24,6 +24,11 @@ class GridFieldTestPage extends TestPage
         "ManyManyCompanies" => "SilverStripe\\FrameworkTest\\Model\\Company",
     );
 
+    private static $owns = [
+        'HasOneCompany',
+        'HasManyCompanies',
+    ];
+
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
@@ -32,24 +37,21 @@ class GridFieldTestPage extends TestPage
 
         $config = new GridFieldConfig_RecordEditor();
         $grid = new GridField('Companies', 'Companies', new DataList('SilverStripe\\FrameworkTest\\Model\\Company'), $config);
+        $grid->setDescription('Records are NOT owned by the page, and need to be individually published');
         $fields->addFieldToTab('Root.NoRelation', $grid);
         $grids[] = $grid;
 
         $config = new GridFieldConfig_RelationEditor();
         $grid = new GridField('HasManyCompanies', 'HasManyCompanies', $this->HasManyCompanies(), $config);
+        $grid->setDescription('Records are owned by the page, so should auto-publish');
         $fields->addFieldToTab('Root.HasMany', $grid);
         $grids[] = $grid;
 
         $config = new GridFieldConfig_RelationEditor();
         $grid = new GridField('ManyManyCompanies', 'ManyManyCompanies', $this->ManyManyCompanies(), $config);
+        $grid->setDescription('Records are NOT owned by the page, and need to be individually published');
         $fields->addFieldToTab('Root.ManyMany', $grid);
         $grids[] = $grid;
-
-        foreach ($grids as $grid) {
-            $grid
-                ->setDescription('This is <strong>bold</strong> help text');
-                // ->addExtraClass('cms-description-tooltip');
-        }
 
         return $fields;
     }
