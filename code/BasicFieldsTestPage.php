@@ -94,6 +94,12 @@ class BasicFieldsTestPage extends TestPage
         'Listbox' => 'SilverStripe\\FrameworkTest\\Model\\TestCategory',
     );
 
+    private static $owns = [
+        'AttachedFile',
+        'File',
+        'Image',
+    ];
+
     private static $defaults = array(
         'Validated' => 2
     );
@@ -270,11 +276,11 @@ class BasicFieldsTestPage extends TestPage
         ));
 
         $fields->addFieldsToTab('Root.File', array(
-            $bla = UploadField::create('File', 'UploadField with multiUpload=false')
+            $bla = UploadField::create('File', 'UploadField with multiUpload=false (owned by page)')
                 ->setDescription($description)
                 ->setRightTitle($rightTitle)
                 ->setIsMultiUpload(false),
-            UploadField::create('Image', 'UploadField for image')
+            UploadField::create('Image', 'UploadField for image (owned by page)')
                 ->setDescription($description)
                 ->setRightTitle($rightTitle),
             UploadField::create('HasManyFiles', 'UploadField for has_many')
