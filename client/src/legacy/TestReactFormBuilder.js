@@ -3,9 +3,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import FormBuilderLoader from 'containers/FormBuilderLoader/FormBuilderLoader';
+import { provideInjector } from 'lib/Injector';
 
 const sectionConfigKey = 'TestReactFormBuilder';
-
+const InjectedFormBuilderLoader = provideInjector(FormBuilderLoader);
 jQuery.entwine('ss', ($) => {
   /**
    * Kick off Test React FormBuilder admin section.
@@ -39,7 +40,8 @@ jQuery.entwine('ss', ($) => {
 
       ReactDOM.render(
         <Provider store={store}>
-          <FormBuilderLoader
+          <InjectedFormBuilderLoader
+            identifier="TestReactForm"
             schemaUrl={schemaUrl}
             handleSubmit={(...args) => this._handleSubmit(...args)}
           />
