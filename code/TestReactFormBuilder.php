@@ -47,7 +47,7 @@ class TestReactFormBuilder extends LeftAndMain
     }
 
     public function getEditForm($id = null, $fields = null) {
-        Requirements::javascript('frameworktest/client/dist/legacy.js');
+        Requirements::javascript('frameworktest/client/dist/js/legacy.js');
 
         return Form::create($this, 'TestEditForm', FieldList::create(), FieldList::create());
     }
