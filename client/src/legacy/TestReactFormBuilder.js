@@ -1,12 +1,13 @@
-import jQuery from 'jQuery';
+import jQuery from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import FormBuilderLoader from 'containers/FormBuilderLoader/FormBuilderLoader';
 import { provideInjector } from 'lib/Injector';
+import FormBuilderLoader from 'containers/FormBuilderLoader/FormBuilderLoader';
 
 const sectionConfigKey = 'TestReactFormBuilder';
 const InjectedFormBuilderLoader = provideInjector(FormBuilderLoader);
+
 jQuery.entwine('ss', ($) => {
   /**
    * Kick off Test React FormBuilder admin section.
@@ -44,6 +45,7 @@ jQuery.entwine('ss', ($) => {
             identifier="TestReactForm"
             schemaUrl={schemaUrl}
             handleSubmit={(...args) => this._handleSubmit(...args)}
+            identifier="FrameworkTest.ReactSection"
           />
         </Provider>,
         this[0]
@@ -64,10 +66,10 @@ jQuery.entwine('ss', ($) => {
   });
 
   $('.TestReactFormBuilder .nav-link').entwine({
-    onclick: function (e) {
+    onclick(e) {
       // this is required because the React version of e.preventDefault() doesn't work
       // this is to stop React Tabs from navigating the page
       e.preventDefault();
-    }
+    },
   });
 });
