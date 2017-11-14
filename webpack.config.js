@@ -1,5 +1,6 @@
 const Path = require('path');
 const webpackConfig = require('@silverstripe/webpack-config');
+
 const {
   resolveJS,
   externalJS,
@@ -37,5 +38,5 @@ const config = [
 
 // Use WEBPACK_CHILD=js or WEBPACK_CHILD=css env var to run a single config
 module.exports = (process.env.WEBPACK_CHILD)
-  ? config.find((entry) => entry.name === process.env.WEBPACK_CHILD)
+  ? config.find(entry => entry.name === process.env.WEBPACK_CHILD)
   : module.exports = config;

@@ -73,7 +73,7 @@ class GridFieldTestPage_Controller extends PageController
     public function init()
     {
         parent::init();
-        Requirements::css('frameworktest/css/gridfieldtest.css', 'screen');
+        Requirements::css('silverstripe/frameworktest: css/gridfieldtest.css', 'screen');
     }
 
     /**
