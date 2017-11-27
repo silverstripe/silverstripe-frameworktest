@@ -10,6 +10,7 @@ use SilverStripe\Forms\TreeMultiselectField;
 
 class RelationFieldsTestPage extends TestPage
 {
+    private static $table_name = 'RelationFieldsTestPage';
 
     private static $has_one = array(
         "HasOneCompany" => "SilverStripe\\FrameworkTest\\Model\\Company",
@@ -28,13 +29,13 @@ class RelationFieldsTestPage extends TestPage
     private static $defaults = array(
         'Title' => 'Relational Fields'
     );
-    
+
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
 
         $allFields = array();
-        
+
         $checkboxFields = array(
             new CheckboxSetField("CheckboxSet", "CheckboxSetField", TestCategory::map())
         );

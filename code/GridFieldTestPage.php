@@ -11,6 +11,7 @@ use SilverStripe\Forms\Form;
 
 class GridFieldTestPage extends TestPage
 {
+    private static $table_name = 'GridFieldTestPage';
 
     private static $has_one = array(
         "HasOneCompany" => "SilverStripe\\FrameworkTest\\Model\\Company",

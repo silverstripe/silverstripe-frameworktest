@@ -36,6 +36,8 @@ use SilverStripe\Forms\HTMLReadonlyField;
 
 class BasicFieldsTestPage extends TestPage
 {
+    private static $table_name = 'BasicFieldsTestPage';
+
     private static $db = array(
         'CalendarDate' => 'Date',
         'Checkbox' => 'Boolean',

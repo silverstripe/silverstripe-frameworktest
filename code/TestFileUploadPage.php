@@ -13,6 +13,7 @@ use SilverStripe\Forms\Form;
 
 class TestFileUploadPage extends TestPage
 {
+    private static $table_name = 'TestFileUploadPage';
 }
 
 class TestFileUploadPage_Controller extends TestPage_Controller
