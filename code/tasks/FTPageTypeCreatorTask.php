@@ -44,15 +44,15 @@ class FTPageTypeCreatorTask extends BuildTask
         $count = $request->getVar('count') ?: 20;
         $module = ModuleLoader::getModule('silverstripe/frameworktest');
         $testPageDir = $module->getPath() . '/code/test-pages';
-        if(!$this->fs->exists($testPageDir)) {
+        if (!$this->fs->exists($testPageDir)) {
             throw new RuntimeException("Test page directory $testPageDir does not exist!");
         }
 
         $pageTypes = $this->getExistingClassNames($testPageDir);
         $created = 0;
-        while($created < $count) {
+        while ($created < $count) {
             $className = null;
-            while(
+            while (
                 !$className ||
                 in_array($className, $pageTypes) ||
                 class_exists(basename($className, 'php'))
