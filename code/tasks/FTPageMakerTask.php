@@ -1,6 +1,8 @@
 <?php
 
 use SilverStripe\Dev\BuildTask;
+use SilverStripe\Core\ClassInfo;
+
 /**
  * Creates sample page structure, useful to test tree performance,
  * UI behaviour on deeply nested pages etc.
@@ -30,16 +32,20 @@ class FTPageMakerTask extends BuildTask
     {
         $maxDepth = count($this->pageCountByDepth);
         $pageCount = $this->pageCountByDepth[$depth];
+        $testPageClasses = ClassInfo::implementorsOf('TestPageInterface');
+        $testPageClasses[] = 'Page';
 
         for ($i=1; $i<=$pageCount; $i++) {
             $fullPrefix = $prefix ? "{$prefix}-{$i}" : $i;
-            $page = new Page();
+            $randomIndex = array_rand($testPageClasses);
+            $pageClass = $testPageClasses[$randomIndex];
+            $page = new $pageClass();
             $page->ParentID = $parentID;
             $page->Title = "Test page {$fullPrefix}";
             $page->write();
             $page->publish('Stage', 'Live');
 
-            echo "Created '$page->Title'\n";
+            echo "Created '$page->Title' ($page->ClassName)\n";
             
             $pageID = $page->ID;
             unset($page);
