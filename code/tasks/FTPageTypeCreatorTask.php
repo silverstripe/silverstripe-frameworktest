@@ -1,11 +1,13 @@
 <?php
 
+use SilverStripe\Control\Director;
+use SilverStripe\Core\Manifest\ModuleManifest;
+use SilverStripe\Core\Path;
 use SilverStripe\Dev\BuildTask;
 use Faker\Factory;
 use SilverStripe\Control\HTTPRequest;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use SilverStripe\Core\Manifest\ModuleLoader;
 use Symfony\Component\Filesystem\Exception\IOException;
 
 class FTPageTypeCreatorTask extends BuildTask
@@ -41,30 +43,32 @@ class FTPageTypeCreatorTask extends BuildTask
      */
     public function run($request)
     {
-        $count = $request->getVar('count') ?: 20;
-        $module = ModuleLoader::getModule('silverstripe/frameworktest');
-        $testPageDir = $module->getPath() . '/code/test-pages';
+        $totalCount = $request->getVar('count') ?: 20;
+
+        $testPageDir = Path::join(Director::baseFolder(), ModuleManifest::config()->get('project'), 'code/test-pages');
         if (!$this->fs->exists($testPageDir)) {
-            throw new RuntimeException("Test page directory $testPageDir does not exist!");
+            \SilverStripe\Assets\Filesystem::makeFolder($testPageDir);
         }
 
         $pageTypes = $this->getExistingClassNames($testPageDir);
-        $created = 0;
-        while ($created < $count) {
+        $createdCount = 0;
+        $counter = 1;
+        while ($createdCount < $totalCount) {
             $className = null;
             while (
                 !$className ||
                 in_array($className, $pageTypes) ||
-                class_exists(basename($className, 'php'))
+                class_exists($className)
             ) {
-                $className = $this->generateClassName();
+                $className = $this->generateClassName($counter);
+                $counter++;
             }
             $pageTypes[] = $className;
             $code = $this->generateClassCode($className);
             $filePath = sprintf('%s/%s.php', $testPageDir, $className);
             try {
                 $this->fs->dumpFile($filePath, $code);
-                $created++;
+                $createdCount++;
             } catch (IOException $e) {
                 echo "Could not write to file $filePath. Got error: {$e->getMessage()}\n";
                 die();
@@ -78,17 +82,17 @@ class FTPageTypeCreatorTask extends BuildTask
         $files = $this->finder
             ->in($dir)
             ->files()
-            ->name('*Page.php');
+            ->name('GeneratedPageType*.php');
 
         return array_map(function ($file) {
             /* @var SplFileInfo $file */
-            return $file->getBasename();
+            return basename($file->getBasename(), '.php');
         }, iterator_to_array($files));
     }
 
-    private function generateClassName()
+    private function generateClassName($counter)
     {
-        return ucfirst($this->faker->word . 'Page');
+        return 'GeneratedPageType' . $counter;
     }
 
     private function generateClassCode($className)
