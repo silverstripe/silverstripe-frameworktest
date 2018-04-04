@@ -54,6 +54,18 @@ class GridFieldTestPage extends TestPage
         $fields->addFieldToTab('Root.ManyMany', $grid);
         $grids[] = $grid;
 
+        $config = new GridFieldConfig_RelationEditor();
+        $grid = new GridField('HasManyCompaniesStacked', 'HasManyCompanies', $this->HasManyCompanies(), $config);
+        $grid->setDescription('Records are owned by the page, so should auto-publish');
+        $fields->addFieldToTab('Root.Stacked', $grid);
+        $grids[] = $grid;
+
+        $config = new GridFieldConfig_RelationEditor();
+        $grid = new GridField('ManyManyCompaniesStacked', 'ManyManyCompanies', $this->ManyManyCompanies(), $config);
+        $grid->setDescription('Records are NOT owned by the page, and need to be individually published');
+        $fields->addFieldToTab('Root.Stacked', $grid);
+        $grids[] = $grid;
+
         return $fields;
     }
 }
