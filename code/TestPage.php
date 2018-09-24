@@ -19,7 +19,7 @@ use SilverStripe\Security\Security;
  */
 class TestPage extends Page
 {
-    private static $table_name = 'TestPage';
+    private static $table_name = 'FrameworkTestPage';
 
     /**
      * We can only create subclasses of TestPage
