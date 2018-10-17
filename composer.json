@@ -22,7 +22,7 @@
         "expose": [
             "client/dist",
             "css",
-
+            "images"
         ]
     },
     "autoload": {
