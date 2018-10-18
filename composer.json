@@ -1,7 +1,7 @@
 {
 	"name": "silverstripe/frameworktest",
 	"description": "Aids core and module developers in testing their code against a set of sample data and behaviour.",
-	"type": "silverstripe-module",
+    "type": "silverstripe-vendormodule",
 	"keywords": ["silverstripe", "frameworktest", "testing"],
 	"license": "BSD-3-Clause",
 	"authors": [
@@ -15,6 +15,19 @@
 		"silverstripe/framework": "~4.0",
 		"silverstripe/cms": "~4.0",
 		"guzzlehttp/guzzle": "~6.0",
-		"fzaninotto/faker": "^1.7"
-	}
+		"fzaninotto/faker": "^1.7",
+        "silverstripe/vendor-plugin": "^1.0"
+	},
+    "extra": {
+        "expose": [
+            "client/dist",
+            "css",
+            "images"
+        ]
+    },
+    "autoload": {
+        "psr-4": {
+            "SSilverStripe\\FrameworkTest\\": "code/"
+        }
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace SilverStripe\FrameworkTest\Model;
 
+use SilverStripe\Forms\DropdownField;
 use SilverStripe\ORM\ValidationResult;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\DB;
@@ -337,5 +338,10 @@ class Company extends DataObject
             214 => array("Ahold", "Retailing", "40.229", "Dick Boer"),
             215 => array("Cisco", "Information technology", "40.04", "John T. Chambers"),
         );
+    }
+
+    public function scaffoldSearchField()
+    {
+        return DropdownField::create('CompanyID', 'Company', self::get()->map())->setEmptyString('');
     }
 }

@@ -6,12 +6,19 @@ namespace SilverStripe\FrameworkTest\Model;
 
 
 
+use SilverStripe\Assets\Image;
+use SilverStripe\Forms\CompositeField;
+use SilverStripe\Forms\FieldGroup;
+use SilverStripe\ORM\Connect\MySQLSchemaManager;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\DB;
 use SilverStripe\Forms\NumericField;
 use SilverStripe\Forms\TextField;
-
-
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\ORM\Filters\ExactMatchFilter;
+use SilverStripe\ORM\Filters\FulltextFilter;
+use SilverStripe\ORM\Filters\GreaterThanOrEqualFilter;
+use SilverStripe\ORM\Filters\LessThanOrEqualFilter;
 
 
 /**
@@ -23,17 +30,62 @@ class Employee extends DataObject
 
     private static $db = array(
         'Name' => 'Varchar',
-        'Biography' => 'HTMLText'
+        'Biography' => 'HTMLText',
+        'DateOfBirth' => 'Date',
+        'Category' => 'Enum("marketing,management,rnd,hr")'
     );
 
-    private static $has_one = array(
-        'Company' => 'SilverStripe\\FrameworkTest\\Model\\Company',
-        'ProfileImage' => 'SilverStripe\\Assets\\Image'
-    );
+    private static $has_one = [
+        'Company' => Company::class,
+        'ProfileImage' => Image::class
+    ];
 
-    private static $belongs_many_many  = array(
-        'PastCompanies' => 'SilverStripe\\FrameworkTest\\Model\\Company'
-    );
+    private static $belongs_many_many  = [
+        'PastCompanies' => Company::class
+    ];
+
+    private static $indexes = [
+        'SearchFields' => [
+            'type' => 'fulltext',
+            'columns' => ['Name', 'Biography'],
+        ]
+    ];
+
+    private static $create_table_options = [
+        MySQLSchemaManager::ID => 'ENGINE=MyISAM'
+    ];
+
+    private static $summary_fields = [
+        'ID',
+        'Name',
+        'Biography',
+        'CompanyID',
+        'Company.Name' => 'Company',
+        'ColleagueNames' => 'Colleague Names',
+        'DateOfBirth',
+        'Category'
+    ];
+
+    private static $searchable_fields = [
+        'Name',
+        'Company' => [
+            'title' => 'Company exact match filter',
+            'filter' => ExactMatchFilter::class,
+        ],
+        'Company.Name' => array(
+            'title' => 'Company Name starting with',
+            'field' => TextField::class,
+            'filter' => 'StartsWithFilter'
+        ),
+        'CompanyID' => [
+            'title' => 'Company ID less than',
+            'field' => NumericField::class,
+            'filter' => 'LessThanFilter'
+        ],
+        'Company.Employees.Name' => array('title' => 'Colleague'),
+        'DateOfBirth',
+        'Category'
+    ];
 
     private static $table_name = 'Employee';
 
@@ -49,17 +101,40 @@ class Employee extends DataObject
     public function requireDefaultRecords()
     {
         parent::requireDefaultRecords();
-        $employeeSet = DataObject::get('SilverStripe\\FrameworkTest\\Model\\Employee');
+        $employeeSet = DataObject::get(Employee::class);
         foreach ($employeeSet as $employee) {
             $employee->delete();
         }
 
+        // By explicitly seeding our random generator, we'll always get the same sequence
+        srand(5);
+
+        $companyIDs = Company::get()->column();
+        $companyCount = sizeof($companyIDs);
+
+        $words = $this->words();
+        $wordCount = sizeof($words);
+        $categories = ['marketing', 'management', 'rnd', 'hr'];
+
         foreach ($this->data() as $employeeName) {
-            $employee = new Employee();
-            $employee->Name = $employeeName;
+            $employee = Employee::create([
+                'Name' => $employeeName,
+                'CompanyID' => $companyIDs[rand(0, $companyCount-1)],
+                'Biography' => implode([
+                    $words[rand(0, $wordCount-1)],
+                    $words[rand(0, $wordCount-1)],
+                    $words[rand(0, $wordCount-1)],
+                    $words[rand(0, $wordCount-1)],
+                    ], " "),
+                'DateOfBirth' => date("Y-m-d", rand(0, 500) * 24 * 60 * 60),
+                'Category' => $categories[rand(0, 3)]
+            ]);
             $employee->write();
         }
         DB::alteration_message("Added default records to Employee table", "created");
+
+        // Let's rescrambled our random generator
+        srand();
     }
 
     public function validate()
@@ -90,5 +165,38 @@ class Employee extends DataObject
             'Cherokee','Zeph','Adam','Uma','Serena','Isabelle','Kieran','Moses','Gay','Lavinia',
             'Elvis','Illana','Lee','Ariana','Hilel','Juliet','Gage','Larissa','Richard','Allen'
         );
+    }
+
+    /**
+     * Random words used to build the BIO
+     *
+     * @return array
+     */
+    public function words()
+    {
+        return [
+            "aquarist", "macedonian", "kalian", "knew", "cloisterless", "separation", "husker",
+            "subhall", "relatable", "gyrofrequency", "mandating", "presentability", "catt", "folioing",
+            "theodore", "yavar", "mutular", "umbrage", "reinstated", "sert", "nonemulous", "nutwood",
+            "perikeiromene", "moi", "wordless", "downstage", "rsj", "nonanesthetized", "dunker",
+            "preloan", "lev", "marlow", "unpaneled", "overliberally", "monasticism", "philoctetes",
+            "amba", "fluffier", "volley", "unwasteful", "helpless", "gallico", "superexpectation",
+            "quartermaster", "extenuative", "marriage", "tiberius", "horn", "yankeedom", "chabazite",
+        ];
+    }
+
+    public function getDefaultSearchContext()
+    {
+        $context =  parent::getDefaultSearchContext();
+
+        $context->addField(TextField::create('SearchFields', 'Full Text search'));
+        $context->addFilter(FulltextFilter::create('SearchFields'));
+
+        return $context;
+    }
+
+    public function getColleagueNames()
+    {
+        return implode($this->Company()->Employees()->column('Name'), ' ');
     }
 }
