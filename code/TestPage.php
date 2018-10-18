@@ -4,6 +4,8 @@ namespace SilverStripe\FrameworkTest\Model;
 
 use Page;
 use PageController;
+use SilverStripe\Core\Manifest\ModuleResource;
+use SilverStripe\Core\Manifest\ModuleResourceLoader;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Forms\FormAction;
@@ -87,7 +89,10 @@ class TestPage_Controller extends PageController
             new FormAction("save", "Save"),
             $gohome = new FormAction("gohome", "Go home")
         );
-        $gohome->setAttribute('src', 'frameworktest/images/test-button.png');
+        $gohome->setAttribute(
+            'src',
+            ModuleResourceLoader::resourceURL('silverstripe/frameworktest: images/test-button.png')
+        );
         $form = new Form($this, "Form", $fields, $actions);
         $form->loadDataFrom($this->dataRecord);
         return $form;
