@@ -2,19 +2,41 @@
 
 namespace SilverStripe\FrameworkTest\Model;
 
+use SilverStripe\Assets\Image;
 use SilverStripe\Forms\DropdownField;
+use SilverStripe\ORM\HasManyList;
+use SilverStripe\ORM\ManyManyList;
 use SilverStripe\ORM\ValidationResult;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\DB;
 use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\Versioned\Versioned;
+use RelationFieldsTestPage;
+use GridFieldTestPage;
 
+/**
+ *
+ * @property string $Name
+ * @property string $Category
+ * @property float $Revenue
+ * @property string $CEO
+ * @property int $RelationFieldsTestPageID
+ * @property int $GridFieldTestPageID
+ * @method RelationFieldsTestPage RelationFieldsTestPage()
+ * @method GridFieldTestPage GridFieldTestPageHasOne()
+ * @method HasManyList|Employee[] Employees()
+ * @method HasManyList|Image[] GroupPhotos()
+ * @method ManyManyList|Employee[] PastEmployees()
+ *
+ * @mixin Versioned
+ * @mixin RecursivePublishable
+ */
 class Company extends DataObject
 {
     private static $table_name = 'Company';
 
     private static $extensions = [
-        Versioned::class
+//        Versioned::class
     ];
 
     /**
@@ -29,17 +51,17 @@ class Company extends DataObject
     );
 
     private static $has_one = array(
-        'RelationFieldsTestPage' => 'RelationFieldsTestPage',
-        'GridFieldTestPageHasOne' => 'GridFieldTestPage'
+        'RelationFieldsTestPage' => RelationFieldsTestPage::class,
+        'GridFieldTestPageHasOne' => GridFieldTestPage::class
     );
 
     private static $has_many  = array(
-        'Employees' => 'SilverStripe\\FrameworkTest\\Model\\Employee',
-        'GroupPhotos' => 'SilverStripe\\Assets\\Image'
+        'Employees' => Employee::class,
+        'GroupPhotos' => Image::class
     );
 
     private static $many_many  = array(
-        'PastEmployees' => 'SilverStripe\\FrameworkTest\\Model\\Employee'
+        'PastEmployees' => Employee::class
     );
 
     private static $many_many_extraFields = array(

@@ -1,0 +1,59 @@
+---
+Name: frameworktestgraphql
+After: '#graphqlconfig'
+---
+
+SilverStripe\Core\Injector\Injector:
+  SilverStripe\GraphQL\Manager.frameworktest:
+    class: SilverStripe\GraphQL\Manager
+    constructor:
+      identifier: frameworktest
+  SilverStripe\GraphQL\Controller.frameworktest:
+    class: SilverStripe\GraphQL\Controller
+    constructor:
+      manager: '%$SilverStripe\GraphQL\Manager.frameworktest'
+
+
+
+SilverStripe\Control\Director:
+  rules:
+    'frameworktest/graphql':
+      Controller: '%$SilverStripe\GraphQL\Controller.frameworktest'
+
+SilverStripe\GraphQL\Manager:
+  schemas:
+    frameworktest:
+      typeNames:
+        SilverStripe\FrameworkTest\Model\Company: Company
+        SilverStripe\FrameworkTest\Model\Employee: Employee
+      scaffolding:
+        types:
+          SilverStripe\FrameworkTest\Model\Company:
+            fields:
+              - ID
+              - Name
+              - Category
+              - Revenue
+              - CEO
+            operations:
+              read: true
+              update: true
+              create: true
+              delete: true
+              readOne: true
+            nestedQueries:
+              Employees: true
+              PastEmployees: true
+          SilverStripe\FrameworkTest\Model\Employee:
+            fields:
+              - ID
+              - Name
+              - Biography
+              - DateOfBirth
+              - Category
+            operations:
+              read: true
+              update: true
+              create: true
+              delete: true
+              readOne: true
