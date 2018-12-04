@@ -36,7 +36,7 @@ class Company extends DataObject
     private static $table_name = 'Company';
 
     private static $extensions = [
-//        Versioned::class
+       Versioned::class
     ];
 
     /**
