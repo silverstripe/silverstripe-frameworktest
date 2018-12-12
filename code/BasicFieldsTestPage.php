@@ -303,8 +303,8 @@ class BasicFieldsTestPage extends TestPage
             foreach ($tabObj->FieldList() as $field) {
                 $field
                     ->setDescription($description)
-                    ->setRightTitle($rightTitle);
-                    // ->addExtraClass('cms-description-tooltip');
+                    ->setRightTitle($rightTitle)
+                    ->addExtraClass('my-extra-class');
 
                 if (in_array($field->getName(), $blacklist)) {
                     continue;
