@@ -1,0 +1,38 @@
+language: php
+
+dist: trusty
+
+env:
+  global:
+    - COMPOSER_ROOT_VERSION=3.x-dev
+
+matrix:
+  fast_finish: true
+  include:
+    - php: 7.1.2
+      env: DB=PGSQL PHPUNIT_TEST=1 PHPCS_TEST=1
+    - php: 7.1.2
+      env: DB=MYSQL PHPUNIT_TEST=1
+    - php: 7.1.2
+      env: DB=MYSQL PDO=1 PHPUNIT_COVERAGE_TEST=1
+
+before_script:
+# Init PHP
+  - composer self-update || true
+  - phpenv rehash
+  - phpenv config-rm xdebug.ini
+
+# Install composer dependencies
+  - composer validate
+  - composer install --prefer-dist
+  - composer require --prefer-dist --no-update silverstripe/recipe-core:4.x-dev silverstripe/versioned:1.x-dev silverstripe/assets:1.x-dev --prefer-dist
+  - composer update
+  - if [[ $DB == PGSQL ]]; then composer require silverstripe/postgresql:2.x-dev --prefer-dist; fi
+
+script:
+  - if [[ $PHPUNIT_TEST ]]; then vendor/bin/phpunit; fi
+  - if [[ $PHPCS_TEST ]]; then composer run-script lint; fi
+  - if [[ $PHPUNIT_COVERAGE_TEST ]]; then vendor/bin/phpunit --coverage-clover=coverage.xml; fi
+
+after_success:
+  - if [[ $PHPUNIT_COVERAGE_TEST ]]; then bash <(curl -s https://codecov.io/bash) -f coverage.xml; fi

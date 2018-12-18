@@ -1,33 +1,46 @@
 {
-	"name": "silverstripe/frameworktest",
-	"description": "Aids core and module developers in testing their code against a set of sample data and behaviour.",
-    "type": "silverstripe-vendormodule",
-	"keywords": ["silverstripe", "frameworktest", "testing"],
-	"license": "BSD-3-Clause",
-	"authors": [
-	{
-		"name": "Ingo Schommer",
-		"email": "ingo@silverstripe.com"
-	}
-	],
-	"require":
-	{
-		"silverstripe/framework": "~4.0",
-		"silverstripe/cms": "~4.0",
-		"guzzlehttp/guzzle": "~6.0",
-		"fzaninotto/faker": "^1.7",
-        "silverstripe/vendor-plugin": "^1.0"
-	},
-    "extra": {
-        "expose": [
-            "client/dist",
-            "css",
-            "images"
-        ]
-    },
-    "autoload": {
-        "psr-4": {
-            "SSilverStripe\\FrameworkTest\\": "code/"
-        }
+  "name": "silverstripe/frameworktest",
+  "description": "Aids core and module developers in testing their code against a set of sample data and behaviour.",
+  "type": "silverstripe-vendormodule",
+  "keywords": [
+    "silverstripe",
+    "frameworktest",
+    "testing"
+  ],
+  "license": "BSD-3-Clause",
+  "authors": [
+    {
+      "name": "Ingo Schommer",
+      "email": "ingo@silverstripe.com"
     }
+  ],
+  "require": {
+    "silverstripe/framework": "~4.0",
+    "silverstripe/cms": "~4.0",
+    "guzzlehttp/guzzle": "~6.0",
+    "fzaninotto/faker": "^1.7",
+    "silverstripe/vendor-plugin": "^1.0"
+  },
+  "require-dev": {
+    "phpunit/PHPUnit": "^5.7",
+    "squizlabs/php_codesniffer": "^3.0",
+    "mikey179/vfsStream": "~1"
+  },
+  "extra": {
+    "expose": [
+      "client/dist",
+      "css",
+      "images"
+    ]
+  },
+  "autoload": {
+    "psr-4": {
+      "SilverStripe\\FrameworkTest\\": "code/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SilverStripe\\FrameworkTest\\Tests\\": "tests/"
+    }
+  }
 }

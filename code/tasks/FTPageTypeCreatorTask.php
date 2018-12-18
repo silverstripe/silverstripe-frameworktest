@@ -45,7 +45,7 @@ class FTPageTypeCreatorTask extends BuildTask
     {
         $totalCount = $request->getVar('count') ?: 20;
 
-        $testPageDir = Path::join(Director::baseFolder(), ModuleManifest::config()->get('project'), 'code/test-pages');
+        $testPageDir = $this->getTargetPath();
         if (!$this->fs->exists($testPageDir)) {
             \SilverStripe\Assets\Filesystem::makeFolder($testPageDir);
         }
@@ -75,6 +75,14 @@ class FTPageTypeCreatorTask extends BuildTask
             }
             echo "Created page type $className\n";
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getTargetPath()
+    {
+        return Path::join(Director::baseFolder(), ModuleManifest::config()->get('project'), 'code/test-pages');
     }
 
     private function getExistingClassNames($dir)
