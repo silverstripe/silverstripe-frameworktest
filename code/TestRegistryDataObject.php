@@ -865,6 +865,6 @@ class TestRegistryDataObject extends DataObject implements RegistryDataInterface
             $new->write();
         }
 
-        DB::alteration_message('Added defualt records to DefaultRegistryDataObject table', 'created');
+        DB::alteration_message('Added default records to DefaultRegistryDataObject table', 'created');
     }
 }
