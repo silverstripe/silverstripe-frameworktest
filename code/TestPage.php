@@ -13,6 +13,7 @@ use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\Form;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Control\Email\Email;
+use SilverStripe\Security\DefaultAdminService;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\Security;
 
@@ -40,32 +41,44 @@ class TestPage extends Page
 
         if (!DataObject::get_one(static::class)) {
             // Try to create common parent
-            Member::actAs(Security::findAnAdministrator(), function () {
-                $parent = SiteTree::get()
-                    ->filter('URLSegment', 'feature-test-pages')
-                    ->First();
-
-                if (!$parent) {
-                    $parent = new Page(array(
-                        'Title' => 'Feature Test Pages',
-                        'Content' => 'A collection of pages for testing various features in the SilverStripe CMS',
-                        'ShowInMenus' => 0
-                    ));
-                    $parent->write();
-                    $parent->doPublish();
-                }
-
+            $defaultAdminService = DefaultAdminService::singleton();
+            Member::actAs($defaultAdminService->findOrCreateDefaultAdmin(), function () {
                 // Create actual page
                 $page = new static();
                 $page->Title = str_replace(self::class, "", static::class);
                 $page->ShowInMenus = 0;
-                if ($parent) {
-                    $page->ParentID = $parent->ID;
-                }
+                $parent = static::getOrCreateParentPage();
+                $page->ParentID = $parent->ID;
                 $page->write();
                 $page->publish('Stage', 'Live');
             });
         }
+    }
+
+    public static function getOrCreateParentPage()
+    {
+        $defaultAdminService = DefaultAdminService::singleton();
+        Member::actAs($defaultAdminService->findOrCreateDefaultAdmin(), function () {
+            $parent = SiteTree::get()
+                ->filter('URLSegment', 'feature-test-pages')
+                ->First();
+
+            if (!$parent) {
+                $parent = new Page(
+                    array(
+                        'Title' => 'Feature Test Pages',
+                        'Content' => 'A collection of pages for testing various features in the SilverStripe CMS',
+                        'ShowInMenus' => 0
+                    )
+                );
+                $parent->write();
+                $parent->doPublish();
+            }
+        });
+
+        return SiteTree::get()
+            ->filter('URLSegment', 'feature-test-pages')
+            ->First();
     }
 }
 
