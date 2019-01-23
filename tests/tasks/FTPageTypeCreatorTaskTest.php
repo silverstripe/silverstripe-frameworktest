@@ -1,5 +1,7 @@
 <?php
 
+use org\bovigo\vfs\vfsStreamDirectory;
+use org\bovigo\vfs\vfsStreamWrapper;
 use SilverStripe\Dev\SapphireTest;
 
 class FTPageTypeCreatorTaskTest extends SapphireTest
