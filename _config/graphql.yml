@@ -7,7 +7,17 @@ SilverStripe\Core\Injector\Injector:
   SilverStripe\GraphQL\Manager.frameworktest:
     class: SilverStripe\GraphQL\Manager
     constructor:
+      schemaKey: frameworktest
+      schemaStore: '%$SilverStripe\GraphQL\Schema\SchemaStorageInterface.frameworktest'
+  SilverStripe\GraphQL\Schema\SchemaStorageInterface.frameworktest:
+    class: SilverStripe\GraphQL\Schema\Encoding\CodeGenerationSchemaStore
+    constructor:
+      registryEncoder: '%$SilverStripe\GraphQL\Schema\Encoding\Interfaces\TypeRegistryEncoderInterface.frameworktest'
+  SilverStripe\GraphQL\Schema\Encoding\Interfaces\TypeRegistryEncoderInterface.frameworktest:
+    class: SilverStripe\GraphQL\GraphQLPHP\Encoders\SchemaEncoder
+    constructor:
       identifier: frameworktest
+      encoderRegistry: '%$SilverStripe\GraphQL\Schema\Encoding\Interfaces\TypeEncoderRegistryInterface'
   SilverStripe\GraphQL\Controller.frameworktest:
     class: SilverStripe\GraphQL\Controller
     constructor:
