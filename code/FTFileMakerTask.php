@@ -26,6 +26,8 @@ class FTFileMakerTask extends BuildTask
 
     protected $fixtureFileBaseUrl = "https://s3-ap-southeast-2.amazonaws.com/silverstripe-frameworktest-assets/";
 
+    protected $defaultImageFileName = 'image-huge-tall.jpg';
+
     protected $fixtureFileNames = [
         'archive.zip',
         'animated.gif',
@@ -85,13 +87,17 @@ class FTFileMakerTask extends BuildTask
 
     public function run($request)
     {
-        echo "Making files\n";
-
         if ($request->getVar('reset')) {
             $this->reset();
         }
 
+        echo "Downloading fixtures\n";
         $fixtureFilePaths = $this->downloadFixtureFiles();
+
+        echo "Generate thumbnails\n";
+        $this->generateThumbnails($fixtureFilePaths);
+
+        echo "Generate files\n";
         $this->generateFiles($fixtureFilePaths);
     }
 
@@ -132,6 +138,29 @@ class FTFileMakerTask extends BuildTask
         Promise\unwrap($promises);
 
         return $paths;
+    }
+
+    /**
+     * Creates thumbnails of sample images
+     *
+     * @param array $fixtureFilePaths
+     */
+    protected function generateThumbnails($fixtureFilePaths)
+    {
+        $folder = Folder::find_or_make('testfolder-thumbnail');
+        $fileName = $this->defaultImageFileName;
+
+        copy($fixtureFilePaths[$fileName], $folder->getFullPath() . $fileName);
+
+        $file = new Image([
+            'ParentID' => $folder->ID,
+            'Title' => $fileName,
+            'Name' => $fileName,
+            'Filename' => $folder->getRelativePath() . $fileName,
+        ]);
+        $file->write();
+
+        $file->Pad(60,60)->CropHeight(30);
     }
 
     protected function generateFiles($fixtureFilePaths, $depth = 0, $prefix = "0", $parentID = 0)
@@ -176,11 +205,6 @@ class FTFileMakerTask extends BuildTask
                     $file->Created = '2010-01-01 00:00:00';
                     $file->Title = '[old] ' . $file->Title;
                     $file->write();
-                }
-
-                // Create thumbnails
-                if ($class === 'Image') {
-                    $file->CMSThumbnail();
                 }
 
                 echo "  Created File: '$file->Title'\n";
