@@ -99,6 +99,11 @@ class FTFileMakerTask extends BuildTask
 
         echo "Generate files\n";
         $this->generateFiles($fixtureFilePaths);
+
+        if (class_exists('SecureFileExtension')) {
+            echo "Generate protected files\n";
+            $this->generateProtectedFiles($fixtureFilePaths);
+        }
     }
 
     protected function reset()
@@ -138,6 +143,40 @@ class FTFileMakerTask extends BuildTask
         Promise\unwrap($promises);
 
         return $paths;
+    }
+
+    /**
+     * Creates protected files, if silverstripe/secureassets is installed.
+     * Note that in this module, only folders can be protected (and all files within them).
+     *
+     * @param array $fixtureFilePaths
+     */
+    protected function generateProtectedFiles($fixtureFilePaths)
+    {
+        $folder = Folder::find_or_make('testfolder-protected');
+        $fileName = $this->defaultImageFileName;
+
+        copy($fixtureFilePaths[$fileName], $folder->getFullPath() . $fileName);
+
+        $contentAuthorsGroup = DataObject::get('Group')
+            ->filter('Code', 'content-authors')
+            ->First();
+
+        if (!$contentAuthorsGroup) {
+            throw new LogicException('No content authors group found');
+        }
+
+        $folder->CanViewType = 'OnlyTheseUsers';
+        $folder->ViewerGroups()->add($contentAuthorsGroup);
+        $folder->write();
+
+        $file = new Image([
+            'ParentID' => $folder->ID,
+            'Title' => $fileName,
+            'Name' => $fileName,
+            'Filename' => $folder->getRelativePath() . $fileName,
+        ]);
+        $file->write();
     }
 
     /**
