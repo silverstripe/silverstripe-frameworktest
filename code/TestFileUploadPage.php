@@ -5,7 +5,7 @@ use SilverStripe\FrameworkTest\Model\TestPage_Controller;
 use SilverStripe\Security\Member;
 use SilverStripe\Forms\EmailField;
 use SilverStripe\Forms\FileField;
-use SilverStripe\Forms\UploadField;
+use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\FormAction;
 use SilverStripe\Forms\Form;
@@ -18,7 +18,6 @@ class TestFileUploadPage extends TestPage
 
 class TestFileUploadPage_Controller extends TestPage_Controller
 {
-
     private static $allowed_actions = array(
         'Form'
     );
