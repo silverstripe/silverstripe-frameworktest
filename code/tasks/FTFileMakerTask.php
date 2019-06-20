@@ -2,6 +2,7 @@
 
 use SilverStripe\Assets\File;
 use SilverStripe\Assets\Folder;
+use SilverStripe\Assets\Image;
 use SilverStripe\Dev\BuildTask;
 use SilverStripe\ORM\DB;
 use GuzzleHttp\Client;
@@ -30,6 +31,8 @@ class FTFileMakerTask extends BuildTask
 {
 
     protected $fixtureFileBaseUrl = "https://s3-ap-southeast-2.amazonaws.com/silverstripe-frameworktest-assets/";
+
+    protected $defaultImageFileName = 'image-huge-tall.jpg';
 
     protected $fixtureFileNames = [
         'archive.zip',
@@ -90,13 +93,17 @@ class FTFileMakerTask extends BuildTask
 
     public function run($request)
     {
-        echo "Making files\n";
-
         if ($request->getVar('reset')) {
             $this->reset();
         }
 
+        echo "Downloading fixtures\n";
         $fixtureFilePaths = $this->downloadFixtureFiles();
+
+        echo "Generate thumbnails\n";
+        $this->generateThumbnails($fixtureFilePaths);
+
+        echo "Generate files\n";
         $this->generateFiles($fixtureFilePaths);
     }
 
@@ -106,7 +113,7 @@ class FTFileMakerTask extends BuildTask
 
         DB::query('TRUNCATE "File"');
         DB::query('TRUNCATE "File_Live"');
-        DB::query('TRUNCATE "File_versions"');
+        DB::query('TRUNCATE "File_Versions"');
 
         if (file_exists(ASSETS_PATH) && ASSETS_PATH && ASSETS_PATH !== '/') {
             exec("rm -rf " . ASSETS_PATH);
@@ -137,6 +144,33 @@ class FTFileMakerTask extends BuildTask
         Promise\unwrap($promises);
 
         return $paths;
+    }
+
+    /**
+     * Creates thumbnails of sample images
+     *
+     * @param array $fixtureFilePaths
+     */
+    protected function generateThumbnails($fixtureFilePaths)
+    {
+        $folder = Folder::find_or_make('testfolder-thumbnail');
+        $fileName = $this->defaultImageFileName;
+
+        foreach(['draft', 'published'] as $state) {
+            $file = new Image([
+                'ParentID' => $folder->ID,
+                'Title' => "{$fileName} {$state}",
+                'Name' => $fileName,
+            ]);
+            $file->File->setFromLocalFile($fixtureFilePaths[$fileName], $folder->getFilename() . $fileName);
+            $file->write();
+
+            if ($state === 'published') {
+                $file->publishFile();
+            }
+
+            $file->Pad(60,60)->CropHeight(30);
+        }
     }
 
     protected function generateFiles($fixtureFilePaths, $depth = 0, $prefix = "0", $parentID = 0)
