@@ -34,25 +34,26 @@ use SilverStripe\Security\Security;
  * The following yml config make 1040 files / 520mb:
  *
  * To make 100K records, increase the base folderCountByDepth from 1 to 100 and run the task overnight
-
-FTFileMakerTask:
-  documentsOnly: true
-  doSetFolderPermissions: true
-  doSetOldCreationDate: false
-  doRandomlyPublish: false
-  depth: 3
-  folderCountByDepth:
-    - 1
-    - 9
-    - 7
-    - 0
-    - 0
-  fileCountByDepth:
-    - 50
-    - 25
-    - 20
-    - 0
-    - 0
+ *
+ *  ```
+ * FTFileMakerTask:
+ *   documentsOnly: true
+ *   doSetFolderPermissions: true
+ *   doSetOldCreationDate: false
+ *   doRandomlyPublish: false
+ *   depth: 3
+ *   folderCountByDepth:
+ *     - 1
+ *     - 9
+ *     - 7
+ *     - 0
+ *     - 0
+ *   fileCountByDepth:
+ *     - 50
+ *     - 25
+ *     - 20
+ *     - 0
+ *     - 0
  *
  * Flush and run:
  * /dev/tasks/FTFileMakerTask?flush&reset=1
@@ -62,21 +63,54 @@ FTFileMakerTask:
  */
 class FTFileMakerTask extends BuildTask
 {
+    /**
+     * If set to TRUE skip thumbnail generation
+     * @var bool
+     * @config
+     */
+    private static $documentsOnly = false;
 
-    protected $documentsOnly = false;
+    /**
+     * Vary the permission on the folders
+     * @var bool
+     * @config
+     */
+    private static $doSetFolderPermissions = true;
 
-    protected $doSetFolderPermissions = false;
+    /**
+     * Put some files in wrong store to test logic meant to correct this kind of problem..
+     * @var bool
+     * @config
+     */
+    private static $doPutProtectedFilesInPublicStore = false;
 
-    // simulate scenario where protected files were uploaded into the wrong asset store
-    protected $doPutProtectedFilesInPublicStore = false;
+    /**
+     * Set the date of some files to an old date.
+     * @var bool
+     * @config
+     */
+    private static $doSetOldCreationDate = true;
 
-    protected $doSetOldCreationDate = true;
+    /**
+     * Publish some files.
+     * @var bool
+     * @config
+     */
+    private static $doRandomlyPublish = true;
 
-    protected $doRandomlyPublish = true;
+    /**
+     * How deep should or folder hierachy be.
+     * @var int
+     * @config
+     */
+    private static $depth = 2;
 
-    protected $depth = 2;
-
-    protected $folderCountByDepth = [
+    /**
+     * Number of folders to create certain hierachy.
+     * @var int[]
+     * @config
+     */
+    private static $folderCountByDepth = [
         0 => 2,
         1 => 2,
         2 => 2,
@@ -84,9 +118,14 @@ class FTFileMakerTask extends BuildTask
         4 => 2,
     ];
 
-    protected $fileCountByDepth = [
-        0 => 10,
-        1 => 8,
+    /**
+     * Number of files to create at various depths in the hierachy
+     * @var int[]
+     * @config
+     */
+    private static $fileCountByDepth = [
+        0 => 100,
+        1 => 30,
         2 => 5,
         3 => 5,
         4 => 5,
@@ -269,15 +308,15 @@ class FTFileMakerTask extends BuildTask
                 'Name' => "testfolder-{$prefix}{$i}",
             ]);
             if ($doSetFolderPermissions) {
-                if ($i == 1) {
+                if ($i === 1) {
                     // the first folder should always be public to ensure there's some public folders
                     $folder->CanViewType = 'Inherit';
-                } elseif ($i == $folderCount) {
+                } elseif ($i === $folderCount) {
                     // the last folder should always be protected to ensure there's some protected folders
                     $folder->CanViewType = 'OnlyTheseUsers';
                 } else {
                     // all the other folder have a 33% chance of being a protected folder
-                    $folder->CanViewType = rand(0, 2) == 0 ? 'OnlyTheseUsers' : 'Inherit';
+                    $folder->CanViewType = rand(0, 2) === 0 ? 'OnlyTheseUsers' : 'Inherit';
                 }
             }
 
@@ -306,7 +345,7 @@ class FTFileMakerTask extends BuildTask
 
                 // Randomly set old created date (for testing)
                 if ($doSetOldCreationDate) {
-                    if (rand(0, 10) == 0) {
+                    if (rand(0, 10) === 0) {
                         $file->Created = '2010-01-01 00:00:00';
                         $file->Title = '[old] ' . $file->Title;
                     }
@@ -315,7 +354,7 @@ class FTFileMakerTask extends BuildTask
                 $file->write();
 
                 if ($doRandomlyPublish) {
-                    if (rand(0, 1) == 0) {
+                    if (rand(0, 1) === 0) {
                         $file->publishFile();
                     }
                 } else {
