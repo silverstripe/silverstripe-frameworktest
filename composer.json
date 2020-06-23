@@ -12,8 +12,8 @@
 	],
 	"require":
 	{
-		"silverstripe/framework": "~4.0",
-		"silverstripe/cms": "~4.0",
+		"silverstripe/framework": "5.x-dev",
+		"silverstripe/cms": "5.x-dev",
 		"guzzlehttp/guzzle": "~6.0",
 		"fzaninotto/faker": "^1.7",
         "silverstripe/vendor-plugin": "^1.0"
