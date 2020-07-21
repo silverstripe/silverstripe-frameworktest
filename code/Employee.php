@@ -2,28 +2,25 @@
 
 namespace SilverStripe\FrameworkTest\Model;
 
-
-
-
-
 use SilverStripe\Assets\Image;
-use SilverStripe\Forms\CompositeField;
-use SilverStripe\Forms\FieldGroup;
+use SilverStripe\Forms\NumericField;
+use SilverStripe\Forms\TextField;
 use SilverStripe\ORM\Connect\MySQLSchemaManager;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\DB;
-use SilverStripe\Forms\NumericField;
-use SilverStripe\Forms\TextField;
-use SilverStripe\Forms\DropdownField;
 use SilverStripe\ORM\Filters\ExactMatchFilter;
 use SilverStripe\ORM\Filters\FulltextFilter;
-use SilverStripe\ORM\Filters\GreaterThanOrEqualFilter;
-use SilverStripe\ORM\Filters\LessThanOrEqualFilter;
 
 
 /**
- * Description of Employees
- *
+ * @property string $Name
+ * @property string $Biography
+ * @property string $DateOfBirth
+ * @property string $Category
+ * @property int $CompanyID
+ * @property int $ProfileImageID
+ * @method Company Company()
+ * @method Image ProfileImage()
  */
 class Employee extends DataObject
 {
@@ -120,12 +117,12 @@ class Employee extends DataObject
             $employee = Employee::create([
                 'Name' => $employeeName,
                 'CompanyID' => $companyIDs[rand(0, $companyCount-1)],
-                'Biography' => implode([
+                'Biography' => implode(' ', [
                     $words[rand(0, $wordCount-1)],
                     $words[rand(0, $wordCount-1)],
                     $words[rand(0, $wordCount-1)],
                     $words[rand(0, $wordCount-1)],
-                    ], " "),
+                    ]),
                 'DateOfBirth' => date("Y-m-d", rand(0, 500) * 24 * 60 * 60),
                 'Category' => $categories[rand(0, 3)]
             ]);
@@ -197,6 +194,6 @@ class Employee extends DataObject
 
     public function getColleagueNames()
     {
-        return implode($this->Company()->Employees()->column('Name'), ' ');
+        return implode(' ', $this->Company()->Employees()->column('Name'));
     }
 }
