@@ -4,14 +4,16 @@ After: '#graphqlconfig'
 ---
 
 SilverStripe\Core\Injector\Injector:
-  SilverStripe\GraphQL\Manager.frameworktest:
-    class: SilverStripe\GraphQL\Manager
+  SilverStripe\GraphQL\Schema\Schema.frameworktest:
+    class: SilverStripe\GraphQL\Schema\Schema
     constructor:
-      identifier: frameworktest
+      schemaKey: frameworktest
   SilverStripe\GraphQL\Controller.frameworktest:
     class: SilverStripe\GraphQL\Controller
     constructor:
-      manager: '%$SilverStripe\GraphQL\Manager.frameworktest'
+      schema: '%$SilverStripe\GraphQL\Schema\Schema.frameworktest'
+      queryHandler: '%$SilverStripe\GraphQL\QueryHandler\QueryHandlerInterface'
+
 
 
 
@@ -20,40 +22,35 @@ SilverStripe\Control\Director:
     'frameworktest/graphql':
       Controller: '%$SilverStripe\GraphQL\Controller.frameworktest'
 
-SilverStripe\GraphQL\Manager:
+SilverStripe\GraphQL\Schema\Schema:
   schemas:
     frameworktest:
-      typeNames:
-        SilverStripe\FrameworkTest\Model\Company: Company
-        SilverStripe\FrameworkTest\Model\Employee: Employee
-      scaffolding:
-        types:
-          SilverStripe\FrameworkTest\Model\Company:
-            fields:
-              - ID
-              - Name
-              - Category
-              - Revenue
-              - CEO
-            operations:
-              read: true
-              update: true
-              create: true
-              delete: true
-              readOne: true
-            nestedQueries:
-              Employees: true
-              PastEmployees: true
-          SilverStripe\FrameworkTest\Model\Employee:
-            fields:
-              - ID
-              - Name
-              - Biography
-              - DateOfBirth
-              - Category
-            operations:
-              read: true
-              update: true
-              create: true
-              delete: true
-              readOne: true
+      models:
+        SilverStripe\FrameworkTest\Model\Company:
+          fields:
+            ID: true
+            Name: true
+            Category: true
+            Revenue: true
+            CEO: true
+            Employees: true
+            PastEmployees: true
+          operations:
+            read: true
+            update: true
+            create: true
+            delete: true
+            readOne: true
+        SilverStripe\FrameworkTest\Model\Employee:
+          fields:
+            ID: true
+            Name: true
+            Biography: true
+            DateOfBirth: true
+            Category: true
+          operations:
+            read: true
+            update: true
+            create: true
+            delete: true
+            readOne: true
