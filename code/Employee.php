@@ -65,10 +65,6 @@ class Employee extends DataObject
 
     private static $searchable_fields = [
         'Name',
-        'Company' => [
-            'title' => 'Company exact match filter',
-            'filter' => ExactMatchFilter::class,
-        ],
         'Company.Name' => array(
             'title' => 'Company Name starting with',
             'field' => TextField::class,
