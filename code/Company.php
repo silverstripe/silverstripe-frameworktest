@@ -47,7 +47,7 @@ class Company extends DataObject
         'Name'=>'Varchar(255)',
         'Category'=>'Varchar(255)',
         'Revenue'=>'Float',
-        'CEO'=>'Varchar(255)',
+        'CEO'=>'Varchar(255)'
     );
 
     private static $has_one = array(
@@ -102,13 +102,13 @@ class Company extends DataObject
 
     public function validate()
     {
-        if (!$this->Title) {
-            $result = new ValidationResult();
-            $result->addError('Title is required');
-            return $result;
-        } else {
-            return parent::validate();
+        $result = parent::validate();
+
+        if (!$this->Name) {
+            $result->addFieldError('Name', 'Name is required');
         }
+
+        return $result;
     }
 
     public function DynamicProperty()
