@@ -6,10 +6,6 @@ use SilverStripe\Registry\RegistryPage;
 use SilverStripe\Security\DefaultAdminService;
 use SilverStripe\Security\Member;
 
-if (!class_exists(RegistryPage::class)) {
-    return;
-}
-
 class TestRegistryPage extends RegistryPage
 {
     public function requireDefaultRecords()

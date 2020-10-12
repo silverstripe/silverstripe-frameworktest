@@ -6,10 +6,6 @@ use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\DB;
 use SilverStripe\Registry\RegistryDataInterface;
 
-if (!interface_exists(RegistryDataInterface::class)) {
-    return;
-}
-
 class TestRegistryDataObject extends DataObject implements RegistryDataInterface
 {
     private static $table_name = 'TestRegistryDataObject';
