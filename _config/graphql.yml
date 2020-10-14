@@ -11,8 +11,7 @@ SilverStripe\Core\Injector\Injector:
   SilverStripe\GraphQL\Controller.frameworktest:
     class: SilverStripe\GraphQL\Controller
     constructor:
-      schema: '%$SilverStripe\GraphQL\Schema\Schema.frameworktest'
-      queryHandler: '%$SilverStripe\GraphQL\QueryHandler\QueryHandlerInterface'
+      schema: frameworktest
 
 
 
