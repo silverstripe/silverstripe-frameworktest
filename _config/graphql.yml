@@ -1,6 +1,8 @@
 ---
 Name: frameworktestgraphql
 After: '#graphqlconfig'
+Only:
+  classexists: 'SilverStripe\GraphQL\Schema\Schema'
 ---
 
 SilverStripe\Core\Injector\Injector:
@@ -12,10 +14,6 @@ SilverStripe\Core\Injector\Injector:
     class: SilverStripe\GraphQL\Controller
     constructor:
       schema: frameworktest
-      queryHandler: '%$SilverStripe\GraphQL\QueryHandler\QueryHandlerInterface'
-
-
-
 
 SilverStripe\Control\Director:
   rules:
@@ -25,6 +23,10 @@ SilverStripe\Control\Director:
 SilverStripe\GraphQL\Schema\Schema:
   schemas:
     frameworktest:
+      modelConfig:
+        type_mapping:
+          SilverStripe\FrameworkTest\Model\Company: Company
+          SilverStripe\FrameworkTest\Model\Employee: Employee
       models:
         SilverStripe\FrameworkTest\Model\Company:
           fields:
