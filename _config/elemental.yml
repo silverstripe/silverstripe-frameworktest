@@ -1,0 +1,7 @@
+---
+Only:
+  classexists: 'DNADesign\Elemental\Extensions\ElementalPageExtension'
+---
+SilverStripe\FrameworkTest\Model\TestPage:
+  extensions:
+    - DNADesign\Elemental\Extensions\ElementalPageExtension
