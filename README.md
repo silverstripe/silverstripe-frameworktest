@@ -29,6 +29,30 @@ If you want to test the CMS behaviour for a large and nested tree,
 the module includes a simple generator task: `dev/tasks/FTPageMakerTask`.
 It will create 3^5 pages by default, so takes a while to run through.
 
+## Blocks
+
+When [dnadesign/silverstripe-elemental](https://github.com/dnadesign/silverstripe-elemental)
+is installed, the `FTPageMakerTask` can also generate blocks within those pages automatically.
+It has a few hardcoded sample data structures for common block types,
+and randomly creates a number of blocks, as well as randomly choosing to publish them.
+Relies on files and images being available to add as sample data. 
+
+Additional setup:
+
+```
+composer require dnadesign/silverstripe-elemental
+composer require silverstripe/elemental-bannerblock
+composer require silverstripe/elemental-fileblock
+```
+
+Usage:
+
+```
+# Generate some sample files to associate with blocks
+sake dev/tasks/FTFileMakerTask
+sake dev/tasks/FTPageMakerTask withBlocks=true
+```
+
 ## Requirements
 
 The module is intended to run against the latest core codebase,

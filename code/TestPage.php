@@ -20,7 +20,7 @@ use SilverStripe\Security\Security;
 /**
  * Parent class of all test pages
  */
-class TestPage extends Page
+class TestPage extends Page implements \TestPageInterface
 {
     private static $table_name = 'FrameworkTestPage';
 
