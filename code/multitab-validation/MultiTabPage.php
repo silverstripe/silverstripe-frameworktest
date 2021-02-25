@@ -2,14 +2,18 @@
 
 namespace SilverStripe\FrameworkTest\Model;
 
-use SilverStripe\CMS\Model\SiteTree;
+use Page;
 use SilverStripe\Forms\RequiredFields;
 use SilverStripe\Forms\TextField;
+
+if (!class_exists(Page::class)) {
+    return;
+}
 
 /**
  * This class is specifically for the silverstripe/admin behat test multitab-validation.feature
  */
-class MultiTabPage extends SiteTree
+class MultiTabPage extends Page
 {
     private static $db = [
         'SecondTabFirstField' => 'Varchar(50)',

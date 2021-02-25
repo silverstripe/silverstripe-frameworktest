@@ -2,13 +2,17 @@
 
 namespace SilverStripe\FrameworkTest\Model;
 
-use SilverStripe\CMS\Model\SiteTree;
+use Page;
 use SilverStripe\Forms\RequiredFields;
+
+if (!class_exists(Page::class)) {
+    return;
+}
 
 /**
  * This class is specifically for the silverstripe/admin behat test multitab-validation.feature
  */
-class SingleTabPage extends SiteTree
+class SingleTabPage extends Page
 {
     public function getCMSValidator()
     {
