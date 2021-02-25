@@ -23,36 +23,37 @@ SilverStripe\Control\Director:
 SilverStripe\GraphQL\Schema\Schema:
   schemas:
     frameworktest:
-      modelConfig:
-        type_mapping:
-          SilverStripe\FrameworkTest\Model\Company: Company
-          SilverStripe\FrameworkTest\Model\Employee: Employee
-      models:
-        SilverStripe\FrameworkTest\Model\Company:
-          fields:
-            ID: true
-            Name: true
-            Category: true
-            Revenue: true
-            CEO: true
-            Employees: true
-            PastEmployees: true
-          operations:
-            read: true
-            update: true
-            create: true
-            delete: true
-            readOne: true
-        SilverStripe\FrameworkTest\Model\Employee:
-          fields:
-            ID: true
-            Name: true
-            Biography: true
-            DateOfBirth: true
-            Category: true
-          operations:
-            read: true
-            update: true
-            create: true
-            delete: true
-            readOne: true
+      config:
+        modelConfig:
+          type_mapping:
+            SilverStripe\FrameworkTest\Model\Company: Company
+            SilverStripe\FrameworkTest\Model\Employee: Employee
+        models:
+          SilverStripe\FrameworkTest\Model\Company:
+            fields:
+              ID: true
+              Name: true
+              Category: true
+              Revenue: true
+              CEO: true
+              Employees: true
+              PastEmployees: true
+            operations:
+              read: true
+              update: true
+              create: true
+              delete: true
+              readOne: true
+          SilverStripe\FrameworkTest\Model\Employee:
+            fields:
+              ID: true
+              Name: true
+              Biography: true
+              DateOfBirth: true
+              Category: true
+            operations:
+              read: true
+              update: true
+              create: true
+              delete: true
+              readOne: true

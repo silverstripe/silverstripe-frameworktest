@@ -15,6 +15,8 @@ if (!class_exists(Page::class)) {
  */
 class MultiTabPage extends Page
 {
+    private static $table_name = 'MultiTabPage';
+
     private static $db = [
         'SecondTabFirstField' => 'Varchar(50)',
         'ThirdTabFirstField' => 'Varchar(50)',
