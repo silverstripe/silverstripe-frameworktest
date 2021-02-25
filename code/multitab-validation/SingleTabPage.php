@@ -14,6 +14,8 @@ if (!class_exists(Page::class)) {
  */
 class SingleTabPage extends Page
 {
+    private static $table_name = 'SingleTabPage';
+
     public function getCMSValidator()
     {
         return new RequiredFields([
