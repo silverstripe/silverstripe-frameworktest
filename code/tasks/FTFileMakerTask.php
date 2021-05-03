@@ -9,6 +9,8 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Promise;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\Security;
+use SilverStripe\Core\Path;
+use SilverStripe\Core\Manifest\ModuleResourceLoader;
 
 /**
  * Creates sample folder and file structure, useful to test performance,
@@ -106,7 +108,14 @@ class FTFileMakerTask extends BuildTask
     private static $depth = 2;
 
     /**
-     * Number of folders to create certain hierachy.
+     * When true, watermark images for unique image binary per Image record
+     * @var bool
+     * @config
+     */
+    private static $uniqueImages = true;
+
+    /**
+     * Number of folders to create certain hierarchy.
      * @var int[]
      * @config
      */
@@ -301,6 +310,11 @@ class FTFileMakerTask extends BuildTask
         $doSetOldCreationDate = (bool) self::config()->get('doSetOldCreationDate');
         $doRandomlyPublish = (bool) self::config()->get('doRandomlyPublish');
 
+        $uniqueImages = (bool) self::config()->get('uniqueImages');
+        $watermarkPath = ModuleResourceLoader::singleton()->resolvePath(
+            'silverstripe/frameworktest: images/silverstripe.png'
+        );
+
         for ($i = 1; $i <= $folderCount; $i++) {
             $folder = new Folder([
                 'ParentID' => $parentID,
@@ -336,12 +350,23 @@ class FTFileMakerTask extends BuildTask
 
                 $class = $this->fixtureFileTypes[$randomFileName];
 
+                // If we're uniquifying images, copy the path and watermark it.
+                if ($class === Image::class && $uniqueImages) {
+                    $copyPath = Path::join(dirname($randomFilePath), $fileName);
+                    copy($randomFilePath, $copyPath);
+                    $newPath = $this->watermarkImage($watermarkPath, $copyPath);
+                    if ($newPath) {
+                        $randomFilePath = $newPath;
+                    }
+                }
+
                 $file = new $class([
                     'ParentID' => $folder->ID,
                     'Title' => $fileName,
                     'Name' => $fileName,
                 ]);
                 $file->File->setFromLocalFile($randomFilePath, $folder->getFilename() . $fileName);
+
 
                 // Randomly set old created date (for testing)
                 if ($doSetOldCreationDate) {
@@ -389,6 +414,54 @@ class FTFileMakerTask extends BuildTask
             $file->publishFile();
             $url = $file->getAbsoluteURL();
         }
+    }
+
+    /**
+     * @param string $stampPath
+     * @param string $targetPath
+     * @return null
+     */
+    protected function watermarkImage(string $stampPath, string $targetPath): ?string
+    {
+        // Load the stamp and the photo to apply the watermark to
+        $ext = strtolower(pathinfo($targetPath, PATHINFO_EXTENSION));
+        $functions = null;
+        if (in_array($ext, ['jpeg', 'jpg'])) {
+            $functions = ['imagecreatefromjpeg', 'imagejpeg'];
+        } elseif ($ext === 'png') {
+            $functions = ['imagecreatefrompng', 'imagepng'];
+        }
+        if (!$functions) {
+            return null;
+        }
+
+        $stamp = imagecreatefrompng($stampPath);
+        $targetImage = call_user_func($functions[0], $targetPath);
+
+        // Set the margins for the stamp and get the height/width of the stamp image
+        $targetX = imagesx($targetImage);
+        $targetY = imagesy($targetImage);
+        $stampX = imagesx($stamp);
+        $stampY = imagesy($stamp);
+
+        $marge_right = rand($stampX, $targetX - $stampX);
+        $marge_bottom = rand($stampY, $targetY - $stampY);
+
+        // Copy the stamp image onto our photo using the margin offsets and the photo
+        // width to calculate positioning of the stamp.
+        imagecopy(
+            $targetImage,
+            $stamp,
+            $targetX - $stampX - $marge_right,
+            $targetY - $stampY - $marge_bottom,
+            0,
+            0,
+            $stampX,
+            $stampY
+        );
+        call_user_func($functions[1], $targetImage, $targetPath);
+
+        return $targetPath;
     }
 
 }
