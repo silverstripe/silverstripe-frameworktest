@@ -185,6 +185,18 @@ class FTFileMakerTask extends BuildTask
     /** @var Member */
     protected $anonymousMember = null;
 
+    /**
+     * Allow override of the fileCountByDepth
+     * @var array
+     */
+    protected $fileCounts = [];
+
+    /**
+     * Allow override of the folderCountByDepth
+     * @var array
+     */
+    protected $folderCounts = [];
+
     public function run($request)
     {
         set_time_limit(0);
@@ -207,6 +219,26 @@ class FTFileMakerTask extends BuildTask
 
         if ($request->getVar('reset')) {
             $this->reset();
+        }
+
+        $fileCounts = $request->getVar('fileCounts');
+        if ($fileCounts) {
+            $counts = explode(',', $fileCounts);
+            $this->fileCounts = array_map(function ($int) {
+                return (int) trim($int);
+            }, $counts);
+        } else {
+            $this->fileCounts = self::config()->get('fileCountByDepth');
+        }
+
+        $folderCounts = $request->getVar('folderCounts');
+        if ($folderCounts) {
+            $counts = explode(',', $folderCounts);
+            $this->folderCounts = array_map(function ($int) {
+                return (int) trim($int);
+            }, $counts);
+        } else {
+            $this->folderCounts = self::config()->get('folderCountByDepth');
         }
 
         echo "Downloading fixtures" . $this->lineBreak;
@@ -302,8 +334,8 @@ class FTFileMakerTask extends BuildTask
     protected function generateFiles($fixtureFilePaths, $depth = 0, $prefix = "0", $parentID = 0)
     {
 
-        $folderCount = self::config()->get('folderCountByDepth')[$depth];
-        $fileCount = self::config()->get('fileCountByDepth')[$depth];
+        $folderCount = $this->folderCounts[$depth];
+        $fileCount = $this->fileCounts[$depth];
 
         $doSetFolderPermissions = (bool) self::config()->get('doSetFolderPermissions');
 

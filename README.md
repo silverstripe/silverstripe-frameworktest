@@ -3,7 +3,7 @@
 ## Introduction
 
 Aids core and module developers in testing their code against
-a set of sample data and behaviour. 
+a set of sample data and behaviour.
 
  * Shows all core form fields, including their disabled and readonly state
  * Shows sample GridField instance including data
@@ -25,9 +25,24 @@ For example, to test the tagfield module, remove the `frameworktest/code/tagfiel
 
 The module creates some default pages for different CMS behaviours.
 The CMS is intended to be perform well with a couple of thousand pages.
-If you want to test the CMS behaviour for a large and nested tree, 
+If you want to test the CMS behaviour for a large and nested tree,
 the module includes a simple generator task: `dev/tasks/FTPageMakerTask`.
 It will create 3^5 pages by default, so takes a while to run through.
+
+## Configuring the amount of data
+
+Both `FTPageMagerTask` and `FTFileMakerTask` allow the amount of generated content to be configured.
+To do this, pass a comma-seprarated list of integers representing the amount of records to create at each
+depth.
+
+`$ vendor/bin/sake dev/tasks/FTPageMakerTask pageCounts=10,200,5,5`
+
+`$ vendor/bin/sake dev/tasks/FTFileMakerTask fileCounts=5,300,55,5 folderCounts=1,5,5,5`
+
+## Guaranteed unique images
+
+The `FTFileMakerTask` will randomly watermark each reference to your images by default. If you want to disable this,
+set the `uniqueImages` config variable to `false`.
 
 ## Blocks
 
@@ -35,7 +50,7 @@ When [dnadesign/silverstripe-elemental](https://github.com/dnadesign/silverstrip
 is installed, the `FTPageMakerTask` can also generate blocks within those pages automatically.
 It has a few hardcoded sample data structures for common block types,
 and randomly creates a number of blocks, as well as randomly choosing to publish them.
-Relies on files and images being available to add as sample data. 
+Relies on files and images being available to add as sample data.
 
 Additional setup:
 
