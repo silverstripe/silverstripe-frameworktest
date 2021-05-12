@@ -346,6 +346,7 @@ class FTFileMakerTask extends BuildTask
         $watermarkPath = ModuleResourceLoader::singleton()->resolvePath(
             'silverstripe/frameworktest: images/silverstripe.png'
         );
+        $absWatermarkPath = Path::join(BASE_PATH, $watermarkPath);
 
         for ($i = 1; $i <= $folderCount; $i++) {
             $folder = new Folder([
@@ -386,7 +387,7 @@ class FTFileMakerTask extends BuildTask
                 if ($class === Image::class && $uniqueImages) {
                     $copyPath = Path::join(dirname($randomFilePath), $fileName);
                     copy($randomFilePath, $copyPath);
-                    $newPath = $this->watermarkImage($watermarkPath, $copyPath);
+                    $newPath = $this->watermarkImage($absWatermarkPath, $copyPath);
                     if ($newPath) {
                         $randomFilePath = $newPath;
                     }
