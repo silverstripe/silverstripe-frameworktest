@@ -1,4 +1,14 @@
 ---
+Name: frameworktest-extensions
+---
+SilverStripe\ORM\DataObject:
+  extensions:
+    - DevBuildGeneratorExtension
+SilverStripe\Assets\File:
+  extensions:
+    - BasicFieldsTestFileExtension
+
+---
 Only:
   classexists: 'DNADesign\Elemental\Extensions\ElementalPageExtension'
 ---

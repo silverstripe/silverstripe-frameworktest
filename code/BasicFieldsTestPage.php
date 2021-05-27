@@ -110,11 +110,10 @@ class BasicFieldsTestPage extends TestPage
     {
         parent::requireDefaultRecords();
 
-        if ($inst = DataObject::get_one('BasicFieldsTestPage')) {
+        if ($inst = DataObject::get_one('BasicFieldsTestPage') && static::config()->get('regenerate_on_build')) {
             $data = $this->getDefaultData();
             $inst->update($data);
             $inst->write();
-
             TestCategory::create()->requireDefaultRecords();
             $cats = TestCategory::get();
             $firstCat = $cats->offsetGet(0);

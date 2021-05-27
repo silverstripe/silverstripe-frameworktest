@@ -851,6 +851,10 @@ class TestRegistryDataObject extends DataObject implements RegistryDataInterface
 
         /** @var DataObject[] $all */
         $all = static::get();
+        if ($all->exists() && !static::config()->get('regenerate_on_build')) {
+            return;
+        }
+
         foreach ($all as $one) {
             $one->delete();
         }

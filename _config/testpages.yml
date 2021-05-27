@@ -1,6 +1,0 @@
----
-Name: frameworktestpages
----
-SilverStripe\Assets\File:
-  extensions:
-    - BasicFieldsTestFileExtension

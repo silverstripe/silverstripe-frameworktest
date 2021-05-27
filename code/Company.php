@@ -6,10 +6,10 @@ use SilverStripe\Assets\Image;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\ORM\HasManyList;
 use SilverStripe\ORM\ManyManyList;
-use SilverStripe\ORM\ValidationResult;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\DB;
 use SilverStripe\AssetAdmin\Forms\UploadField;
+use SilverStripe\Versioned\RecursivePublishable;
 use SilverStripe\Versioned\Versioned;
 use RelationFieldsTestPage;
 use GridFieldTestPage;
@@ -120,11 +120,15 @@ class Company extends DataObject
     {
         parent::requireDefaultRecords();
         $companySet = static::get();
+        $data = $this->data();
+        if ($companySet->exists() && !static::config()->get('regenerate_on_build')) {
+            return;
+        }
         foreach ($companySet as $company) {
             $company->delete();
         }
 
-        foreach ($this->data() as $companyData) {
+        foreach ($data as $companyData) {
             $company = new Company();
             $company->Name = $companyData[0];
             $company->Category = $companyData[1];

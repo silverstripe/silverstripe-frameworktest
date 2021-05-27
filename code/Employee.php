@@ -99,6 +99,10 @@ class Employee extends DataObject
     {
         parent::requireDefaultRecords();
         $employeeSet = DataObject::get(Employee::class);
+        if ($employeeSet->exists() && !static::config()->get('regenerate_on_build')) {
+            return;
+        }
+
         foreach ($employeeSet as $employee) {
             $employee->delete();
         }
