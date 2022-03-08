@@ -1,24 +1,23 @@
 {
-	"name": "silverstripe/frameworktest",
-	"description": "Aids core and module developers in testing their code against a set of sample data and behaviour.",
+    "name": "silverstripe/frameworktest",
+    "description": "Aids core and module developers in testing their code against a set of sample data and behaviour.",
     "type": "silverstripe-vendormodule",
-	"keywords": ["silverstripe", "frameworktest", "testing"],
-	"license": "BSD-3-Clause",
-	"authors": [
-	{
-		"name": "Ingo Schommer",
-		"email": "ingo@silverstripe.com"
-	}
-	],
-	"require":
-	{
-		"silverstripe/framework": "~4.0",
-		"silverstripe/cms": "~4.0",
-		"guzzlehttp/guzzle": "~6.0",
-		"fzaninotto/faker": "^1.7",
-        "silverstripe/vendor-plugin": "^1.0",
-		"silverstripe/registry": "~2"
-	},
+    "keywords": ["silverstripe", "frameworktest", "testing"],
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Ingo Schommer",
+            "email": "ingo@silverstripe.com"
+        }
+    ],
+    "require": {
+        "silverstripe/framework": "^4",
+        "silverstripe/cms": "^4",
+        "guzzlehttp/guzzle": "^7.3",
+        "fzaninotto/faker": "^1.7",
+        "silverstripe/vendor-plugin": "^1",
+        "silverstripe/registry": "^2"
+    },
     "extra": {
         "expose": [
             "client/dist",

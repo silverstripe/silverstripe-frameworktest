@@ -6,7 +6,7 @@ use SilverStripe\Assets\Image;
 use SilverStripe\Dev\BuildTask;
 use SilverStripe\ORM\DB;
 use GuzzleHttp\Client;
-use GuzzleHttp\Promise;
+use GuzzleHttp\Promise\Utils;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\Security;
 use SilverStripe\Core\Path;
@@ -299,7 +299,7 @@ class FTFileMakerTask extends BuildTask
 
         // Wait on all of the requests to complete. Throws a ConnectException
         // if any of the requests fail
-        Promise\unwrap($promises);
+        Utils::unwrap($promises);
 
         return $paths;
     }
