@@ -305,7 +305,7 @@ class BasicFieldsTestPage extends TestPage
                     ->setRightTitle($rightTitle)
                     ->addExtraClass('my-extra-class');
 
-                if (in_array($field->getName(), $blacklist)) {
+                if (in_array($field->getName(), $blacklist ?? [])) {
                     continue;
                 }
 

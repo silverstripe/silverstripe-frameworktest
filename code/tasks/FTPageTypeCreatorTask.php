@@ -54,8 +54,8 @@ class FTPageTypeCreatorTask extends BuildTask
             $className = null;
             while (
                 !$className ||
-                in_array($className, $pageTypes) ||
-                class_exists(basename($className, 'php'))
+                in_array($className, $pageTypes ?? []) ||
+                class_exists(basename($className ?? '', 'php'))
             ) {
                 $className = $this->generateClassName();
             }

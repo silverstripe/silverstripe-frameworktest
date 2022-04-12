@@ -223,20 +223,20 @@ class FTFileMakerTask extends BuildTask
 
         $fileCounts = $request->getVar('fileCounts');
         if ($fileCounts) {
-            $counts = explode(',', $fileCounts);
+            $counts = explode(',', $fileCounts ?? '');
             $this->fileCounts = array_map(function ($int) {
-                return (int) trim($int);
-            }, $counts);
+                return (int) trim($int ?? '');
+            }, $counts ?? []);
         } else {
             $this->fileCounts = self::config()->get('fileCountByDepth');
         }
 
         $folderCounts = $request->getVar('folderCounts');
         if ($folderCounts) {
-            $counts = explode(',', $folderCounts);
+            $counts = explode(',', $folderCounts ?? '');
             $this->folderCounts = array_map(function ($int) {
-                return (int) trim($int);
-            }, $counts);
+                return (int) trim($int ?? '');
+            }, $counts ?? []);
         } else {
             $this->folderCounts = self::config()->get('folderCountByDepth');
         }
@@ -277,8 +277,8 @@ class FTFileMakerTask extends BuildTask
 
         $fixtureFileNames = $this->fixtureFileNames;
         if (self::config()->get('documentsOnly')) {
-            $fixtureFileNames = array_filter($fixtureFileNames, function($v) {
-                return (bool) preg_match('%\.(docx|xlsx|pdf)$%', $v);
+            $fixtureFileNames = array_filter($fixtureFileNames ?? [], function($v) {
+                return (bool) preg_match('%\.(docx|xlsx|pdf)$%', $v ?? '');
             });
         }
 
@@ -289,7 +289,7 @@ class FTFileMakerTask extends BuildTask
             $path = TEMP_FOLDER . '/' . $filename;
             $paths[$filename] = $path;
             $url = "{$this->fixtureFileBaseUrl}/{$filename}";
-            if (!file_exists($path)) {
+            if (!file_exists($path ?? '')) {
                 $promises[$filename] = $client->getAsync($filename, [
                     'sink' => $path
                 ]);
@@ -373,20 +373,20 @@ class FTFileMakerTask extends BuildTask
                 $randomFileName = array_keys($fixtureFilePaths)[rand(0, count($fixtureFilePaths) - 1)];
                 $randomFilePath = $fixtureFilePaths[$randomFileName];
 
-                $fileName = pathinfo($randomFilePath, PATHINFO_FILENAME)
+                $fileName = pathinfo($randomFilePath ?? '', PATHINFO_FILENAME)
                     . "-{$prefix}-{$j}"
                     . "."
-                    . pathinfo($randomFilePath, PATHINFO_EXTENSION);
+                    . pathinfo($randomFilePath ?? '', PATHINFO_EXTENSION);
 
                 // Add a random prefix to avoid all types of files showing up on a single screen page
-                $fileName = substr(md5($fileName), 0, 5) . '-' . $fileName;
+                $fileName = substr(md5($fileName ?? ''), 0, 5) . '-' . $fileName;
 
                 $class = $this->fixtureFileTypes[$randomFileName];
 
                 // If we're uniquifying images, copy the path and watermark it.
                 if ($class === Image::class && $uniqueImages) {
-                    $copyPath = Path::join(dirname($randomFilePath), $fileName);
-                    copy($randomFilePath, $copyPath);
+                    $copyPath = Path::join(dirname($randomFilePath ?? ''), $fileName);
+                    copy($randomFilePath ?? '', $copyPath ?? '');
                     $newPath = $this->watermarkImage($absWatermarkPath, $copyPath);
                     if ($newPath) {
                         $randomFilePath = $newPath;
@@ -457,7 +457,7 @@ class FTFileMakerTask extends BuildTask
     protected function watermarkImage(string $stampPath, string $targetPath): ?string
     {
         // Load the stamp and the photo to apply the watermark to
-        $ext = strtolower(pathinfo($targetPath, PATHINFO_EXTENSION));
+        $ext = strtolower(pathinfo($targetPath ?? '', PATHINFO_EXTENSION) ?? '');
         $functions = null;
         if (in_array($ext, ['jpeg', 'jpg'])) {
             $functions = ['imagecreatefromjpeg', 'imagejpeg'];
@@ -468,7 +468,7 @@ class FTFileMakerTask extends BuildTask
             return null;
         }
 
-        $stamp = imagecreatefrompng($stampPath);
+        $stamp = imagecreatefrompng($stampPath ?? '');
         $targetImage = call_user_func($functions[0], $targetPath);
 
         // Set the margins for the stamp and get the height/width of the stamp image
@@ -477,8 +477,8 @@ class FTFileMakerTask extends BuildTask
         $stampX = imagesx($stamp);
         $stampY = imagesy($stamp);
 
-        $marge_right = rand($stampX, $targetX - $stampX);
-        $marge_bottom = rand($stampY, $targetY - $stampY);
+        $marge_right = rand($stampX ?? 0, $targetX - $stampX);
+        $marge_bottom = rand($stampY ?? 0, $targetY - $stampY);
 
         // Copy the stamp image onto our photo using the margin offsets and the photo
         // width to calculate positioning of the stamp.
@@ -489,8 +489,8 @@ class FTFileMakerTask extends BuildTask
             $targetY - $stampY - $marge_bottom,
             0,
             0,
-            $stampX,
-            $stampY
+            $stampX ?? 0,
+            $stampY ?? 0
         );
         call_user_func($functions[1], $targetImage, $targetPath);
 

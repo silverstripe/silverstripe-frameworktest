@@ -78,7 +78,7 @@ class TestMultiFormStepThree extends MultiFormStep
         $fields->push(new LiteralField("Heading", "<h3>You have submitted the following information:</h3>"));
         
         foreach ($savedData as $key=>$value) {
-            if (preg_match("/_copy$/", $key)) {
+            if (preg_match("/_copy$/", $key ?? '')) {
                 continue;
             }
             

@@ -59,10 +59,10 @@ class FTPageMakerTask extends BuildTask
         // Allow pageCountByDepth to be passed as comma-separated value, e.g. pageCounts=5,100,1,1
         $pageCounts = $request->getVar('pageCounts');
         if ($pageCounts) {
-            $counts = explode(',', $pageCounts);
+            $counts = explode(',', $pageCounts ?? '');
             $this->pageCountByDepth = array_map(function ($int) {
-                return (int) trim($int);
-            }, $counts);
+                return (int) trim($int ?? '');
+            }, $counts ?? []);
         }
 
         $this->generatePages(0, "", 0, $withBlocks);
@@ -70,13 +70,13 @@ class FTPageMakerTask extends BuildTask
 
     protected function generatePages($depth = 0, $prefix = "", $parentID = 0, $withBlocks = false)
     {
-        $maxDepth = count($this->pageCountByDepth);
+        $maxDepth = count($this->pageCountByDepth ?? []);
         $pageCount = $this->pageCountByDepth[$depth];
         $testPageClasses = ClassInfo::implementorsOf('TestPageInterface');
 
         for ($i=1; $i<=$pageCount; $i++) {
             $fullPrefix = $prefix ? "{$prefix}-{$i}" : $i;
-            $randomIndex = array_rand($testPageClasses);
+            $randomIndex = array_rand($testPageClasses ?? []);
             $pageClass = $testPageClasses[$randomIndex];
             $page = new $pageClass();
             $page->ParentID = $parentID;
@@ -102,14 +102,14 @@ class FTPageMakerTask extends BuildTask
 
     protected function generateBlocksForPage(Page $page)
     {
-        $classes = array_filter($this->config()->get('block_generators'), function ($callable, $class) {
-            return class_exists($class);
+        $classes = array_filter($this->config()->get('block_generators') ?? [], function ($callable, $class) {
+            return class_exists($class ?? '');
         }, ARRAY_FILTER_USE_BOTH);
 
         // Generate a random amount of blocks in the preferred range
         $range = $this->blockCountRange;
         foreach(range($range[0], array_rand(range($range[0], $range[1]))) as $i) {
-            $class = array_rand($classes);
+            $class = array_rand($classes ?? []);
             $callable = $classes[$class];
             $block = call_user_func($callable, $page);
 
