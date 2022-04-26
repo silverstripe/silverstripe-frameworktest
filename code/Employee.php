@@ -111,10 +111,10 @@ class Employee extends DataObject
         srand(5);
 
         $companyIDs = Company::get()->column();
-        $companyCount = sizeof($companyIDs);
+        $companyCount = sizeof($companyIDs ?? []);
 
         $words = $this->words();
-        $wordCount = sizeof($words);
+        $wordCount = sizeof($words ?? []);
         $categories = ['marketing', 'management', 'rnd', 'hr'];
 
         foreach ($this->data() as $employeeName) {
