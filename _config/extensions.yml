@@ -7,11 +7,16 @@ SilverStripe\ORM\DataObject:
 SilverStripe\Assets\File:
   extensions:
     - BasicFieldsTestFileExtension
-
+    
 ---
 Only:
-  classexists: 'DNADesign\Elemental\Extensions\ElementalPageExtension'
+  moduleexists: 'dnadesign/silverstripe-elemental'
 ---
 SilverStripe\FrameworkTest\Model\TestPage:
   extensions:
     - DNADesign\Elemental\Extensions\ElementalPageExtension
+
+SilverStripe\FrameworkTest\Elemental\Model\ElementalBehatTestObject:
+  extensions:
+    - DNADesign\Elemental\Extensions\ElementalAreasExtension
+    - SilverStripe\FrameworkTest\Elemental\Extension\ElementalBehatTestExtension
