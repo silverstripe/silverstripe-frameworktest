@@ -8,6 +8,11 @@ SilverStripe\Assets\File:
   extensions:
     - BasicFieldsTestFileExtension
 
+SilverStripe\FrameworkTest\Model\TestBlogPost:
+  extensions:
+    - DNADesign\Elemental\Extensions\ElementalAreasExtension
+    - SilverStripe\FrameworkTest\Extension\TestBlogPostExtension
+    
 ---
 Only:
   classexists: 'DNADesign\Elemental\Extensions\ElementalPageExtension'
