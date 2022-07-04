@@ -13,7 +13,7 @@
     "require": {
         "silverstripe/framework": "^4",
         "silverstripe/cms": "^4",
-        "guzzlehttp/guzzle": "^7.3",
+        "guzzlehttp/guzzle": "^6.3 || ^7.3",
         "fzaninotto/faker": "^1.7",
         "silverstripe/vendor-plugin": "^1",
         "silverstripe/registry": "^2"
