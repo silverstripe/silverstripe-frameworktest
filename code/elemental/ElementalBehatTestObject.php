@@ -8,7 +8,7 @@ use SilverStripe\ORM\DataObject;
 
 class ElementalBehatTestObject extends DataObject
 {
-    private static string $table_name = 'ElementalBehatTestObject';
+    private static $table_name = 'ElementalBehatTestObject';
 
     public function CMSEditLink()
     {
