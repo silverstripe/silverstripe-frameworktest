@@ -1,10 +1,6 @@
 <?php
-
-use DNADesign\Elemental\Extensions\ElementalPageExtension;
+// DNADesign\Elemental\Extensions\ElementalPageExtension is added in extensions.yml
 
 class BasicElementalPage extends Page
 {
-    private static $extensions = [
-        ElementalPageExtension::class,
-    ];
 }

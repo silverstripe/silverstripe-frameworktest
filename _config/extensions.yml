@@ -20,3 +20,7 @@ SilverStripe\FrameworkTest\Elemental\Model\ElementalBehatTestObject:
   extensions:
     - DNADesign\Elemental\Extensions\ElementalAreasExtension
     - SilverStripe\FrameworkTest\Elemental\Extension\ElementalBehatTestExtension
+
+BasicElementalPage:
+  extensions:
+    - DNADesign\Elemental\Extensions\ElementalPageExtension
