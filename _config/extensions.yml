@@ -7,10 +7,10 @@ SilverStripe\ORM\DataObject:
 SilverStripe\Assets\File:
   extensions:
     - BasicFieldsTestFileExtension
-    
+
 ---
 Only:
-  moduleexists: 'dnadesign/silverstripe-elemental'
+  classexists: DNADesign\Elemental\Extensions\ElementalPageExtension
 ---
 SilverStripe\FrameworkTest\Model\TestPage:
   extensions:
