@@ -18,8 +18,8 @@
         "php": "^8.1",
         "silverstripe/framework": "^5",
         "silverstripe/cms": "^5",
-        "guzzlehttp/guzzle": "^7.3",
-        "fzaninotto/faker": "^1.7",
+        "guzzlehttp/guzzle": "^7.4.5",
+        "fzaninotto/faker": "^1.9.2",
         "silverstripe/vendor-plugin": "^2",
         "silverstripe/registry": "^3"
     },
