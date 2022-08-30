@@ -82,7 +82,7 @@ class FTPageMakerTask extends BuildTask
             $page->ParentID = $parentID;
             $page->Title = "Test page {$fullPrefix}";
             $page->write();
-            $page->publish('Stage', 'Live');
+            $page->copyVersionToStage('Stage', 'Live');
 
             echo "Created '$page->Title' ($page->ClassName)\n";
 
