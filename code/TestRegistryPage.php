@@ -21,7 +21,7 @@ class TestRegistryPage extends RegistryPage
                 $page->ParentID = $parent->ID;
                 $page->DataClass = TestRegistryDataObject::class;
                 $page->write();
-                $page->publish('Stage', 'Live');
+                $page->copyVersionToStage('Stage', 'Live');
             });
         }
     }

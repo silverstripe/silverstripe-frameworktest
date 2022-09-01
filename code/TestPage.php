@@ -50,7 +50,7 @@ class TestPage extends Page implements \TestPageInterface
                 $parent = static::getOrCreateParentPage();
                 $page->ParentID = $parent->ID;
                 $page->write();
-                $page->publish('Stage', 'Live');
+                $page->copyVersionToStage('Stage', 'Live');
             });
         }
     }
@@ -72,7 +72,7 @@ class TestPage extends Page implements \TestPageInterface
                     )
                 );
                 $parent->write();
-                $parent->doPublish();
+                $parent->publishRecursive();
             }
         });
 
