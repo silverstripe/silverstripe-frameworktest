@@ -14,4 +14,7 @@ class ElementalBehatTestAdmin extends ModelAdmin
     private static $managed_models = [
         ElementalBehatTestObject::class,
     ];
+
+    private static $required_permission_codes = 'CMS_ACCESS_CMSMain';
+
 }

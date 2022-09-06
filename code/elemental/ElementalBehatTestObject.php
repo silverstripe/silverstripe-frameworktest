@@ -5,6 +5,7 @@ namespace SilverStripe\FrameworkTest\Elemental\Model;
 use SilverStripe\FrameworkTest\Elemental\Admin\ElementalBehatTestAdmin;
 use SilverStripe\Control\Controller;
 use SilverStripe\ORM\DataObject;
+use SilverStripe\Security\Permission;
 
 class ElementalBehatTestObject extends DataObject
 {
@@ -23,4 +24,25 @@ class ElementalBehatTestObject extends DataObject
             $this->ID,
         );
     }
+
+    public function canView($member = null) 
+    {
+        return Permission::check(ElementalBehatTestAdmin::getRequiredPermissions() , 'any', $member);
+    }
+
+    public function canEdit($member = null) 
+    {
+        return Permission::check(ElementalBehatTestAdmin::getRequiredPermissions(), 'any', $member);
+    }
+
+    public function canDelete($member = null) 
+    {
+        return Permission::check(ElementalBehatTestAdmin::getRequiredPermissions(), 'any', $member);
+    }
+
+    public function canCreate($member = null, $context = []) 
+    {
+        return Permission::check(ElementalBehatTestAdmin::getRequiredPermissions(), 'any', $member);
+    }
+    
 }
