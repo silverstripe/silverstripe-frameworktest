@@ -13,6 +13,8 @@ use SilverStripe\Versioned\RecursivePublishable;
 use SilverStripe\Versioned\Versioned;
 use RelationFieldsTestPage;
 use GridFieldTestPage;
+use SilverStripe\Security\Permission;
+use SilverStripe\Security\PermissionProvider;
 
 /**
  *
@@ -31,7 +33,7 @@ use GridFieldTestPage;
  * @mixin Versioned
  * @mixin RecursivePublishable
  */
-class Company extends DataObject
+class Company extends DataObject implements PermissionProvider
 {
     private static $table_name = 'Company';
 
@@ -370,4 +372,41 @@ class Company extends DataObject
     {
         return DropdownField::create('CompanyID', 'Company', self::get()->map())->setEmptyString('');
     }
+
+    public function providePermissions()
+    {
+        return [
+            'COMPANY_EDIT' => [
+                'name' => _t(
+                    __CLASS__ . '.EditPermissionLabel',
+                    'Edit a company'
+                ),
+                'category' => _t(
+                    __CLASS__ . '.Category',
+                    'Company'
+                ),
+            ],
+        ];
+    }
+
+    public function canView($member = null) 
+    {
+        return Permission::check('COMPANY_EDIT', 'any', $member);
+    }
+
+    public function canEdit($member = null) 
+    {
+        return Permission::check('COMPANY_EDIT', 'any', $member);
+    }
+
+    public function canDelete($member = null) 
+    {
+        return Permission::check('COMPANY_EDIT', 'any', $member);
+    }
+
+    public function canCreate($member = null, $context = []) 
+    {
+        return Permission::check('COMPANY_EDIT', 'any', $member);
+    }
+
 }
