@@ -7,6 +7,13 @@ SilverStripe\ORM\DataObject:
 SilverStripe\Assets\File:
   extensions:
     - BasicFieldsTestFileExtension
+
+SilverStripe\FrameworkTest\Model\Company:
+    extensions:
+    - SilverStripe\FrameworkTest\Extension\TestDataObjectExtension
+SilverStripe\FrameworkTest\Model\Employee:
+    extensions:
+    - SilverStripe\FrameworkTest\Extension\TestDataObjectExtension
     
 ---
 Only:
