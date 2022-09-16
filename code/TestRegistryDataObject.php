@@ -6,7 +6,7 @@ use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\DB;
 use SilverStripe\Registry\RegistryDataInterface;
 
-if (!class_exists(RegistryDataInterface::class)) {
+if (!interface_exists(RegistryDataInterface::class)) {
     return;
 }
 
