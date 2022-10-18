@@ -91,7 +91,7 @@ class FrameworktestRegressSessionAdmin extends Controller
         return $form;
     }
 
-    public function startsession($data, $form)
+    public function startsession(array $data, Form $form): HTTPResponse
     {
         Session::set('enabletranslatable', (isset($data['enabletranslatable'])) ? $data['enabletranslatable'] : null);
         Session::set('db', $data['db']);
