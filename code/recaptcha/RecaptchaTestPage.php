@@ -7,6 +7,8 @@ use SilverStripe\Forms\FormAction;
 use SilverStripe\Forms\RequiredFields;
 use SilverStripe\Forms\Form;
 use SilverStripe\Control\Director;
+use SilverStripe\Control\HTTPResponse;
+
 class RecaptchaTestPage extends Page
 {
 }
@@ -38,7 +40,7 @@ class RecaptchaTestPage_Controller extends PageController
         return $form;
     }
 
-    public function submit($data, $form)
+    public function submit(array $data, Form $form): HTTPResponse
     {
         $form->sessionMessage('Hooray!', 'good');
 

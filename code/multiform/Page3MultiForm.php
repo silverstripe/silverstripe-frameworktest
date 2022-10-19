@@ -11,7 +11,7 @@ class Page3MultiForm extends MultiForm
 {
     public static $start_step = 'Page3StartFormStep';
 
-    public function finish($data, $form)
+    public function finish(array $data, Form $form): HTTPResponse
     {
         parent::finish($data, $form);
         $steps = DataObject::get('MultiFormStep', "SessionID = {$this->session->ID}");
@@ -42,7 +42,7 @@ class Page3MultiForm extends MultiForm
             }
         }
         $controller = $this->getController();
-        $controller->redirect($controller->Link() . 'finished');
+        return $controller->redirect($controller->Link() . 'finished');
     }
 }
 

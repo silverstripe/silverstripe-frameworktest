@@ -6,6 +6,7 @@ use SilverStripe\Security\Member;
 use SilverStripe\Forms\EmailField;
 use SilverStripe\Forms\FileField;
 use SilverStripe\AssetAdmin\Forms\UploadField;
+use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\FormAction;
 use SilverStripe\Forms\Form;
@@ -38,11 +39,11 @@ class TestFileUploadPage_Controller extends TestPage_Controller
         return new Form($this, "Form", $fields, $actions);
     }
 
-    public function addMember($data, $form)
+    public function addMember(array $data, Form $form): HTTPResponse
     {
         $member = new Member();
         $form->saveInto($member);
         $member->write();
-        $this->redirectBack();
+        return $this->redirectBack();
     }
 }

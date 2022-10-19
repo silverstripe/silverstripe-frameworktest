@@ -13,6 +13,7 @@ use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\Form;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Control\Email\Email;
+use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Security\DefaultAdminService;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\Security;
@@ -111,11 +112,11 @@ class TestPage_Controller extends PageController
         return $form;
     }
 
-    public function save($data, $form)
+    public function save(array $data, Form $form): HTTPResponse
     {
         $form->saveInto($this->dataRecord);
         $this->dataRecord->write();
-        $this->redirectBack();
+        return $this->redirectBack();
     }
 
     public function gohome()
@@ -140,7 +141,8 @@ class TestPage_Controller extends PageController
         );
     }
 
-    public function sendEmail($data, $form)
+    public function sendEmail(array $data, Form $form): HTTPResponse
+
     {
         $email = new Email();
         $email->setTo($data['Email']);
@@ -149,6 +151,6 @@ class TestPage_Controller extends PageController
         $email->setBody('A body with some umlauts: öäüß');
         $email->send();
 
-        echo "<p>email sent to " . $data['Email'] . "</p>";
+        return HTTPResponse::create()->setBody("<p>email sent to " . $data['Email'] . "</p>");
     }
 }

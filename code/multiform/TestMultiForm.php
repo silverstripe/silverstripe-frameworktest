@@ -4,12 +4,14 @@ use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\LiteralField;
 use SilverStripe\Control\Session;
 use SilverStripe\Control\Director;
+use SilverStripe\Control\HTTPResponse;
+use SilverStripe\Forms\Form;
 use SilverStripe\Forms\TextField;
 class TestMultiForm extends MultiForm
 {
     public static $start_step = 'TestMultiFormStepOne';
     
-    public function finish($data, $form)
+    public function finish(array $data, Form $form): HTTPResponse
     {
         parent::finish($data, $form);
         
@@ -29,7 +31,7 @@ class TestMultiForm extends MultiForm
         
         Session::set("MultiFormMessage", "Your information has been submitted.");
         
-        $this->Controller()->redirect(Director::BaseURL() . $this->Controller()->URLSegment);
+        return $this->Controller()->redirect(Director::BaseURL() . $this->Controller()->URLSegment);
     }
 }
 

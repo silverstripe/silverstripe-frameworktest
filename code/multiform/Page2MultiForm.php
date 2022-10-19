@@ -1,17 +1,18 @@
 <?php
 
+use SilverStripe\Control\HTTPResponse;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Security\Member;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\FieldList;
-
+use SilverStripe\Forms\Form;
 
 class Page2MultiForm extends MultiForm
 {
 
     public static $start_step = 'Page2PersonalDetailsFormStep';
 
-    public function finish($data, $form)
+    public function finish(array $data, Form $form): HTTPResponse
     {
         parent::finish($data, $form);
         $steps = DataObject::get('MultiFormStep', "SessionID = {$this->session->ID}");
@@ -42,7 +43,7 @@ class Page2MultiForm extends MultiForm
             }
         }
         $controller = $this->getController();
-        $controller->redirect($controller->Link() . 'finished');
+        return $controller->redirect($controller->Link() . 'finished');
     }
 }
 
