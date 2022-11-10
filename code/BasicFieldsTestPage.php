@@ -313,13 +313,13 @@ class BasicFieldsTestPage extends TestPage
                 $disabledField->setTitle($disabledField->Title() . ' (disabled)');
                 $disabledField->setName($disabledField->getName() . '_disabled');
                 $disabledField->setValue($this->getField($field->getName()));
-                $tabObj->insertAfter($disabledField, $field->getName());
+                $tabObj->insertAfter($field->getName(), $disabledField);
 
                 $readonlyField = $field->performReadonlyTransformation();
                 $readonlyField->setTitle($readonlyField->Title() . ' (readonly)');
                 $readonlyField->setName($readonlyField->getName() . '_readonly');
                 $readonlyField->setValue($this->getField($field->getName()));
-                $tabObj->insertAfter($readonlyField, $field->getName());
+                $tabObj->insertAfter($field->getName(), $readonlyField);
             }
         }
 
