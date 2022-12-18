@@ -1,7 +1,7 @@
 /* global window */
 import jQuery from 'jquery';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { provideInjector } from 'lib/Injector';
 import FormBuilderLoader from 'containers/FormBuilderLoader/FormBuilderLoader';
@@ -15,6 +15,8 @@ jQuery.entwine('ss', ($) => {
    * Uses React to rebuild the list of fields from FrameworkTest's TestPages.
    */
   $('.js-injector-boot .TestReactFormBuilder').entwine({
+    ReactRoot: null,
+
     onmatch() {
       this._renderForm();
     },
@@ -42,20 +44,25 @@ jQuery.entwine('ss', ($) => {
         .config.sections.find((section) => section.name === sectionConfigKey);
       const schemaUrl = sectionConfig.form.TestEditForm.schemaUrl;
 
-      ReactDOM.render(
+      const root = createRoot(this.container());
+      root.render(
         <Provider store={store}>
           <InjectedFormBuilderLoader
             schemaUrl={schemaUrl}
             handleSubmit={(...args) => this._handleSubmit(...args)}
             identifier="FrameworkTest.ReactSection"
           />
-        </Provider>,
-        this.container()
+        </Provider>
       );
+      this.setReactRoot(root);
     },
 
     _clearForm() {
-      ReactDOM.unmountComponentAtNode(this.container());
+      const root = this.getReactRoot();
+      if (root) {
+        root.unmount();
+        this.setReactRoot(null);
+      }
       // this.empty();
     },
 
