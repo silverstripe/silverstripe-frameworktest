@@ -16,13 +16,13 @@
     "node": "18.x"
   },
   "scripts": {
-    "build": "yarn && rm -rf client/dist/* && NODE_ENV=production webpack --mode production --bail --progress",
+    "build": "yarn && yarn lint && rm -rf client/dist/* && NODE_ENV=production webpack --mode production --bail --progress",
     "dev": "NODE_ENV=development webpack --progress",
     "watch": "NODE_ENV=development webpack --watch --progress",
     "lock": "npm-shrinkwrap --dev",
     "test": "NODE_PATH=\"./client/src\" jest",
     "coverage": "NODE_PATH=\"./client/src\" jest --coverage",
-    "lint": "eslint client/src & sass-lint -v"
+    "lint": "eslint client/src && sass-lint -v client/src"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
@@ -51,7 +51,8 @@
     "url": "^0.11.0"
   },
   "devDependencies": {
-    "@silverstripe/webpack-config": "^2.0.0-alpha1",
+    "@silverstripe/eslint-config": "^1.0.0-alpha6",
+    "@silverstripe/webpack-config": "^2.0.0-alpha5",
     "babel-jest": "^20.0.3",
     "jest-cli": "^19.0.2",
     "webpack": "^5.74.0",
