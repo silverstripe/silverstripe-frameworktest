@@ -1,0 +1,5 @@
+---
+name: frameworktest-spamprotection
+---
+SilverStripe\SpamProtection\Extension\FormSpamProtectionExtension:
+  default_spam_protector: SilverStripe\FrameworkTest\NullSpamProtector\NullSpamProtector
