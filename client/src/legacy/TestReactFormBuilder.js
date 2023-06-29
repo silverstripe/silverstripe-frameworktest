@@ -39,10 +39,10 @@ jQuery.entwine('ss', ($) => {
     },
 
     _renderForm() {
-      const store = window.ss.store;
+      const { store } = window.ss;
       const sectionConfig = store.getState()
         .config.sections.find((section) => section.name === sectionConfigKey);
-      const schemaUrl = sectionConfig.form.TestEditForm.schemaUrl;
+      const { schemaUrl } = sectionConfig.form.TestEditForm;
 
       const root = createRoot(this.container());
       root.render(
@@ -52,7 +52,7 @@ jQuery.entwine('ss', ($) => {
             handleSubmit={(...args) => this._handleSubmit(...args)}
             identifier="FrameworkTest.ReactSection"
           />
-        </Provider>
+        </Provider>,
       );
       this.setReactRoot(root);
     },
