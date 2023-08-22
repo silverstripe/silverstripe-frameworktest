@@ -3,6 +3,7 @@
 namespace SilverStripe\FrameworkTest\Model;
 
 use SilverStripe\Assets\Image;
+use SilverStripe\Forms\EmailField;
 use SilverStripe\Forms\NumericField;
 use SilverStripe\Forms\TextField;
 use SilverStripe\ORM\Connect\MySQLSchemaManager;
@@ -27,6 +28,7 @@ class Employee extends DataObject
 
     private static $db = array(
         'Name' => 'Varchar',
+        'Email' => 'Varchar',
         'Biography' => 'HTMLText',
         'DateOfBirth' => 'Date',
         'Category' => 'Enum("marketing,management,rnd,hr")'
@@ -90,6 +92,7 @@ class Employee extends DataObject
     {
         // Use basic scaffolder (no tabs)
         $fields = $this->scaffoldFormFields();
+        $fields->replaceField('Email', EmailField::create('Email'));
         $fields->push(new NumericField('ManyMany[YearStart]', 'Year started (3.1, many-many only)'));
         $fields->push(new TextField('ManyMany[Role]', 'Role (3.1, many-many only)'));
         return $fields;
@@ -142,7 +145,7 @@ class Employee extends DataObject
     {
         $result = parent::validate();
         if (!$this->Name) {
-            $result->error('"Name" can\'t be blank');
+            $result->addFieldError('Name', '"Name" can\'t be blank');
         }
         return $result;
     }
