@@ -55,7 +55,7 @@
     "@silverstripe/webpack-config": "^2.0.0",
     "babel-jest": "^20.0.3",
     "jest-cli": "^19.0.2",
-    "webpack": "^5.74.0",
+    "webpack": "^5.76.0",
     "webpack-cli": "^5.0.0"
   }
 }
