@@ -5,6 +5,7 @@ namespace SilverStripe\FrameworkTest\Model;
 use SilverStripe\Assets\Image;
 use SilverStripe\Forms\EmailField;
 use SilverStripe\Forms\NumericField;
+use SilverStripe\Forms\RequiredFields;
 use SilverStripe\Forms\TextField;
 use SilverStripe\ORM\Connect\MySQLSchemaManager;
 use SilverStripe\ORM\DataObject;
@@ -141,13 +142,11 @@ class Employee extends DataObject
         srand();
     }
 
-    public function validate()
+    public function getCMSValidator()
     {
-        $result = parent::validate();
-        if (!$this->Name) {
-            $result->addFieldError('Name', '"Name" can\'t be blank');
-        }
-        return $result;
+        return new RequiredFields(
+            ['Name']
+        );
     }
 
     /**
