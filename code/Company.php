@@ -13,6 +13,7 @@ use SilverStripe\Versioned\RecursivePublishable;
 use SilverStripe\Versioned\Versioned;
 use RelationFieldsTestPage;
 use GridFieldTestPage;
+use SilverStripe\Forms\RequiredFields;
 
 /**
  *
@@ -100,15 +101,11 @@ class Company extends DataObject
         return $fields;
     }
 
-    public function validate()
+    public function getCMSValidator()
     {
-        $result = parent::validate();
-
-        if (!$this->Name) {
-            $result->addFieldError('Name', 'Name is required');
-        }
-
-        return $result;
+        return new RequiredFields(
+            ['Name']
+        );
     }
 
     public function DynamicProperty()
