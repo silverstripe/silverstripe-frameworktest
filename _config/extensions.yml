@@ -14,7 +14,19 @@ SilverStripe\FrameworkTest\Model\Company:
 SilverStripe\FrameworkTest\Model\Employee:
     extensions:
     - SilverStripe\FrameworkTest\Extension\TestDataObjectExtension
-    
+
+SilverStripe\ORM\DatabaseAdmin:
+  extensions:
+    - SilverStripe\FrameworkTest\GridFieldArbitraryData\DatabaseBuildExtension
+
+---
+Only:
+  moduleexists: 'silverstripe/testsession'
+---
+SilverStripe\TestSession\TestSessionEnvironment:
+  extensions:
+    - SilverStripe\FrameworkTest\GridFieldArbitraryData\DatabaseBuildExtension
+
 ---
 Only:
   moduleexists: 'dnadesign/silverstripe-elemental'
