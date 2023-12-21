@@ -15,6 +15,19 @@ SilverStripe\FrameworkTest\Model\Employee:
     extensions:
     - SilverStripe\FrameworkTest\Extension\TestDataObjectExtension
 
+SilverStripe\FrameworkTest\Versioned\Model\NonVersionedParentObject:
+  extensions:
+    - SilverStripe\FrameworkTest\Extension\TestDataObjectExtension
+SilverStripe\FrameworkTest\Versioned\Model\NonVersionedChildObject:
+  extensions:
+    - SilverStripe\FrameworkTest\Extension\TestDataObjectExtension
+SilverStripe\FrameworkTest\Versioned\Model\VersionedChildObject:
+  extensions:
+    - SilverStripe\FrameworkTest\Extension\TestDataObjectExtension
+SilverStripe\FrameworkTest\Versioned\Model\VersionedParentObject:
+  extensions:
+    - SilverStripe\FrameworkTest\Extension\TestDataObjectExtension
+
 SilverStripe\ORM\DatabaseAdmin:
   extensions:
     - SilverStripe\FrameworkTest\GridFieldArbitraryData\DatabaseBuildExtension
