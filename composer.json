@@ -16,8 +16,8 @@
     ],
     "require": {
         "php": "^8.1",
-        "silverstripe/framework": "^5",
-        "silverstripe/cms": "^5",
+        "silverstripe/framework": "^6",
+        "silverstripe/cms": "^6",
         "guzzlehttp/guzzle": "^7.5",
         "fzaninotto/faker": "^1.9.2",
         "silverstripe/vendor-plugin": "^2"
