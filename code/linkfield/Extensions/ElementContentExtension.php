@@ -12,7 +12,6 @@ use SilverStripe\LinkField\Models\SiteTreeLink;
 
 class ElementContentExtension extends Extension
 {
-
     private static bool $inline_editable = true;
 
     private static array $has_one = [
@@ -44,13 +43,13 @@ class ElementContentExtension extends Extension
         $fields->addFieldsToTab(
             'Root.Main',
             [
-                LinkField::create('OneLink')
+                LinkField::create('OneLink', 'Single Link')
                     ->setAllowedTypes([
                         SiteTreeLink::class,
                         EmailLink::class,
                         PhoneLink::class
                     ]),
-                MultiLinkField::create('ManyLinks'),
+                MultiLinkField::create('ManyLinks', 'Multiple Links'),
             ],
         );
     }
