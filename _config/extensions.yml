@@ -43,3 +43,20 @@ SilverStripe\FrameworkTest\Elemental\Model\ElementalBehatTestObject:
 BasicElementalPage:
   extensions:
     - DNADesign\Elemental\Extensions\ElementalPageExtension
+
+---
+Only:
+  moduleexists: 'silverstripe/linkfield'
+---
+
+SilverStripe\FrameworkTest\LinkField\PageTypes\LinkFieldTestPage:
+  extensions:
+    - SilverStripe\FrameworkTest\LinkField\Extensions\LinkPageExtension
+
+SilverStripe\FrameworkTest\Model\Company:
+    extensions:
+    - SilverStripe\FrameworkTest\LinkField\Extensions\CompanyExtension
+
+SilverStripe\FrameworkTest\LinkField\Blocks\LinkFieldTestBlock:
+  extensions:
+    - SilverStripe\FrameworkTest\LinkField\Extensions\ElementContentExtension

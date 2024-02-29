@@ -38,18 +38,18 @@ class LinkPageExtension extends Extension
 
     public function updateCMSFields(FieldList $fields)
     {
-        $fields->removeByName(['Content', 'HasOneLinkID', 'HasManyLinks']);
+        $fields->removeByName(['Content', 'HasOneLinkID', 'HasManyLinksID']);
 
         $fields->addFieldsToTab(
             'Root.Main',
             [
-                LinkField::create('HasOneLink')
+                LinkField::create('HasOneLink', 'Single Link')
                     ->setAllowedTypes([
                         SiteTreeLink::class,
                         EmailLink::class,
                         PhoneLink::class
                     ]),
-                MultiLinkField::create('HasManyLinks'),
+                MultiLinkField::create('HasManyLinks', 'Multiple Links'),
             ],
         );
     }
