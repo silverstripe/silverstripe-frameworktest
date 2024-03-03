@@ -4,6 +4,10 @@ namespace SilverStripe\FrameworkTest\LinkField\Blocks;
 
 use DNADesign\Elemental\Models\BaseElement;
 
+if (!class_exists(BaseElement::class)) {
+    return;
+}
+
 class LinkFieldTestBlock extends BaseElement
 {
     private static string $table_name = 'LinkFieldTestBlock';
