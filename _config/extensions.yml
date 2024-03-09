@@ -48,15 +48,21 @@ BasicElementalPage:
 Only:
   moduleexists: 'silverstripe/linkfield'
 ---
-
 SilverStripe\FrameworkTest\LinkField\PageTypes\LinkFieldTestPage:
   extensions:
     - SilverStripe\FrameworkTest\LinkField\Extensions\LinkPageExtension
 
 SilverStripe\FrameworkTest\Model\Company:
-    extensions:
+  extensions:
     - SilverStripe\FrameworkTest\LinkField\Extensions\CompanyExtension
 
+
+---
+Only:
+  moduleexists:
+    - 'silverstripe/linkfield'
+    - 'dnadesign/silverstripe-elemental'
+---
 SilverStripe\FrameworkTest\LinkField\Blocks\LinkFieldTestBlock:
   extensions:
     - SilverStripe\FrameworkTest\LinkField\Extensions\ElementContentExtension
