@@ -1,0 +1,16 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  ci:
+    # This is a dummy ci job added so that the gha-merge-up action will find a ci.yml file to run
+    name: CI
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pass
+        run: |
+          echo "Passed"
