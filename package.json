@@ -22,7 +22,7 @@
     "lock": "npm-shrinkwrap --dev",
     "test": "NODE_PATH=\"./client/src\" jest",
     "coverage": "NODE_PATH=\"./client/src\" jest --coverage",
-    "lint": "eslint client/src && sass-lint -v client/src"
+    "lint": "eslint client/src && stylelint css/*"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
@@ -51,8 +51,8 @@
     "url": "^0.11.0"
   },
   "devDependencies": {
-    "@silverstripe/eslint-config": "^1.1.0",
-    "@silverstripe/webpack-config": "^2.0.0",
+    "@silverstripe/eslint-config": "^1.2.1",
+    "@silverstripe/webpack-config": "^2.1.0",
     "babel-jest": "^20.0.3",
     "jest-cli": "^19.0.2",
     "webpack": "^5.76.0",
