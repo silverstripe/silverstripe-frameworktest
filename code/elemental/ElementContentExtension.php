@@ -2,6 +2,7 @@
 
 namespace SilverStripe\FrameworkTest\Elemental\Extension;
 
+use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Core\Extension;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\ValidationResult;
@@ -20,6 +21,10 @@ class ElementContentExtension extends Extension
         'MyInt' => 'Int',
     ];
 
+    private static $has_one = [
+        'MyPage' => SiteTree::class,
+    ];
+
     public function validate(ValidationResult $result)
     {
         if ($this->owner->Title == 'x') {
@@ -35,7 +40,7 @@ class ElementContentExtension extends Extension
 
     public function updateCMSCompositeValidator(CompositeValidator $compositeValidator)
     {
-        $compositeValidator->addValidator(new RequiredFields(['Title']));
+        $compositeValidator->addValidator(new RequiredFields(['Title', 'MyPageID']));
     }
 
     public function updateCMSFields(FieldList $fields)
