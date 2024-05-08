@@ -2,6 +2,7 @@
 
 namespace SilverStripe\FrameworkTest\Elemental\Extension;
 
+use SilverStripe\Assets\File;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Core\Extension;
 use SilverStripe\Forms\FieldList;
@@ -23,6 +24,7 @@ class ElementContentExtension extends Extension
 
     private static $has_one = [
         'MyPage' => SiteTree::class,
+        'MyFile' => File::class,
     ];
 
     public function validate(ValidationResult $result)
@@ -40,7 +42,7 @@ class ElementContentExtension extends Extension
 
     public function updateCMSCompositeValidator(CompositeValidator $compositeValidator)
     {
-        $compositeValidator->addValidator(new RequiredFields(['Title', 'MyPageID']));
+        $compositeValidator->addValidator(new RequiredFields(['Title', 'MyPageID', 'MyFile']));
     }
 
     public function updateCMSFields(FieldList $fields)
