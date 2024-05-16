@@ -37,7 +37,7 @@ class ElementContentExtension extends Extension
         'ManyLinks',
     ];
 
-    public function updateCMSFields($fields)
+    protected function updateCMSFields($fields)
     {
         $fields->removeByName(['OneLinkID', 'ManyLinks']);
         $fields->addFieldsToTab(

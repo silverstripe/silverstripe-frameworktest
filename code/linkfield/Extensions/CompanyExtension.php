@@ -34,7 +34,7 @@ class CompanyExtension extends Extension
         'ManyCompanyWebSiteLink',
     ];
 
-    public function updateCMSFields(FieldList $fields)
+    protected function updateCMSFields(FieldList $fields)
     {
         $fields->removeByName(['CompanyWebSiteLinkID', 'ManyCompanyWebSiteLinkID']);
 
