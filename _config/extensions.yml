@@ -15,6 +15,19 @@ SilverStripe\FrameworkTest\Model\Employee:
     extensions:
     - SilverStripe\FrameworkTest\Extension\TestDataObjectExtension
 
+SilverStripe\FrameworkTest\Fields\NestedGridField\RootNode:
+    extensions:
+    - SilverStripe\FrameworkTest\Extension\TestDataObjectExtension
+SilverStripe\FrameworkTest\Fields\NestedGridField\BranchNode:
+    extensions:
+    - SilverStripe\FrameworkTest\Extension\TestDataObjectExtension
+SilverStripe\FrameworkTest\Fields\NestedGridField\LeafNode:
+    extensions:
+    - SilverStripe\FrameworkTest\Extension\TestDataObjectExtension
+SilverStripe\FrameworkTest\Fields\NestedGridField\NonRelationalData:
+    extensions:
+    - SilverStripe\FrameworkTest\Extension\TestDataObjectExtension
+
 SilverStripe\ORM\DatabaseAdmin:
   extensions:
     - SilverStripe\FrameworkTest\GridFieldArbitraryData\DatabaseBuildExtension
