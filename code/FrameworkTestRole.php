@@ -16,7 +16,7 @@ class FrameworkTestRole extends DataExtension
         'FavouritePage' => 'SilverStripe\\CMS\\Model\\SiteTree',
     );
 
-    public function updateCMSFields(FieldList $fields)
+    protected function updateCMSFields(FieldList $fields)
     {
         $fields->addFieldToTab(
             'Root.Main',

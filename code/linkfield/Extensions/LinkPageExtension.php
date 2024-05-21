@@ -36,7 +36,7 @@ class LinkPageExtension extends Extension
         'HasManyLinks',
     ];
 
-    public function updateCMSFields(FieldList $fields)
+    protected function updateCMSFields(FieldList $fields)
     {
         $fields->removeByName(['Content', 'HasOneLinkID', 'HasManyLinksID']);
 

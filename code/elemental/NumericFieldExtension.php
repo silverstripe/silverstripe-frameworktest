@@ -10,7 +10,7 @@ use SilverStripe\Core\Extension;
  */
 class NumericFieldExtension extends Extension
 {
-    public function updateValidationResult($result, $validator)
+    protected function updateValidationResult($result, $validator)
     {
         if ($this->owner->Value() == 1) {
             $validator->validationError($this->owner->getName(), 'This field cannot be 1');

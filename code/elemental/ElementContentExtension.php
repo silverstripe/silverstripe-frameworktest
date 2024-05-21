@@ -40,12 +40,12 @@ class ElementContentExtension extends Extension
         }
     }
 
-    public function updateCMSCompositeValidator(CompositeValidator $compositeValidator)
+    protected function updateCMSCompositeValidator(CompositeValidator $compositeValidator)
     {
         $compositeValidator->addValidator(new RequiredFields(['Title', 'MyPageID', 'MyFile']));
     }
 
-    public function updateCMSFields(FieldList $fields)
+    protected function updateCMSFields(FieldList $fields)
     {
         $fields->removeByName('HTML');
         $fields->addFieldToTab('Root.Main', TextField::create('MyField', 'My Field'));
