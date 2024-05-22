@@ -3,6 +3,7 @@
 namespace SilverStripe\FrameworkTest\Model;
 
 use Page;
+use SilverStripe\Forms\EmailField;
 use SilverStripe\Forms\RequiredFields;
 use SilverStripe\Forms\TextField;
 
@@ -29,7 +30,7 @@ class MultiTabPage extends Page
     {
         $fields = parent::getCMSFields();
         $fields->addFieldToTab("Root.Second", TextField::create("SecondTabFirstField"));
-        $fields->addFieldToTab("Root.Third", TextField::create("ThirdTabFirstField"));
+        $fields->addFieldToTab("Root.Third", EmailField::create("ThirdTabFirstField"));
         $fields->addFieldToTab("Root.Third", TextField::create("ThirdTabSecondField"));
         $fields->addFieldToTab("Root.Fourth", TextField::create("FourthTabFirstField"));
         return $fields;
