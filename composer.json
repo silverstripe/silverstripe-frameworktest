@@ -33,5 +33,9 @@
         "psr-4": {
             "SSilverStripe\\FrameworkTest\\": "code/"
         }
+    },
+    "require-dev": {
+        "silverstripe/standards": "^1",
+        "phpstan/extension-installer": "^1.3"
     }
 }
