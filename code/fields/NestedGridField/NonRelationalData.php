@@ -16,7 +16,7 @@ class NonRelationalData extends DataObject
 
     public function getList() {
         $list = ArrayList::create();
-        $data = Company::get()->byIDs([1,2,3,4,5]);
+        $data = Company::get()->limit(5);
         foreach ($data as $value) {
             $list->push($value);
         }
