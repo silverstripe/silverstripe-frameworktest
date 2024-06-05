@@ -56,10 +56,10 @@ class ArbitraryDataAdmin extends LeftAndMain
 
         // accessing the admin directly
         if ($this->tab === null) {
-            $this->tab = self::TAB_ARRAYDATA;
+            $this->tab = ArbitraryDataAdmin::TAB_ARRAYDATA;
         }
 
-        if ($this->tab !== self::TAB_ARRAYDATA && $this->tab !== self::TAB_CUSTOM_MODEL) {
+        if ($this->tab !== ArbitraryDataAdmin::TAB_ARRAYDATA && $this->tab !== ArbitraryDataAdmin::TAB_CUSTOM_MODEL) {
             throw new RuntimeException("Unexpected url segment: {$this->tab}");
         }
     }
@@ -69,12 +69,12 @@ class ArbitraryDataAdmin extends LeftAndMain
         $list = ArrayList::create();
 
         switch ($this->tab) {
-            case self::TAB_ARRAYDATA:
-                foreach (self::getInitialRecords() as $stub) {
+            case ArbitraryDataAdmin::TAB_ARRAYDATA:
+                foreach (ArbitraryDataAdmin::getInitialRecords() as $stub) {
                     $list->add(ArrayData::create($stub));
                 }
                 break;
-            case self::TAB_CUSTOM_MODEL:
+            case ArbitraryDataAdmin::TAB_CUSTOM_MODEL:
                 $rawData = SQLSelect::create()->setFrom(ArbitraryDataModel::TABLE_NAME)->execute();
                 foreach ($rawData as $record) {
                     $list->add(ArbitraryDataModel::create($record));
@@ -105,14 +105,14 @@ class ArbitraryDataAdmin extends LeftAndMain
 
     protected function getGridFieldConfig(): GridFieldConfig
     {
-        if ($this->tab === self::TAB_CUSTOM_MODEL) {
+        if ($this->tab === ArbitraryDataAdmin::TAB_CUSTOM_MODEL) {
             $config = GridFieldConfig_RecordEditor::create();
         } else {
             // This is effectively the same as a GridFieldConfig_RecordViewer, but without removing the GridFieldFilterHeader.
             $config = GridFieldConfig_Base::create();
             $config->addComponent(GridFieldViewButton::create());
             $config->addComponent(GridFieldDetailForm::create());
-            $fieldNames = array_keys(self::getInitialRecords()[0]);
+            $fieldNames = array_keys(ArbitraryDataAdmin::getInitialRecords()[0]);
             $config->getComponentByType(GridFieldDataColumns::class)->setDisplayFields(array_combine($fieldNames, $fieldNames));
             $fields = array_map(fn ($name) => $name === 'ID' ? HiddenField::create($name) : TextField::create($name), $fieldNames);
             $config->getComponentByType(GridFieldDetailForm::class)->setFields(FieldList::create($fields));
@@ -188,8 +188,8 @@ class ArbitraryDataAdmin extends LeftAndMain
     protected function getManagedTabs()
     {
         $tabs = [
-            self::TAB_ARRAYDATA => 'ArrayData',
-            self::TAB_CUSTOM_MODEL => 'Custom Model',
+            ArbitraryDataAdmin::TAB_ARRAYDATA => 'ArrayData',
+            ArbitraryDataAdmin::TAB_CUSTOM_MODEL => 'Custom Model',
         ];
         $forms = new ArrayList();
 

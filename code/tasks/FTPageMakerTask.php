@@ -43,9 +43,9 @@ class FTPageMakerTask extends BuildTask
      * @config
      */
     private static $block_generators = [
-        'DNADesign\Elemental\Models\ElementContent' => [self::class, 'generateContentBlock'],
-        'SilverStripe\ElementalBannerBlock\Block\BannerBlock' => [self::class, 'generateBannerBlock'],
-        'SilverStripe\ElementalFileBlock\Block\FileBlock' => [self::class, 'generateFileBlock'],
+        'DNADesign\Elemental\Models\ElementContent' => [FTPageMakerTask::class, 'generateContentBlock'],
+        'SilverStripe\ElementalBannerBlock\Block\BannerBlock' => [FTPageMakerTask::class, 'generateBannerBlock'],
+        'SilverStripe\ElementalFileBlock\Block\FileBlock' => [FTPageMakerTask::class, 'generateFileBlock'],
     ];
 
     public function run($request)
