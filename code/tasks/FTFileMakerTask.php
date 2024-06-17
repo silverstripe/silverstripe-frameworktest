@@ -228,7 +228,7 @@ class FTFileMakerTask extends BuildTask
                 return (int) trim($int ?? '');
             }, $counts ?? []);
         } else {
-            $this->fileCounts = self::config()->get('fileCountByDepth');
+            $this->fileCounts = FTFileMakerTask::config()->get('fileCountByDepth');
         }
 
         $folderCounts = $request->getVar('folderCounts');
@@ -238,13 +238,13 @@ class FTFileMakerTask extends BuildTask
                 return (int) trim($int ?? '');
             }, $counts ?? []);
         } else {
-            $this->folderCounts = self::config()->get('folderCountByDepth');
+            $this->folderCounts = FTFileMakerTask::config()->get('folderCountByDepth');
         }
 
         echo "Downloading fixtures" . $this->lineBreak;
         $fixtureFilePaths = $this->downloadFixtureFiles();
 
-        if (!self::config()->get('documentsOnly')) {
+        if (!FTFileMakerTask::config()->get('documentsOnly')) {
             echo "Generate thumbnails" . $this->lineBreak;
             $this->generateThumbnails($fixtureFilePaths);
         }
@@ -252,7 +252,7 @@ class FTFileMakerTask extends BuildTask
         echo "Generate files" . $this->lineBreak;
         $this->generateFiles($fixtureFilePaths);
 
-        if (!self::config()->get('doPutProtectedFilesInPublicStore')) {
+        if (!FTFileMakerTask::config()->get('doPutProtectedFilesInPublicStore')) {
             echo "Incorrectly putting protected files into public asset store on purpose" . $this->lineBreak;
             $this->putProtectedFilesInPublicAssetStore();
         }
@@ -276,7 +276,7 @@ class FTFileMakerTask extends BuildTask
         $client = new Client(['base_uri' => $this->fixtureFileBaseUrl]);
 
         $fixtureFileNames = $this->fixtureFileNames;
-        if (self::config()->get('documentsOnly')) {
+        if (FTFileMakerTask::config()->get('documentsOnly')) {
             $fixtureFileNames = array_filter($fixtureFileNames ?? [], function($v) {
                 return (bool) preg_match('%\.(docx|xlsx|pdf)$%', $v ?? '');
             });
@@ -337,12 +337,12 @@ class FTFileMakerTask extends BuildTask
         $folderCount = $this->folderCounts[$depth];
         $fileCount = $this->fileCounts[$depth];
 
-        $doSetFolderPermissions = (bool) self::config()->get('doSetFolderPermissions');
+        $doSetFolderPermissions = (bool) FTFileMakerTask::config()->get('doSetFolderPermissions');
 
-        $doSetOldCreationDate = (bool) self::config()->get('doSetOldCreationDate');
-        $doRandomlyPublish = (bool) self::config()->get('doRandomlyPublish');
+        $doSetOldCreationDate = (bool) FTFileMakerTask::config()->get('doSetOldCreationDate');
+        $doRandomlyPublish = (bool) FTFileMakerTask::config()->get('doRandomlyPublish');
 
-        $uniqueImages = (bool) self::config()->get('uniqueImages');
+        $uniqueImages = (bool) FTFileMakerTask::config()->get('uniqueImages');
         $watermarkPath = ModuleResourceLoader::singleton()->resolvePath(
             'silverstripe/frameworktest: images/silverstripe.png'
         );
@@ -424,7 +424,7 @@ class FTFileMakerTask extends BuildTask
                 }
             }
 
-            if ($depth < self::config()->get('depth') - 1) {
+            if ($depth < FTFileMakerTask::config()->get('depth') - 1) {
                 $this->generateFiles($fixtureFilePaths, $depth + 1, "{$prefix}-{$i}", $folder->ID);
             }
         }
