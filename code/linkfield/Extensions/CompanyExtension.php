@@ -5,8 +5,6 @@ namespace SilverStripe\FrameworkTest\LinkField\Extensions;
 use SilverStripe\Core\Extension;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\LinkField\Models\Link;
-use SilverStripe\LinkField\Form\LinkField;
-use SilverStripe\LinkField\Form\MultiLinkField;
 use SilverStripe\LinkField\Models\ExternalLink;
 
 class CompanyExtension extends Extension
@@ -36,15 +34,6 @@ class CompanyExtension extends Extension
 
     protected function updateCMSFields(FieldList $fields)
     {
-        $fields->removeByName(['CompanyWebSiteLinkID', 'ManyCompanyWebSiteLinkID']);
-
-        $fields->addFieldsToTab(
-            'Root.Main',
-            [
-                LinkField::create('CompanyWebSiteLink', 'Company Website link')
-                    ->setAllowedTypes([ExternalLink::class]),
-                MultiLinkField::create('ManyCompanyWebSiteLink', 'Multiple Company Website link'),
-            ]
-        );
+        $fields->dataFieldByName('CompanyWebSiteLink')->setAllowedTypes([ExternalLink::class]);
     }
 }

@@ -3,8 +3,6 @@
 namespace SilverStripe\FrameworkTest\LinkField\Extensions;
 
 use SilverStripe\Core\Extension;
-use SilverStripe\LinkField\Form\LinkField;
-use SilverStripe\LinkField\Form\MultiLinkField;
 use SilverStripe\LinkField\Models\Link;
 use SilverStripe\LinkField\Models\EmailLink;
 use SilverStripe\LinkField\Models\PhoneLink;
@@ -39,18 +37,10 @@ class ElementContentExtension extends Extension
 
     protected function updateCMSFields($fields)
     {
-        $fields->removeByName(['OneLinkID', 'ManyLinks']);
-        $fields->addFieldsToTab(
-            'Root.Main',
-            [
-                LinkField::create('OneLink', 'Single Link')
-                    ->setAllowedTypes([
-                        SiteTreeLink::class,
-                        EmailLink::class,
-                        PhoneLink::class
-                    ]),
-                MultiLinkField::create('ManyLinks', 'Multiple Links'),
-            ],
-        );
+        $fields->dataFieldByName('OneLink')->setAllowedTypes([
+            SiteTreeLink::class,
+            EmailLink::class,
+            PhoneLink::class
+        ]);
     }
 }

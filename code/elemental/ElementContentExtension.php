@@ -10,6 +10,7 @@ use SilverStripe\ORM\ValidationResult;
 use SilverStripe\Forms\CompositeValidator;
 use SilverStripe\Forms\NumericField;
 use SilverStripe\Forms\RequiredFields;
+use SilverStripe\Forms\SearchableDropdownField;
 use SilverStripe\Forms\TextField;
 
 /**
@@ -47,7 +48,12 @@ class ElementContentExtension extends Extension
 
     protected function updateCMSFields(FieldList $fields)
     {
-        $fields->removeByName('HTML');
+        // Note we explicitly use a SearchableDropdownField here so the behat test can rely on specific selectors
+        $fields->removeByName(['HTML', 'MyPage', 'MyPageID']);
+        $fields->addFieldToTab(
+            'Root.Main',
+            SearchableDropdownField::create('MyPageID', 'My page', SiteTree::get())->setIsLazyLoaded(false)
+        );
         $fields->addFieldToTab('Root.Main', TextField::create('MyField', 'My Field'));
         $fields->addFieldToTab('Root.Main', NumericField::create('MyInt', 'My Int'));
     }
