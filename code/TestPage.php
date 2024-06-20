@@ -36,7 +36,7 @@ class TestPage extends Page implements \TestPageInterface
 
     public function requireDefaultRecords()
     {
-        if (static::class === self::class) {
+        if (static::class === TestPage::class) {
             return;
         }
 
@@ -46,7 +46,7 @@ class TestPage extends Page implements \TestPageInterface
             Member::actAs($defaultAdminService->findOrCreateDefaultAdmin(), function () {
                 // Create actual page
                 $page = new static();
-                $page->Title = str_replace(self::class, "", static::class);
+                $page->Title = str_replace(TestPage::class, "", static::class);
                 $page->ShowInMenus = 0;
                 $parent = static::getOrCreateParentPage();
                 $page->ParentID = $parent->ID;

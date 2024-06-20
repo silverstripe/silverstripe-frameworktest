@@ -365,7 +365,7 @@ class Company extends DataObject
 
     public function scaffoldSearchField()
     {
-        return DropdownField::create('CompanyID', 'Company', self::get()->map())->setEmptyString('');
+        return DropdownField::create('CompanyID', 'Company', Company::get()->map())->setEmptyString('');
     }
 
 }

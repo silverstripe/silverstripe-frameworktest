@@ -61,7 +61,7 @@ class ArbitraryDataModel extends ArrayData implements DataObjectInterface
         }
 
         // Remove anything that isn't storable in the DB, such as Security ID
-        $dbColumns = DB::field_list(self::TABLE_NAME);
+        $dbColumns = DB::field_list(ArbitraryDataModel::TABLE_NAME);
         foreach ($record as $fieldName => $value) {
             if (!array_key_exists($fieldName, $dbColumns)) {
                 unset($record[$fieldName]);
@@ -76,11 +76,11 @@ class ArbitraryDataModel extends ArrayData implements DataObjectInterface
         if (!$isNew) {
             $manipulation['id'] = $this->ID;
         }
-        DB::manipulate([self::TABLE_NAME => $manipulation]);
+        DB::manipulate([ArbitraryDataModel::TABLE_NAME => $manipulation]);
 
         if ($isNew) {
             // Must save the ID in this object so GridField knows what URL to redirect to.
-            $this->ID = DB::get_generated_id(self::TABLE_NAME);
+            $this->ID = DB::get_generated_id(ArbitraryDataModel::TABLE_NAME);
         }
     }
 
@@ -89,7 +89,7 @@ class ArbitraryDataModel extends ArrayData implements DataObjectInterface
         if (!$this->ID) {
             throw new LogicException('DataObject::delete() called on a record without an ID');
         }
-        SQLDelete::create()->setFrom(self::TABLE_NAME)->setWhere(['ID' => $this->ID])->execute();
+        SQLDelete::create()->setFrom(ArbitraryDataModel::TABLE_NAME)->setWhere(['ID' => $this->ID])->execute();
         $this->ID = 0;
     }
 
