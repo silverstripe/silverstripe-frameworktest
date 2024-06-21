@@ -7,6 +7,10 @@ use SilverStripe\Forms\SearchableDropdownField;
 use SilverStripe\Forms\SearchableMultiDropdownField;
 use SilverStripe\FrameworkTest\Model\Company;
 
+if (!class_exists(BaseElement::class)) {
+    return;
+}
+
 class ElementalSearchableFieldsBlock extends BaseElement
 {
     private static $table_name = 'ElementalSearchableFieldsBlock';
