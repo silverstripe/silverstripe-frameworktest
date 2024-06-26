@@ -38,7 +38,7 @@ class LinkPageExtension extends Extension
 
     protected function updateCMSFields(FieldList $fields)
     {
-        $fields->removeByName(['Content', 'HasOneLinkID', 'HasManyLinksID']);
+        $fields->removeByName(['Content']);
 
         $fields->addFieldsToTab(
             'Root.Main',
