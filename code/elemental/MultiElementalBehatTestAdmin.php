@@ -5,6 +5,10 @@ namespace SilverStripe\FrameworkTest\Elemental\Admin;
 use SilverStripe\Admin\ModelAdmin;
 use SilverStripe\FrameworkTest\Elemental\Model\MultiElementalBehatTestObject;
 
+if (!class_exists(MultiElementalBehatTestObject::class)) {
+    return;
+}
+
 class MutliElementalBehatTestAdmin extends ModelAdmin
 {
     private static $url_segment = 'multi-elemental-behat-test-admin';
