@@ -3,11 +3,6 @@
 namespace SilverStripe\FrameworkTest\Elemental\Model;
 
 use SilverStripe\ORM\DataObject;
-use SilverStripe\FrameworkTest\Elemental\Extension\MultiElementalAreasExtension;
-
-if (!class_exists(MultiElementalAreasExtension::class)) {
-    return;
-}
 
 class MultiElementalBehatTestObject extends DataObject
 {
@@ -16,10 +11,6 @@ class MultiElementalBehatTestObject extends DataObject
     ];
 
     private static $table_name = 'ElementalMultiBehatTestObject';
-
-    private static $extensions = [
-        MultiElementalAreasExtension::class,
-    ];
 
     public function canView($member = null)
     {
