@@ -53,6 +53,10 @@ SilverStripe\FrameworkTest\Elemental\Model\ElementalBehatTestObject:
     - DNADesign\Elemental\Extensions\ElementalAreasExtension
     - SilverStripe\FrameworkTest\Elemental\Extension\ElementalBehatTestExtension
 
+SilverStripe\FrameworkTest\Elemental\Model\MultiElementalBehatTestObject:
+  extensions:
+    - SilverStripe\FrameworkTest\Elemental\Extension\MultiElementalAreasExtension
+
 BasicElementalPage:
   extensions:
     - DNADesign\Elemental\Extensions\ElementalPageExtension
@@ -68,7 +72,6 @@ SilverStripe\FrameworkTest\LinkField\PageTypes\LinkFieldTestPage:
 SilverStripe\FrameworkTest\Model\Company:
   extensions:
     - SilverStripe\FrameworkTest\LinkField\Extensions\CompanyExtension
-
 
 ---
 Only:
