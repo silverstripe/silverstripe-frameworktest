@@ -5,6 +5,10 @@ namespace SilverStripe\FrameworkTest\Elemental\Extension;
 use DNADesign\Elemental\Extensions\ElementalAreasExtension;
 use DNADesign\Elemental\Models\ElementalArea;
 
+if (!class_exists(ElementalAreasExtension::class)) {
+    return;
+}
+
 /**
  * This is used to test multiple elemental areas on a page
  */
