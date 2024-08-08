@@ -41,8 +41,6 @@ class BasicFieldsTestPage extends TestPage
     private static $db = array(
         'CalendarDate' => 'Date',
         'Checkbox' => 'Boolean',
-        'ConfirmedPassword' => 'Varchar',
-        'CreditCard' => 'Varchar',
         'Date' => 'Date',
         'DateTime' => 'Datetime',
         'DateTimeWithCalendar' => 'Datetime',
@@ -64,8 +62,6 @@ class BasicFieldsTestPage extends TestPage
         'MyLabelledFieldGroupCheckbox' => 'Boolean',
         'Number' => 'Float',
         'OptionSet' => 'Varchar',
-        'Password' => 'Varchar',
-        'PhoneNumber' => 'Varchar',
         'Price' => 'Double',
         'Readonly' => 'Varchar',
         'Required' => 'Text',
@@ -79,9 +75,7 @@ class BasicFieldsTestPage extends TestPage
     );
 
     private static $has_one = array(
-        'AttachedFile' => 'SilverStripe\\Assets\\File',
         'Dropdown' => 'SilverStripe\\FrameworkTest\\Model\\TestCategory',
-        'File' => 'SilverStripe\\Assets\\File',
         'GroupedDropdown' => 'SilverStripe\\FrameworkTest\\Model\\TestCategory',
         'Image' => 'SilverStripe\\Assets\\Image',
     );
@@ -97,9 +91,30 @@ class BasicFieldsTestPage extends TestPage
     );
 
     private static $owns = [
-        'AttachedFile',
-        'File',
         'Image',
+    ];
+
+    private static array $scaffold_cms_fields_settings = [
+        'ignoreFields' => [
+            'MyCompositeField1',
+            'MyCompositeField2',
+            'MyCompositeField3',
+            'MyCompositeFieldCheckbox',
+            'MyFieldGroup1',
+            'MyFieldGroup2',
+            'MyFieldGroup3',
+            'MyFieldGroupCheckbox',
+            'MyLabelledFieldGroup1',
+            'MyLabelledFieldGroup2',
+            'MyLabelledFieldGroup3',
+            'MyLabelledFieldGroupCheckbox',
+            'ToggleCompositeTextField1',
+            'ToggleCompositeDropdownField',
+        ],
+        'ignoreRelations' => [
+            'CheckboxSet',
+            'Listbox',
+        ],
     ];
 
     private static $defaults = array(
@@ -140,8 +155,6 @@ class BasicFieldsTestPage extends TestPage
             'CalendarDate' => "2017-01-31",
             'Checkbox' => 1,
             // 'CheckboxSet' => null,
-            'ConfirmedPassword' => 'secret',
-            'CreditCard' => '4000400040004111',
             'Date' => "2017-01-31",
             'DateTime' => "2017-01-31 23:59",
             'DateTimeWithCalendar' => "2017-01-31 23:59",
@@ -166,8 +179,6 @@ class BasicFieldsTestPage extends TestPage
             'MyLabelledFieldGroupCheckbox' => true,
             'Number' => 99.123,
             'OptionSet' => $thirdCat->ID,
-            'Password' => 'My value (ä!)',
-            'PhoneNumber' => '021 1235',
             'Price' => 99.99,
             'Readonly' => 'My value (ä!)',
             'Required' => 'My required value (delete to test)',
