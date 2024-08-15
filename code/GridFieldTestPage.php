@@ -30,6 +30,16 @@ class GridFieldTestPage extends TestPage
         'HasManyCompanies',
     ];
 
+    private static array $scaffold_cms_fields_settings = [
+        'ignoreFields' => [
+            'HasOneCompany',
+        ],
+        'ignoreRelations' => [
+            'HasManyCompanies',
+            'ManyManyCompanies',
+        ],
+    ];
+
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();

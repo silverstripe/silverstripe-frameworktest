@@ -30,6 +30,16 @@ class RelationFieldsTestPage extends TestPage
         'Title' => 'Relational Fields'
     );
 
+    private static array $scaffold_cms_fields_settings = [
+        'ignoreFields' => [
+            'HasOneCompany',
+        ],
+        'ignoreRelations' => [
+            'HasManyCompanies',
+            'ManyManyCompanies',
+        ],
+    ];
+
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();

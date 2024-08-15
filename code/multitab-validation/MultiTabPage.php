@@ -26,6 +26,12 @@ class MultiTabPage extends Page
         'SettingsTabFirstField' => 'Varchar(50)',
     ];
 
+    private static array $scaffold_cms_fields_settings = [
+        'ignoreFields' => [
+            'SettingsTabFirstField',
+        ],
+    ];
+
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
