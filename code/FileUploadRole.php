@@ -1,7 +1,8 @@
 <?php
 
-use SilverStripe\ORM\DataExtension;
-class FileUploadRole extends DataExtension
+use SilverStripe\Core\Extension;
+
+class FileUploadRole extends Extension
 {
     private static $has_one = array(
         'AFile' => 'SilverStripe\\Assets\\File',

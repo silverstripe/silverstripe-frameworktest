@@ -2,11 +2,11 @@
 
 namespace SilverStripe\FrameworkTest\Extension;
 
-use SilverStripe\ORM\DataExtension;
+use SilverStripe\Core\Extension;
 use SilverStripe\Security\Permission;
 use SilverStripe\Security\PermissionProvider;
 
-class TestDataObjectExtension extends DataExtension implements PermissionProvider
+class TestDataObjectExtension extends Extension implements PermissionProvider
 {
     public function providePermissions()
     {

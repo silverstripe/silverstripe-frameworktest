@@ -1,8 +1,8 @@
 <?php
 
-use SilverStripe\ORM\DataExtension;
+use SilverStripe\Core\Extension;
 
-class BasicFieldsTestFileExtension extends DataExtension
+class BasicFieldsTestFileExtension extends Extension
 {
     private static $has_one = [
         'TestPage' => BasicFieldsTestPage::class,
