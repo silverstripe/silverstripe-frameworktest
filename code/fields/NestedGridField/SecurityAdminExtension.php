@@ -8,7 +8,7 @@ use Symbiote\GridFieldExtensions\GridFieldNestedForm;
 
 class SecurityAdminExtension extends Extension
 {
-    public function updateGridFieldConfig($config)
+    protected function updateGridFieldConfig($config)
     {
         if ($this->owner->getModelClass() === Group::class) {
           $config->addComponent(GridFieldNestedForm::create()->setRelationName('Members'));
