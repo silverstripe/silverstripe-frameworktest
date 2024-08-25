@@ -11,7 +11,7 @@ class ElementalBehatTestObject extends DataObject
 {
     private static $table_name = 'ElementalBehatTestObject';
 
-    public function CMSEditLink()
+    public function getCMSEditLink(): ?string
     {
         $admin = ElementalBehatTestAdmin::singleton();
         $sanitisedClassname = str_replace('\\', '-', $this->ClassName);
