@@ -24,7 +24,7 @@ class FrameworkTestRole extends DataExtension
         );
     }
 
-    public function requireDefaultRecords()
+    protected function onRequireDefaultRecords()
     {
         $hasTestMembers = Member::get()->find('Email', 'hayley@test.com');
         if (!$hasTestMembers) {

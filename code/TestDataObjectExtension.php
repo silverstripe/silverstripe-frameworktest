@@ -24,22 +24,22 @@ class TestDataObjectExtension extends DataExtension implements PermissionProvide
         ];
     }
 
-    public function canView($member = null) 
+    protected function canView($member = null)
     {
         return Permission::check('TEST_DATAOBJECT_EDIT', 'any', $member);
     }
 
-    public function canEdit($member = null) 
+    protected function canEdit($member = null)
     {
         return Permission::check('TEST_DATAOBJECT_EDIT', 'any', $member);
     }
 
-    public function canDelete($member = null) 
+    protected function canDelete($member = null)
     {
         return Permission::check('TEST_DATAOBJECT_EDIT', 'any', $member);
     }
 
-    public function canCreate($member = null, $context = []) 
+    protected function canCreate($member = null, $context = [])
     {
         return Permission::check('TEST_DATAOBJECT_EDIT', 'any', $member);
     }
