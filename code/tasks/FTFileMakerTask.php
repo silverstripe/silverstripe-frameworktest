@@ -11,6 +11,10 @@ use SilverStripe\Security\Member;
 use SilverStripe\Security\Security;
 use SilverStripe\Core\Path;
 use SilverStripe\Core\Manifest\ModuleResourceLoader;
+use SilverStripe\PolyExecution\PolyOutput;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 
 /**
  * Creates sample folder and file structure, useful to test performance,
@@ -23,10 +27,6 @@ use SilverStripe\Core\Manifest\ModuleResourceLoader;
  * Protip: In case you want to test thumbnail generation, you can
  * recursively delete any generated ones through the following bash command in `assets/`:
  * `find . -name '*Resampled*' -print0 | xargs -0 rm`
- *
- * Parameters:
- *  - reset=1: Optionally truncate ALL files and folders in the database, plus delete
- *    the entire `assets/` directory.
  *
  *
  * Configuration
@@ -58,7 +58,7 @@ use SilverStripe\Core\Manifest\ModuleResourceLoader;
  *     - 0
  *
  * Flush and run:
- * /dev/tasks/FTFileMakerTask?flush&reset=1
+ * sake tasks:FTFileMakerTask --flush --reset
  *
  * @todo Automatically retrieve file listing from S3
  * @todo Handle HTTP errors from S3
@@ -180,8 +180,6 @@ class FTFileMakerTask extends BuildTask
         'video.m4v' => 'SilverStripe\Assets\File',
     ];
 
-    protected $lineBreak = "\n<br>";
-
     /** @var Member */
     protected $anonymousMember = null;
 
@@ -197,7 +195,7 @@ class FTFileMakerTask extends BuildTask
      */
     protected $folderCounts = [];
 
-    public function run($request)
+    protected function execute(InputInterface $input, PolyOutput $output): int
     {
         set_time_limit(0);
 
@@ -213,15 +211,11 @@ class FTFileMakerTask extends BuildTask
         }
         Security::setCurrentUser($this->anonymousMember);
 
-        if (php_sapi_name() == "cli") {
-            $this->lineBreak = "\n";
+        if ($input->getOption('reset')) {
+            $this->reset($output);
         }
 
-        if ($request->getVar('reset')) {
-            $this->reset();
-        }
-
-        $fileCounts = $request->getVar('fileCounts');
+        $fileCounts = $input->getOption('fileCounts');
         if ($fileCounts) {
             $counts = explode(',', $fileCounts ?? '');
             $this->fileCounts = array_map(function ($int) {
@@ -231,7 +225,7 @@ class FTFileMakerTask extends BuildTask
             $this->fileCounts = FTFileMakerTask::config()->get('fileCountByDepth');
         }
 
-        $folderCounts = $request->getVar('folderCounts');
+        $folderCounts = $input->getOption('folderCounts');
         if ($folderCounts) {
             $counts = explode(',', $folderCounts ?? '');
             $this->folderCounts = array_map(function ($int) {
@@ -241,26 +235,27 @@ class FTFileMakerTask extends BuildTask
             $this->folderCounts = FTFileMakerTask::config()->get('folderCountByDepth');
         }
 
-        echo "Downloading fixtures" . $this->lineBreak;
-        $fixtureFilePaths = $this->downloadFixtureFiles();
+        $output->writeln('Downloading fixtures');
+        $fixtureFilePaths = $this->downloadFixtureFiles($output);
 
         if (!FTFileMakerTask::config()->get('documentsOnly')) {
-            echo "Generate thumbnails" . $this->lineBreak;
+            $output->writeln('Generate thumbnails');
             $this->generateThumbnails($fixtureFilePaths);
         }
 
-        echo "Generate files" . $this->lineBreak;
+        $output->writeln('Generate files');
         $this->generateFiles($fixtureFilePaths);
 
         if (!FTFileMakerTask::config()->get('doPutProtectedFilesInPublicStore')) {
-            echo "Incorrectly putting protected files into public asset store on purpose" . $this->lineBreak;
+            $output->writeln('Incorrectly putting protected files into public asset store on purpose');
             $this->putProtectedFilesInPublicAssetStore();
         }
+        return Command::SUCCESS;
     }
 
-    protected function reset()
+    protected function reset(PolyOutput $output)
     {
-        echo "Resetting assets" . $this->lineBreak;
+        $output->writeln('Resetting assets');
 
         DB::query('TRUNCATE "File"');
         DB::query('TRUNCATE "File_Live"');
@@ -271,7 +266,7 @@ class FTFileMakerTask extends BuildTask
         }
     }
 
-    protected function downloadFixtureFiles()
+    protected function downloadFixtureFiles(PolyOutput $output)
     {
         $client = new Client(['base_uri' => $this->fixtureFileBaseUrl]);
 
@@ -293,7 +288,7 @@ class FTFileMakerTask extends BuildTask
                 $promises[$filename] = $client->getAsync($filename, [
                     'sink' => $path
                 ]);
-                echo "Downloading $url" . $this->lineBreak;
+                $output->writeln("Downloading $url");
             }
         }
 
@@ -497,4 +492,28 @@ class FTFileMakerTask extends BuildTask
         return $targetPath;
     }
 
+    public function getOptions(): array
+    {
+        return [
+            new InputOption(
+                'reset',
+                null,
+                InputOption::VALUE_NONE,
+                'Optionally truncate ALL files and folders in the database,'
+                . ' plus delete the entire `assets/` directory',
+            ),
+            new InputOption(
+                'fileCounts',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Comma separated string'
+            ),
+            new InputOption(
+                'folderCounts',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Comma separated string'
+            ),
+        ];
+    }
 }

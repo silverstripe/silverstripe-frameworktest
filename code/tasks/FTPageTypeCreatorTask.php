@@ -2,10 +2,13 @@
 
 use SilverStripe\Dev\BuildTask;
 use Faker\Factory;
-use SilverStripe\Control\HTTPRequest;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use SilverStripe\Core\Manifest\ModuleLoader;
+use SilverStripe\PolyExecution\PolyOutput;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Filesystem\Exception\IOException;
 
 class FTPageTypeCreatorTask extends BuildTask
@@ -36,12 +39,9 @@ class FTPageTypeCreatorTask extends BuildTask
         $this->finder = new Finder();
     }
 
-    /**
-     * @param HTTPRequest $request
-     */
-    public function run($request)
+    protected function execute(InputInterface $input, PolyOutput $output): int
     {
-        $count = $request->getVar('count') ?: 20;
+        $count = $input->getOption('count');
         $module = ModuleLoader::getModule('silverstripe/frameworktest');
         $testPageDir = $module->getPath() . '/code/test-pages';
         if (!$this->fs->exists($testPageDir)) {
@@ -66,11 +66,19 @@ class FTPageTypeCreatorTask extends BuildTask
                 $this->fs->dumpFile($filePath, $code);
                 $created++;
             } catch (IOException $e) {
-                echo "Could not write to file $filePath. Got error: {$e->getMessage()}\n";
+                $output->writeln("Could not write to file $filePath. Got error: {$e->getMessage()}");
                 die();
             }
-            echo "Created page type $className\n";
+            $output->writeln("Created page type $className");
         }
+        return Command::SUCCESS;
+    }
+
+    public function getOptions(): array
+    {
+        return [
+            new InputOption('count', null, InputOption::VALUE_REQUIRED, 'Number of page types to create', 20),
+        ];
     }
 
     private function getExistingClassNames($dir)
@@ -107,5 +115,4 @@ class $className extends Page implements TestPageInterface
 PHP;
         return $code;
     }
-
 }

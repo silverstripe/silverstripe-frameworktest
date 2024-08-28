@@ -15,7 +15,7 @@ a set of sample data and behaviour.
 
 ## Usage
 
-Simply running `dev/build` will take care of most sample data setup.
+Simply running `sake db:build` will take care of most sample data setup.
 
 In order to use any of the optional test behaviour targeted at modules,
 install the module and remove the `_manifest_exclude` file from the relevant folder.
@@ -26,7 +26,7 @@ For example, to test the tagfield module, remove the `frameworktest/code/tagfiel
 The module creates some default pages for different CMS behaviours.
 The CMS is intended to be perform well with a couple of thousand pages.
 If you want to test the CMS behaviour for a large and nested tree,
-the module includes a simple generator task: `dev/tasks/FTPageMakerTask`.
+the module includes a simple generator task: `sake tasks:FTPageMakerTask`.
 It will create 3^5 pages by default, so takes a while to run through.
 
 ## Configuring the amount of data
@@ -35,9 +35,9 @@ Both `FTPageMagerTask` and `FTFileMakerTask` allow the amount of generated conte
 To do this, pass a comma-seprarated list of integers representing the amount of records to create at each
 depth.
 
-`$ vendor/bin/sake dev/tasks/FTPageMakerTask pageCounts=10,200,5,5`
+`$ vendor/bin/sake tasks:FTPageMakerTask --pageCounts=10,200,5,5`
 
-`$ vendor/bin/sake dev/tasks/FTFileMakerTask fileCounts=5,300,55,5 folderCounts=1,5,5,5`
+`$ vendor/bin/sake tasks:FTFileMakerTask --fileCounts=5,300,55,5 --folderCounts=1,5,5,5`
 
 ## Guaranteed unique images
 
@@ -64,8 +64,8 @@ Usage:
 
 ```
 # Generate some sample files to associate with blocks
-sake dev/tasks/FTFileMakerTask
-sake dev/tasks/FTPageMakerTask withBlocks=true
+sake tasks:FTFileMakerTask
+sake tasks:FTPageMakerTask withBlocks=true
 ```
 
 ## Requirements
