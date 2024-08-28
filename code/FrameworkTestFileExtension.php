@@ -1,7 +1,8 @@
 <?php
 
-use SilverStripe\ORM\DataExtension;
-class FrameworkTestFileExtension extends DataExtension
+use SilverStripe\Core\Extension;
+
+class FrameworkTestFileExtension extends Extension
 {
     private static $has_one = array(
         'Company' => 'SilverStripe\\FrameworkTest\\Model\\Company',
