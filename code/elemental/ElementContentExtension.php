@@ -6,7 +6,7 @@ use SilverStripe\Assets\File;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Core\Extension;
 use SilverStripe\Forms\FieldList;
-use SilverStripe\ORM\ValidationResult;
+use SilverStripe\Core\Validation\ValidationResult;
 use SilverStripe\Forms\CompositeValidator;
 use SilverStripe\Forms\NumericField;
 use SilverStripe\Forms\RequiredFields;

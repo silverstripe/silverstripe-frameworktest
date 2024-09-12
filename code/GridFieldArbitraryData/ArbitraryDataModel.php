@@ -12,7 +12,7 @@ use SilverStripe\ORM\DB;
 use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\ORM\Queries\SQLDelete;
 use SilverStripe\ORM\Search\BasicSearchContext;
-use SilverStripe\View\ArrayData;
+use SilverStripe\Model\ArrayData;
 
 /**
  * A class of arbitrary data for testing GridField components.

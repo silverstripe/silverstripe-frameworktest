@@ -20,10 +20,10 @@ use SilverStripe\Forms\GridField\GridFieldPrintButton;
 use SilverStripe\Forms\GridField\GridFieldViewButton;
 use SilverStripe\Forms\HiddenField;
 use SilverStripe\Forms\TextField;
-use SilverStripe\ORM\ArrayList;
+use SilverStripe\Model\List\ArrayList;
 use SilverStripe\ORM\Queries\SQLSelect;
 use SilverStripe\ORM\Search\BasicSearchContext;
-use SilverStripe\View\ArrayData;
+use SilverStripe\Model\ArrayData;
 
 class ArbitraryDataAdmin extends LeftAndMain
 {
