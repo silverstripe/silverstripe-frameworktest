@@ -128,7 +128,7 @@ class FTPageMakerTask extends BuildTask
     /**
      * @param SiteTree&ElementalPageExtension|null $page
      * @return ElementContent
-     * @throws \SilverStripe\ORM\ValidationException
+     * @throws \SilverStripe\Core\Validation\ValidationException
      */
     public static function generateContentBlock(?SiteTree $page = null)
     {
@@ -147,7 +147,7 @@ class FTPageMakerTask extends BuildTask
     /**
      * @param SiteTree&ElementalPageExtension|null $page
      * @return FileBlock
-     * @throws \SilverStripe\ORM\ValidationException
+     * @throws \SilverStripe\Core\Validation\ValidationException
      */
     public static function generateFileBlock(?SiteTree $page = null): FileBlock
     {
@@ -172,7 +172,7 @@ class FTPageMakerTask extends BuildTask
     /**
      * @param SiteTree&ElementalPageExtension|null $page
      * @return BannerBlock
-     * @throws \SilverStripe\ORM\ValidationException
+     * @throws \SilverStripe\Core\Validation\ValidationException
      */
     public static function generateBannerBlock(?SiteTree $page = null): BannerBlock
     {

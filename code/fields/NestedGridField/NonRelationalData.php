@@ -3,7 +3,7 @@
 namespace SilverStripe\FrameworkTest\Fields\NestedGridField;
 
 use SilverStripe\FrameworkTest\Model\Company;
-use SilverStripe\ORM\ArrayList;
+use SilverStripe\Model\List\ArrayList;
 use SilverStripe\ORM\DataObject;
 
 class NonRelationalData extends DataObject
