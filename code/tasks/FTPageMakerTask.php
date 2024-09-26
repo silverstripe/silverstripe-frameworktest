@@ -8,7 +8,10 @@ use SilverStripe\ElementalBannerBlock\Block\BannerBlock;
 use SilverStripe\ElementalFileBlock\Block\FileBlock;
 use SilverStripe\CMS\Model\SiteTree;
 use DNADesign\Elemental\Extensions\ElementalPageExtension;
-use DNADesign\Elemental\Models\BaseElement;
+use SilverStripe\PolyExecution\PolyOutput;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 
 /**
  * Creates sample page structure, useful to test tree performance,
@@ -48,16 +51,16 @@ class FTPageMakerTask extends BuildTask
         'SilverStripe\ElementalFileBlock\Block\FileBlock' => [FTPageMakerTask::class, 'generateFileBlock'],
     ];
 
-    public function run($request)
+    protected function execute(InputInterface $input, PolyOutput $output): int
     {
         // Optionally add blocks
-        $withBlocks = (bool)$request->getVar('withBlocks');
+        $withBlocks = (bool)$input->getOption('withBlocks');
         if ($withBlocks && !class_exists('DNADesign\Elemental\Models\BaseElement')) {
             throw new \LogicException('withBlocks requested, but BaseElement class not found');
         }
 
         // Allow pageCountByDepth to be passed as comma-separated value, e.g. pageCounts=5,100,1,1
-        $pageCounts = $request->getVar('pageCounts');
+        $pageCounts = $input->getOption('pageCounts');
         if ($pageCounts) {
             $counts = explode(',', $pageCounts ?? '');
             $this->pageCountByDepth = array_map(function ($int) {
@@ -65,10 +68,11 @@ class FTPageMakerTask extends BuildTask
             }, $counts ?? []);
         }
 
-        $this->generatePages(0, "", 0, $withBlocks);
+        $this->generatePages($output, 0, "", 0, $withBlocks);
+        return Command::SUCCESS;
     }
 
-    protected function generatePages($depth = 0, $prefix = "", $parentID = 0, $withBlocks = false)
+    protected function generatePages(PolyOutput $output, $depth = 0, $prefix = "", $parentID = 0, $withBlocks = false)
     {
         $maxDepth = count($this->pageCountByDepth ?? []);
         $pageCount = $this->pageCountByDepth[$depth];
@@ -84,10 +88,10 @@ class FTPageMakerTask extends BuildTask
             $page->write();
             $page->copyVersionToStage('Stage', 'Live');
 
-            echo "Created '$page->Title' ($page->ClassName)\n";
+            $output->writeln("Created '$page->Title' ($page->ClassName)");
 
             if ($withBlocks) {
-                $this->generateBlocksForPage($page);
+                $this->generateBlocksForPage($output, $page);
             }
 
             $pageID = $page->ID;
@@ -95,12 +99,12 @@ class FTPageMakerTask extends BuildTask
             unset($page);
 
             if ($depth < $maxDepth-1) {
-                $this->generatePages($depth+1, $fullPrefix, $pageID, $withBlocks);
+                $this->generatePages($output, $depth+1, $fullPrefix, $pageID, $withBlocks);
             }
         }
     }
 
-    protected function generateBlocksForPage(Page $page)
+    protected function generateBlocksForPage(PolyOutput $output, Page $page)
     {
         $classes = array_filter($this->config()->get('block_generators') ?? [], function ($callable, $class) {
             return class_exists($class ?? '');
@@ -121,7 +125,7 @@ class FTPageMakerTask extends BuildTask
                 $block->publishRecursive();
             }
 
-            echo sprintf("  Added '%s' block #%d to page #%d\n", $class, $block->ID, $page->ID);
+            $output->writeln(sprintf("  Added '%s' block #%d to page #%d", $class, $block->ID, $page->ID));
         }
     }
 
@@ -193,4 +197,21 @@ class FTPageMakerTask extends BuildTask
         return $block;
     }
 
+    public function getOptions(): array
+    {
+        return [
+            new InputOption(
+                'withBlocks',
+                null,
+                InputOption::VALUE_NONE,
+                'Include elemental blocks on the page',
+            ),
+            new InputOption(
+                'pageCounts',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Comma separated string'
+            ),
+        ];
+    }
 }

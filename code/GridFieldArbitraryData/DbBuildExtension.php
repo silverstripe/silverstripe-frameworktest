@@ -4,7 +4,8 @@ namespace SilverStripe\FrameworkTest\GridFieldArbitraryData;
 
 use SilverStripe\Control\Director;
 use SilverStripe\Core\Extension;
-use SilverStripe\ORM\DatabaseAdmin;
+use SilverStripe\Dev\Command\DbBuild;
+use SilverStripe\PolyExecution\PolyOutput;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\DB;
 use SilverStripe\ORM\FieldType\DBDatetime;
@@ -13,87 +14,66 @@ use SilverStripe\ORM\Queries\SQLSelect;
 /**
  * Builds the table and adds default records for the ArbitraryDataModel.
  */
-class DatabaseBuildExtension extends Extension
+class DbBuildExtension extends Extension
 {
     /**
      * This extension hook is on TestSessionEnvironment, which is used by behat but not by phpunit.
-     * For whatever reason, behat doesn't use dev/build, so we can't rely on the below onAfterbuild
+     * For whatever reason, behat doesn't build the db, so we can't rely on the below onAfterbuild
      * being run in that scenario.
      */
     protected function onAfterStartTestSession()
     {
-        $this->buildTable(true);
+        $output = PolyOutput::create(
+            Director::is_cli() ? PolyOutput::FORMAT_ANSI : PolyOutput::FORMAT_HTML,
+            PolyOutput::VERBOSITY_QUIET
+        );
+        $output->startList();
+        $this->buildTable($output);
+        $output->stopList();
         $this->populateData();
     }
 
     /**
-     * This extension hook is on DatabaseAdmin, after dev/build has finished building the database.
+     * This extension hook is on DbBuild, after building the database.
      */
-    protected function onAfterBuild(bool $quiet, bool $populate, bool $testMode): void
+    protected function onAfterBuild(PolyOutput $output, bool $populate, bool $testMode): void
     {
         if ($testMode) {
             return;
         }
 
-        if (!$quiet) {
-            if (Director::is_cli()) {
-                echo "\nCREATING TABLE FOR FRAMEWORKTEST ARBITRARY DATA\n\n";
-            } else {
-                echo "\n<p><b>Creating table for frameworktest arbitrary data</b></p><ul>\n\n";
-            }
-        }
-
-        $this->buildTable($quiet);
-
-        if (!$quiet && !Director::is_cli()) {
-            echo '</ul>';
-        }
-
+        $output->writeln('<options=bold>Creating table for frameworktest arbitrary data</>');
+        $output->startList();
+        $this->buildTable($output);
+        $output->stopList();
         if ($populate) {
-            if (!$quiet) {
-                if (Director::is_cli()) {
-                    echo "\nCREATING DATABASE RECORDS FOR FRAMEWORKTEST ARBITRARY DATA\n\n";
-                } else {
-                    echo "\n<p><b>Creating database records arbitrary data</b></p><ul>\n\n";
-                }
-            }
-
+            $output->writeln('<options=bold>Creating database records arbitrary data</>');
+            $output->startList();
             $this->populateData();
-
-            if (!$quiet && !Director::is_cli()) {
-                echo '</ul>';
-            }
+            $output->stopList();
         }
-
-        if (!$quiet) {
-            echo (Director::is_cli()) ? "\n Frameworktest database build completed!\n\n" : '<p>Frameworktest database build completed!</p>';
-        }
+        $output->writeln(['<options=bold>Frameworktest database build completed!</>', '']);
     }
 
-    private function buildTable(bool $quiet): void
+    private function buildTable(PolyOutput $output): void
     {
         $tableName = ArbitraryDataModel::TABLE_NAME;
 
         // Log data
-        if (!$quiet) {
-            $showRecordCounts = DatabaseAdmin::config()->get('show_record_counts');
-            if ($showRecordCounts && DB::get_schema()->hasTable($tableName)) {
-                try {
-                    $count = SQLSelect::create()->setFrom($tableName)->count();
-                    $countSuffix = " ($count records)";
-                } catch (\Exception $e) {
-                    $countSuffix = ' (error getting record count)';
-                }
-            } else {
-                $countSuffix = "";
+        $showRecordCounts = DbBuild::config()->get('show_record_counts');
+        if ($showRecordCounts && DB::get_schema()->hasTable($tableName)) {
+            try {
+                $count = SQLSelect::create()->setFrom($tableName)->count();
+                $countSuffix = " ($count records)";
+            } catch (\Exception $e) {
+                $countSuffix = ' (error getting record count)';
             }
-
-            if (Director::is_cli()) {
-                echo " * $tableName$countSuffix\n";
-            } else {
-                echo "<li>$tableName$countSuffix</li>\n";
-            }
+        } else {
+            $countSuffix = "";
         }
+        // We're adding one list item, but we need to do it this way for consistency
+        // with the rest of the db build output
+        $output->writeListItem($tableName . $countSuffix);
 
         // Get field schema
         $fields = [

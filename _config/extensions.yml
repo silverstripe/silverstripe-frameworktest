@@ -28,9 +28,9 @@ SilverStripe\FrameworkTest\Fields\NestedGridField\NonRelationalData:
     extensions:
     - SilverStripe\FrameworkTest\Extension\TestDataObjectExtension
 
-SilverStripe\ORM\DatabaseAdmin:
+SilverStripe\Dev\Command\DbBuild:
   extensions:
-    - SilverStripe\FrameworkTest\GridFieldArbitraryData\DatabaseBuildExtension
+    - SilverStripe\FrameworkTest\GridFieldArbitraryData\DbBuildExtension
 
 ---
 Only:
@@ -38,7 +38,7 @@ Only:
 ---
 SilverStripe\TestSession\TestSessionEnvironment:
   extensions:
-    - SilverStripe\FrameworkTest\GridFieldArbitraryData\DatabaseBuildExtension
+    - SilverStripe\FrameworkTest\GridFieldArbitraryData\DbBuildExtension
 
 ---
 Only:
