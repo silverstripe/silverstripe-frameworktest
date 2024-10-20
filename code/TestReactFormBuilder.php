@@ -10,7 +10,7 @@ class TestReactFormBuilder extends LeftAndMain
     private static $url_segment = 'test-react';
     private static $menu_title = 'Test React FormBuilder';
 
-    public function getClientConfig()
+    public function getClientConfig(): array
     {
         $baseLink = $this->Link();
         return array_merge(parent::getClientConfig(), [
