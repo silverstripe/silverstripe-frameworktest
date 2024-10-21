@@ -71,7 +71,7 @@ class BasicFieldsTestPage extends TestPage
         'TimeHTML5' => 'Time',
         'ToggleCompositeTextField1' => 'Varchar',
         'ToggleCompositeDropdownField' => 'Varchar',
-        'Validated' => 'Text',
+        'Validated' => 'Int',
     );
 
     private static $has_one = array(
@@ -187,7 +187,7 @@ class BasicFieldsTestPage extends TestPage
             'Time' => "23:59",
             'TimeHTML5' => "23:59",
             'ToggleCompositeTextField1' => 'My value (ä!)',
-            'Validated' => '1',
+            'Validated' => 1,
         );
     }
 
