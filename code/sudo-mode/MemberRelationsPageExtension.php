@@ -8,7 +8,7 @@ use SilverStripe\Core\Extension;
 use SilverStripe\Security\Member;
 use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
-use SilverStripe\ORM\ArrayList;
+use SilverStripe\Model\List\ArrayList;
 
 /**
  * Extension that adds Member relations on a page to test that sudo-mode
@@ -38,7 +38,6 @@ class MemberRelationsPageExtension extends Extension
         $config = GridFieldConfig_RecordEditor::create();
         $gridField->setConfig($config);
         $fields->insertAfter('Title', $gridField);
-        return $fields;
     }
 
     protected function onBeforeWrite()
