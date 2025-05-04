@@ -13,6 +13,7 @@ use SilverStripe\Versioned\RecursivePublishable;
 use SilverStripe\Versioned\Versioned;
 use RelationFieldsTestPage;
 use GridFieldTestPage;
+use SilverStripe\Forms\ReadonlyField;
 use SilverStripe\Forms\Validation\CompositeValidator;
 use SilverStripe\Forms\Validation\RequiredFieldsValidator;
 
@@ -97,7 +98,11 @@ class Company extends DataObject
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
-        $fields->addFieldToTab('Root.Main', $uploadField = UploadField::create('GroupPhotos'));
+        $fields->addFieldsToTab('Root.Main', [
+            ReadonlyField::create('IntentionallyEmpty'),
+            ReadonlyField::create('ReadonlyWithValue', null, '<i>Read-only value</i>'),
+            $uploadField = UploadField::create('GroupPhotos'),
+        ]);
         $uploadField->setAllowedFileCategories('image');
         return $fields;
     }
