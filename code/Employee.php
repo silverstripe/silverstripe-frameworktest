@@ -89,10 +89,18 @@ class Employee extends DataObject
 
     private static $table_name = 'Employee';
 
+    /**
+     * Use basic scaffold settings (no tabs, etc)
+     */
+    private static array $scaffold_cms_fields_settings = [
+        'includeRelations' => false,
+        'tabbed' => false,
+        'ajaxSafe' => false,
+    ];
+
     public function getCMSFields()
     {
-        // Use basic scaffolder (no tabs)
-        $fields = $this->scaffoldFormFields();
+        $fields = parent::getCMSFields();
         $fields->replaceField('Email', EmailField::create('Email'));
         $fields->push(new NumericField('ManyMany[YearStart]', 'Year started (3.1, many-many only)'));
         $fields->push(new TextField('ManyMany[Role]', 'Role (3.1, many-many only)'));
