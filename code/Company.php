@@ -95,10 +95,11 @@ class Company extends DataObject
 
     public function getCMSFields()
     {
-        $fields = parent::getCMSFields();
-        $fields->addFieldToTab('Root.Main', $uploadField = UploadField::create('GroupPhotos'));
-        $uploadField->setAllowedFileCategories('image');
-        return $fields;
+        $this->beforeUpdateCMSFields(function ($fields) {
+            $fields->addFieldToTab('Root.Main', $uploadField = UploadField::create('GroupPhotos'));
+            $uploadField->setAllowedFileCategories('image');
+        });
+        return parent::getCMSFields();
     }
 
     public function getCMSValidator()
