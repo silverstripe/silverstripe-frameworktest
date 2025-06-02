@@ -104,7 +104,11 @@ class Company extends DataObject
             $uploadField = UploadField::create('GroupPhotos'),
         ]);
         $uploadField->setAllowedFileCategories('image');
-        return $fields;
+        $this->beforeUpdateCMSFields(function ($fields) {
+            $fields->addFieldToTab('Root.Main', $uploadField = UploadField::create('GroupPhotos'));
+            $uploadField->setAllowedFileCategories('image');
+        });
+        return parent::getCMSFields();
     }
 
     public function getCMSCompositeValidator(): CompositeValidator
