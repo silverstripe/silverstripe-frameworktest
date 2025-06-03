@@ -97,16 +97,14 @@ class Company extends DataObject
 
     public function getCMSFields()
     {
-        $fields = parent::getCMSFields();
-        $fields->addFieldsToTab('Root.Main', [
-            ReadonlyField::create('IntentionallyEmpty'),
-            ReadonlyField::create('ReadonlyWithValue', null, '<i>Read-only value</i>'),
-            $uploadField = UploadField::create('GroupPhotos'),
-        ]);
-        $uploadField->setAllowedFileCategories('image');
         $this->beforeUpdateCMSFields(function ($fields) {
-            $fields->addFieldToTab('Root.Main', $uploadField = UploadField::create('GroupPhotos'));
+            $uploadField = UploadField::create('GroupPhotos');
             $uploadField->setAllowedFileCategories('image');
+            $fields->addFieldsToTab('Root.Main', [
+                ReadonlyField::create('IntentionallyEmpty'),
+                ReadonlyField::create('ReadonlyWithValue', null, '<i>Read-only value</i>'),
+                $uploadField,
+            ]);
         });
         return parent::getCMSFields();
     }
