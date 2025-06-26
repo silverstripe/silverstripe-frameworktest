@@ -127,7 +127,8 @@ class BasicFieldsTestPage extends TestPage
     {
         parent::requireDefaultRecords();
 
-        if ($inst = DataObject::get_one('BasicFieldsTestPage') && static::config()->get('regenerate_on_build')) {
+        $inst = BasicFieldsTestPage::get()->setUseCache(true)->first();
+        if ($inst && static::config()->get('regenerate_on_build')) {
             $data = $this->getDefaultData();
             $inst->update($data);
             $inst->write();
@@ -139,7 +140,6 @@ class BasicFieldsTestPage extends TestPage
             $inst->Listbox()->add($thirdCat);
             $inst->CheckboxSet()->add($firstCat);
             $inst->CheckboxSet()->add($thirdCat);
-
         }
     }
 

@@ -11,7 +11,7 @@ if (class_exists(RegistryPage::class)) {
     {
         public function requireDefaultRecords()
         {
-            if (!DataObject::get_one(static::class)) {
+            if (static::get()->count() === 0) {
                 // Try to create common parent
                 $defaultAdminService = DefaultAdminService::singleton();
                 Member::actAs($defaultAdminService->findOrCreateDefaultAdmin(), function () {
