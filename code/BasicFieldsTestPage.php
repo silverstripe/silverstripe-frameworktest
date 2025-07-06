@@ -127,7 +127,7 @@ class BasicFieldsTestPage extends TestPage
     {
         parent::requireDefaultRecords();
 
-        $inst = BasicFieldsTestPage::get()->setUseCache(true)->first();
+        $inst = BasicFieldsTestPage::get()->first();
         if ($inst && static::config()->get('regenerate_on_build')) {
             $data = $this->getDefaultData();
             $inst->update($data);
