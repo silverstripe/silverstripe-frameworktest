@@ -13,6 +13,9 @@ use SilverStripe\Versioned\RecursivePublishable;
 use SilverStripe\Versioned\Versioned;
 use RelationFieldsTestPage;
 use GridFieldTestPage;
+use SilverStripe\AssetAdmin\Controller\AssetAdmin;
+use SilverStripe\Assets\File;
+use SilverStripe\Forms\LiteralField;
 use SilverStripe\Forms\RequiredFields;
 
 /**
@@ -96,7 +99,12 @@ class Company extends DataObject
     public function getCMSFields()
     {
         $this->beforeUpdateCMSFields(function ($fields) {
-            $fields->addFieldToTab('Root.Main', $uploadField = UploadField::create('GroupPhotos'));
+            $file = File::get()->first();
+            $fileUrl = $file?->CMSEditLink() ?? AssetAdmin::singleton()->Link();
+            $fields->addFieldsToTab('Root.Main', [
+                $uploadField = UploadField::create('GroupPhotos'),
+                LiteralField::create('fileLink', '<a href="' . $fileUrl . '">behat link to file</a>'),
+            ]);
             $uploadField->setAllowedFileCategories('image');
         });
         return parent::getCMSFields();
