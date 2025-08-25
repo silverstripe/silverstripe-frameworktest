@@ -16,6 +16,9 @@ use GridFieldTestPage;
 use SilverStripe\Forms\ReadonlyField;
 use SilverStripe\Forms\Validation\CompositeValidator;
 use SilverStripe\Forms\Validation\RequiredFieldsValidator;
+use SilverStripe\AssetAdmin\Controller\AssetAdmin;
+use SilverStripe\Assets\File;
+use SilverStripe\Forms\LiteralField;
 
 /**
  *
@@ -98,12 +101,15 @@ class Company extends DataObject
     public function getCMSFields()
     {
         $this->beforeUpdateCMSFields(function ($fields) {
+            $file = File::get()->first();
+            $fileUrl = $file?->CMSEditLink() ?? AssetAdmin::singleton()->Link();
             $uploadField = UploadField::create('GroupPhotos');
             $uploadField->setAllowedFileCategories('image');
             $fields->addFieldsToTab('Root.Main', [
                 ReadonlyField::create('IntentionallyEmpty'),
                 ReadonlyField::create('ReadonlyWithValue', null, '<i>Read-only value</i>'),
                 $uploadField,
+                LiteralField::create('fileLink', '<a href="' . $fileUrl . '">behat link to file</a>'),
             ]);
         });
         return parent::getCMSFields();
