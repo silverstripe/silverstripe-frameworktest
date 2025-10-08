@@ -72,6 +72,7 @@ class Employee extends DataObject
         'Company' => [
             'title' => 'Company exact match filter',
             'filter' => ExactMatchFilter::class,
+            'general' => false,
         ],
         'Company.Name' => array(
             'title' => 'Company Name starting with',
