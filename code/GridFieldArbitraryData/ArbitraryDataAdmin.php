@@ -18,6 +18,7 @@ use SilverStripe\Forms\GridField\GridFieldFilterHeader;
 use SilverStripe\Forms\GridField\GridFieldPaginator;
 use SilverStripe\Forms\GridField\GridFieldPrintButton;
 use SilverStripe\Forms\GridField\GridFieldViewButton;
+use SilverStripe\Forms\GridField\GridField_ActionMenu;
 use SilverStripe\Forms\HiddenField;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Model\List\ArrayList;
@@ -110,6 +111,7 @@ class ArbitraryDataAdmin extends LeftAndMain
         } else {
             // This is effectively the same as a GridFieldConfig_RecordViewer, but without removing the GridFieldFilterHeader.
             $config = GridFieldConfig_Base::create();
+            $config->addComponent(GridField_ActionMenu::create());
             $config->addComponent(GridFieldViewButton::create());
             $config->addComponent(GridFieldDetailForm::create());
             $fieldNames = array_keys(ArbitraryDataAdmin::getInitialRecords()[0]);
