@@ -4,6 +4,7 @@ use SilverStripe\Admin\LeftAndMain;
 use SilverStripe\View\Requirements;
 use SilverStripe\Forms\Form;
 use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\FormField;
 
 class TestReactFormBuilder extends LeftAndMain
 {
@@ -25,8 +26,20 @@ class TestReactFormBuilder extends LeftAndMain
     public function getTestEditForm($id = null) {
         /* @var $page BasicFieldsTestPage */
         $page = BasicFieldsTestPage::get()->First();
-
         $form = Form::create($this, 'TestEditForm', $page->getCMSFields(), FieldList::create([]));
+
+        // Remove non-react fields
+        $toRemove = [];
+        $form->Fields()->recursiveWalk(function (FormField $field) use (&$toRemove) {
+            $schemaData = $field->getSchemaData();
+            if (!$schemaData['schemaType'] && !$schemaData['component']) {
+                $toRemove[] = $field->getName();
+            }
+        });
+        if (!empty($toRemove)) {
+            $form->Fields()->removeByName($toRemove);
+        }
+
         $form->loadDataFrom($page);
         return $form;
     }
