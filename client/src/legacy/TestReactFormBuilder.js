@@ -28,7 +28,7 @@ jQuery.entwine('ss', ($) => {
       let container = this.find('.frameworktest-react-container');
 
       if (!container.length) {
-        container = $('<div class="frameworktest-react-container panel panel--padded" style="overflow-y: auto; max-height: 100%;"></div>');
+        container = $('<div class="frameworktest-react-container panel panel--padded" style="overflow-y: auto; height: 100%;"></div>');
         this.append(container);
       }
 
