@@ -12,6 +12,10 @@ class TestReactFormBuilder extends LeftAndMain implements PermissionProvider
     private static $url_segment = 'test-react';
     private static $menu_title = 'Test React FormBuilder';
 
+    private static array $allowed_actions = [
+        'TestEditForm',
+    ];
+
     public function getClientConfig(): array
     {
         $baseLink = $this->Link();
