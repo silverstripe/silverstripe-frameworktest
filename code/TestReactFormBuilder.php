@@ -5,11 +5,16 @@ use SilverStripe\View\Requirements;
 use SilverStripe\Forms\Form;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\FormField;
+use SilverStripe\Security\PermissionProvider;
 
-class TestReactFormBuilder extends LeftAndMain
+class TestReactFormBuilder extends LeftAndMain implements PermissionProvider
 {
     private static $url_segment = 'test-react';
     private static $menu_title = 'Test React FormBuilder';
+
+    private static array $allowed_actions = [
+        'TestEditForm',
+    ];
 
     public function getClientConfig(): array
     {
@@ -63,5 +68,23 @@ class TestReactFormBuilder extends LeftAndMain
         Requirements::javascript('silverstripe/frameworktest: client/dist/js/legacy.js');
 
         return Form::create($this, 'TestEditForm', FieldList::create(), FieldList::create());
+    }
+
+
+    public function providePermissions()
+    {
+        $code = static::getRequiredPermissions();
+        $title = LeftAndMain::menu_title(static::class);
+        return [
+            $code => [
+                // Item in permission selection identifying the admin section. Example: Access to 'Files & Images'
+                'name' => _t(
+                    static::class . '.ACCESS',
+                    "Access to '{title}' section",
+                    ['title' => $title]
+                ),
+                'category' => _t(static::class . '.CMS_ACCESS_CATEGORY', 'CMS Access')
+            ]
+        ];
     }
 }
