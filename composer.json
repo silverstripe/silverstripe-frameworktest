@@ -30,7 +30,7 @@
     },
     "autoload": {
         "psr-4": {
-            "SSilverStripe\\FrameworkTest\\": "code/"
+            "SilverStripe\\FrameworkTest\\": "code/"
         }
     },
     "require-dev": {
