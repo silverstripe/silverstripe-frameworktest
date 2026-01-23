@@ -5,7 +5,7 @@ namespace SilverStripe\FrameworkTest\Elemental\Admin;
 use SilverStripe\Admin\ModelAdmin;
 use SilverStripe\FrameworkTest\Elemental\Model\MultiElementalBehatTestObject;
 
-class MutliElementalBehatTestAdmin extends ModelAdmin
+class MultiElementalBehatTestAdmin extends ModelAdmin
 {
     private static $url_segment = 'multi-elemental-behat-test-admin';
 
