@@ -9,6 +9,7 @@ use SilverStripe\Security\Permission;
 // Note that we should explicitly NOT add a getCMSEditLink
 // implementation for this class, as one of the behat tests
 // relies on it not having one.
+// Add the ElementalBehatTestObjectCMSEditLinkExtension if you need one
 class ElementalBehatTestObject extends DataObject
 {
     private static $table_name = 'ElementalBehatTestObject';

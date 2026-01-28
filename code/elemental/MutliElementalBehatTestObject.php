@@ -3,7 +3,7 @@
 namespace SilverStripe\FrameworkTest\Elemental\Model;
 
 use SilverStripe\Admin\CMSEditLinkExtension;
-use SilverStripe\FrameworkTest\Elemental\Admin\MutliElementalBehatTestAdmin;
+use SilverStripe\FrameworkTest\Elemental\Admin\MultiElementalBehatTestAdmin;
 use SilverStripe\ORM\DataObject;
 
 class MultiElementalBehatTestObject extends DataObject
@@ -18,7 +18,7 @@ class MultiElementalBehatTestObject extends DataObject
         CMSEditLinkExtension::class,
     ];
 
-    private static string $cms_edit_owner = MutliElementalBehatTestAdmin::class;
+    private static string $cms_edit_owner = MultiElementalBehatTestAdmin::class;
 
     public function canView($member = null)
     {
