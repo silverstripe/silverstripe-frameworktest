@@ -40,17 +40,21 @@ class LinkPageExtension extends Extension
     {
         $fields->removeByName(['Content']);
 
-        $fields->addFieldsToTab(
-            'Root.Main',
-            [
-                LinkField::create('HasOneLink', 'Single Link')
-                    ->setAllowedTypes([
-                        SiteTreeLink::class,
-                        EmailLink::class,
-                        PhoneLink::class
-                    ]),
-                MultiLinkField::create('HasManyLinks', 'Multiple Links'),
-            ],
-        );
+        // Update scaffolded fields in place rather than replacing them, which
+        // would discard changes made by earlier extensions.
+        $hasOneLink = $fields->dataFieldByName('HasOneLink');
+        if (!$hasOneLink) {
+            $hasOneLink = LinkField::create('HasOneLink');
+            $fields->addFieldToTab('Root.Main', $hasOneLink);
+        }
+        $allowedTypes = [SiteTreeLink::class, EmailLink::class, PhoneLink::class];
+        $hasOneLink->setTitle('Single Link')->setAllowedTypes($allowedTypes);
+
+        $hasManyLinks = $fields->dataFieldByName('HasManyLinks');
+        if (!$hasManyLinks) {
+            $hasManyLinks = MultiLinkField::create('HasManyLinks');
+            $fields->addFieldToTab('Root.Main', $hasManyLinks);
+        }
+        $hasManyLinks->setTitle('Multiple Links');
     }
 }
