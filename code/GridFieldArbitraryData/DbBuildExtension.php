@@ -2,7 +2,7 @@
 
 namespace SilverStripe\FrameworkTest\GridFieldArbitraryData;
 
-use SilverStripe\Control\Director;
+use SilverStripe\Core\Environment;
 use SilverStripe\Core\Extension;
 use SilverStripe\Dev\Command\DbBuild;
 use SilverStripe\PolyExecution\PolyOutput;
@@ -24,7 +24,7 @@ class DbBuildExtension extends Extension
     protected function onAfterStartTestSession()
     {
         $output = PolyOutput::create(
-            Director::is_cli() ? PolyOutput::FORMAT_ANSI : PolyOutput::FORMAT_HTML,
+            Environment::isCli() ? PolyOutput::FORMAT_ANSI : PolyOutput::FORMAT_HTML,
             PolyOutput::VERBOSITY_QUIET
         );
         $output->startList();
